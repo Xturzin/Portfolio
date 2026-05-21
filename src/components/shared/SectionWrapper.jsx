@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 
-const variants = {
+const sectionVariants = {
    fadeUp: {
       hidden:  { opacity: 0, y: 40 },
       visible: { opacity: 1, y: 0  },
@@ -16,19 +16,54 @@ const variants = {
       visible: { opacity: 1, x: 0  },
    },
    scaleIn: {
-      hidden:  { opacity: 0, scale: 0.96 },
+      hidden:  { opacity: 0, scale: 0.97 },
       visible: { opacity: 1, scale: 1    },
    },
+}
+
+export function StaggerWrapper({ children, className = "", delay = 0 }) {
+   return (
+      <motion.div
+         initial="hidden"
+         whileInView="visible"
+         viewport={{ once: true, margin: "-60px" }}
+         variants={{
+            hidden:  {},
+            visible: { transition: { staggerChildren: 0.1, delayChildren: delay } },
+         }}
+         className={className}
+      >
+         {children}
+      </motion.div>
+   )
+}
+
+export function StaggerItem({ children, className = "" }) {
+   return (
+      <motion.div
+         variants={{
+            hidden:  { opacity: 0, y: 20 },
+            visible: {
+               opacity: 1,
+               y: 0,
+               transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+            },
+         }}
+         className={className}
+      >
+         {children}
+      </motion.div>
+   )
 }
 
 export default function SectionWrapper({
    children,
    id,
    className = "",
-   delay     = 0,
-   variant   = "fadeUp",
+   delay   = 0,
+   variant = "fadeUp",
 }) {
-   const selected = variants[variant] || variants.fadeUp
+   const selected = sectionVariants[variant] || sectionVariants.fadeUp
 
    return (
       <motion.section
@@ -37,8 +72,8 @@ export default function SectionWrapper({
          whileInView="visible"
          viewport={{ once: true, margin: "-80px" }}
          transition={{
-            duration: 0.75,
-            ease:     [0.25, 0.1, 0.25, 1],
+            duration: 0.8,
+            ease:     [0.22, 1, 0.36, 1],
             delay,
          }}
          variants={selected}
