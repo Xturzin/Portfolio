@@ -88,3 +88,19 @@ body {
          0 0 20px rgba(168, 85, 247, 0.1);
    }
 }
+
+/* Scroll suave em Safari mobile */
+* {
+   -webkit-overflow-scrolling: touch;
+}
+
+/* Remove outline padrao em elementos focados via mouse, mantém via teclado */
+:focus:not(:focus-visible) {
+   outline: none;
+}
+
+:focus-visible {
+   outline: 2px solid var(--color-neon-base);
+   outline-offset: 3px;
+   border-radius: 4px;
+}
