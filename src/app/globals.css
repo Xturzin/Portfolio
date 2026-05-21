@@ -2,26 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Variáveis CSS nativas para uso no Three.js e lógica JS */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+   --color-bg-deep:      #07070f;
+   --color-bg-surface:   #0f0f1a;
+   --color-purple-base:  #7c3aed;
+   --color-purple-light: #a855f7;
+   --color-purple-glow:  #c084fc;
+   --color-neon-base:    #00e87a;
+   --color-neon-bright:  #39ff9a;
+   --color-blue-base:    #3b82f6;
+   --color-red-base:     #ef4444;
+   --color-text-primary: #f1f0ff;
+   --color-text-secondary: #a09ab8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Reset e base */
+*, *::before, *::after {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+}
+
+html {
+   scroll-behavior: smooth;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+   background-color: var(--color-bg-deep);
+   color: var(--color-text-primary);
+   font-family: var(--font-space-grotesk), system-ui, sans-serif;
+   overflow-x: hidden;
+   line-height: 1.6;
 }
 
+/* Scrollbar customizada - discreta e alinhada com a paleta */
+::-webkit-scrollbar {
+   width: 5px;
+}
+
+::-webkit-scrollbar-track {
+   background: var(--color-bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+   background: #3d2a6e;
+   border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+   background: var(--color-purple-base);
+}
+
+/* Seleção de texto */
+::selection {
+   background: rgba(124, 58, 237, 0.35);
+   color: #f1f0ff;
+}
+
+/* Utilitário de glow para texto */
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+   .text-glow-neon {
+      text-shadow:
+         0 0 10px rgba(0, 232, 122, 0.6),
+         0 0 30px rgba(0, 232, 122, 0.3);
+   }
+
+   .text-glow-purple {
+      text-shadow:
+         0 0 10px rgba(168, 85, 247, 0.6),
+         0 0 30px rgba(168, 85, 247, 0.3);
+   }
+
+   .border-glow-neon {
+      box-shadow:
+         0 0 0 1px rgba(0, 232, 122, 0.3),
+         0 0 20px rgba(0, 232, 122, 0.1);
+   }
+
+   .border-glow-purple {
+      box-shadow:
+         0 0 0 1px rgba(168, 85, 247, 0.3),
+         0 0 20px rgba(168, 85, 247, 0.1);
+   }
 }
