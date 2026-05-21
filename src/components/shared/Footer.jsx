@@ -10,19 +10,18 @@ export default function Footer() {
                   Arthur<span className="text-neon-base">.</span>
                </span>
                <span className="text-text-muted/40 text-sm">—</span>
-               <span className="text-text-muted text-sm">
-                  {year}
-               </span>
+               <span className="text-text-muted text-sm">{year}</span>
             </div>
 
             <div className="flex items-center gap-6">
-               
+               <a
                   href="mailto:arthur.coliveira@gmail.com"
                   className="text-text-muted text-xs hover:text-text-secondary transition-colors duration-300"
                >
-                  arthur.coliveira@gmail.com
+                  Email
                </a>
-               
+
+               <a
                   href="https://www.linkedin.com/in/arthurcoutooliveira/"
                   target="_blank"
                   rel="noopener noreferrer"

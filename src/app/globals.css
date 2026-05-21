@@ -94,7 +94,6 @@ body {
    -webkit-overflow-scrolling: touch;
 }
 
-/* Remove outline padrao em elementos focados via mouse, mantém via teclado */
 :focus:not(:focus-visible) {
    outline: none;
 }
