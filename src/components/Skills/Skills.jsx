@@ -54,7 +54,7 @@ const otherTech = [
 
 export default function Skills() {
    return (
-      <SectionWrapper id="skills" className="py-32 px-6 md:px-12">
+      <SectionWrapper id="skills" variant="scaleIn" className="py-32 px-6 md:px-12">
          <div className="max-w-6xl mx-auto flex flex-col gap-16">
 
             <div className="flex flex-col gap-2">

@@ -4,7 +4,7 @@ import SectionWrapper from "@/components/shared/SectionWrapper"
 
 export default function Contact() {
    return (
-      <SectionWrapper id="contato" className="py-32 px-6 md:px-12">
+      <SectionWrapper id="contato" variant="scaleIn" className="py-32 px-6 md:px-12">
          <div className="max-w-3xl mx-auto flex flex-col items-center text-center gap-12">
 
             <div className="flex flex-col items-center gap-4">

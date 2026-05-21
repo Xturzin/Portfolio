@@ -16,7 +16,7 @@ const educationItems = [
 
 export default function About() {
    return (
-      <SectionWrapper id="sobre" className="py-32 px-6 md:px-12 max-w-6xl mx-auto">
+      <SectionWrapper id="sobre" variant="fadeLeft" className="py-32 px-6 md:px-12 max-w-6xl mx-auto">
 
          <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-start">
 

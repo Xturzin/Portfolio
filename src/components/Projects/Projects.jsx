@@ -155,7 +155,7 @@ function ProjectCard({ project, index }) {
 
 export default function Projects() {
    return (
-      <SectionWrapper id="projetos" className="py-32 px-6 md:px-12">
+      <SectionWrapper id="projetos" variant="fadeRight" className="py-32 px-6 md:px-12">
          <div className="max-w-6xl mx-auto flex flex-col gap-16">
 
             <div className="flex flex-col gap-2">

@@ -54,7 +54,7 @@ const services = [
 
 export default function WhatIDo() {
    return (
-      <SectionWrapper id="what-i-do" className="py-32 px-6 md:px-12">
+      <SectionWrapper id="what-i-do" variant="fadeUp" className="py-32 px-6 md:px-12">
          <div className="max-w-6xl mx-auto flex flex-col gap-12">
 
             <div className="flex flex-col gap-2">
