@@ -8,9 +8,7 @@ const HeroBackground = dynamic(() => import("./HeroBackground"), { ssr: false })
 
 const containerVariants = {
    hidden: {},
-   visible: {
-      transition: { staggerChildren: 0.2, delayChildren: 0.55 },
-   },
+   visible: { transition: { staggerChildren: 0.2, delayChildren: 0.55 } },
 }
 
 const itemVariants = {
@@ -19,8 +17,46 @@ const itemVariants = {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 1.0, ease: [0.22, 1, 0.36, 1] },
    },
+}
+
+const ORBS = [
+   { cx: "15%", cy: "25%", size: 3, color: "#00e87a", dur: 4.2, delay: 0 },
+   { cx: "80%", cy: "18%", size: 2, color: "#a855f7", dur: 5.8, delay: 1.1 },
+   { cx: "65%", cy: "72%", size: 2, color: "#3b82f6", dur: 4.8, delay: 0.7 },
+   { cx: "28%", cy: "68%", size: 3, color: "#00e87a", dur: 6.2, delay: 2.0 },
+   { cx: "90%", cy: "55%", size: 2, color: "#c084fc", dur: 5.0, delay: 0.4 },
+   { cx: "8%", cy: "52%", size: 2, color: "#3b82f6", dur: 4.6, delay: 1.6 },
+   { cx: "50%", cy: "88%", size: 3, color: "#a855f7", dur: 5.4, delay: 0.9 },
+]
+
+function FloatingOrbs() {
+   return (
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
+         {ORBS.map((orb, i) => (
+            <motion.div
+               key={i}
+               className="absolute rounded-full"
+               style={{
+                  left: orb.cx,
+                  top: orb.cy,
+                  width: orb.size,
+                  height: orb.size,
+                  backgroundColor: orb.color,
+                  boxShadow: `0 0 ${orb.size * 4}px ${orb.color}`,
+               }}
+               animate={{ y: [0, -18, 0], opacity: [0.4, 1, 0.4] }}
+               transition={{
+                  duration: orb.dur,
+                  repeat: Infinity,
+                  delay: orb.delay,
+                  ease: "easeInOut",
+               }}
+            />
+         ))}
+      </div>
+   )
 }
 
 export default function Hero() {
@@ -30,7 +66,6 @@ export default function Hero() {
       const touch =
          window.matchMedia("(pointer: coarse)").matches ||
          window.innerWidth < 768
-
       setIsTouch(touch)
    }, [])
 
@@ -46,19 +81,16 @@ export default function Hero() {
       [-0.5, 0.5],
       isTouch ? [0, 0] : [1.5, -1.5]
    )
-
    const rotateY = useTransform(
       springX,
       [-0.5, 0.5],
       isTouch ? [0, 0] : [-1.5, 1.5]
    )
-
    const tx = useTransform(
       springX,
       [-0.5, 0.5],
       isTouch ? [0, 0] : [-5, 5]
    )
-
    const ty = useTransform(
       springY,
       [-0.5, 0.5],
@@ -67,7 +99,6 @@ export default function Hero() {
 
    const handleMouseMove = (e) => {
       if (isTouch) return
-
       mouseX.set(e.clientX / window.innerWidth - 0.5)
       mouseY.set(e.clientY / window.innerHeight - 0.5)
    }
@@ -80,6 +111,7 @@ export default function Hero() {
          onMouseMove={handleMouseMove}
       >
          <HeroBackground />
+         <FloatingOrbs />
 
          <div className="absolute inset-0 bg-gradient-to-b from-bg-deep/15 via-transparent to-bg-deep pointer-events-none" />
 
@@ -149,7 +181,7 @@ export default function Hero() {
          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2, duration: 1 }}
+            transition={{ delay: 2.0, duration: 1.0 }}
             aria-hidden="true"
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
          >
@@ -159,11 +191,7 @@ export default function Hero() {
 
             <motion.div
                animate={{ y: [0, 8, 0] }}
-               transition={{
-                  duration: 2.4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-               }}
+               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
                className="w-px h-8 bg-gradient-to-b from-purple-base to-transparent"
             />
          </motion.div>
