@@ -1,64 +1,94 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const navLinks = [
-   { label: "Sobre", href: "#sobre" },
-   { label: "O que faco", href: "#what-i-do" },
-   { label: "Skills", href: "#skills" },
-   { label: "Projetos", href: "#projetos" },
-   { label: "Contato", href: "#contato" },
+   { label: "Sobre",      href: "#sobre",     id: "sobre" },
+   { label: "O que faco", href: "#what-i-do", id: "what-i-do" },
+   { label: "Skills",     href: "#skills",    id: "skills" },
+   { label: "Projetos",   href: "#projetos",  id: "projetos" },
+   { label: "Contato",    href: "#contato",   id: "contato" },
 ]
 
 const menuVariants = {
-   hidden: { opacity: 0, y: -16 },
+   hidden: {
+      opacity: 0,
+      y: -12,
+   },
    visible: {
       opacity: 1,
       y: 0,
       transition: {
-         duration: 0.35,
-         ease: [0.25, 0.1, 0.25, 1],
+         duration: 0.32,
+         ease: [0.22, 1, 0.36, 1],
          staggerChildren: 0.06,
-         delayChildren: 0.1,
+         delayChildren: 0.08,
       },
    },
    exit: {
       opacity: 0,
-      y: -12,
-      transition: { duration: 0.25, ease: "easeIn" },
+      y: -10,
+      transition: { duration: 0.22, ease: "easeIn" },
    },
 }
 
 const linkVariants = {
-   hidden: { opacity: 0, x: -12 },
-   visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
+   hidden: { opacity: 0, x: -10 },
+   visible: { opacity: 1, x: 0, transition: { duration: 0.28, ease: "easeOut" } },
    exit: { opacity: 0, x: -8 },
 }
 
 export default function Navbar() {
    const [scrolled, setScrolled] = useState(false)
    const [menuOpen, setMenuOpen] = useState(false)
+   const [active, setActive] = useState("")
+   const activeRef = useRef("")
 
    useEffect(() => {
-      const handleScroll = () => {
-         setScrolled(window.scrollY > 20)
-      }
+      const onScroll = () => setScrolled(window.scrollY > 20)
+      window.addEventListener("scroll", onScroll, { passive: true })
+      return () => window.removeEventListener("scroll", onScroll)
+   }, [])
 
-      window.addEventListener("scroll", handleScroll, { passive: true })
-      return () => window.removeEventListener("scroll", handleScroll)
+   useEffect(() => {
+      const observers = []
+
+      navLinks.forEach(({ id }) => {
+         const el = document.getElementById(id)
+         if (!el) return
+
+         const obs = new IntersectionObserver(
+            (entries) => {
+               entries.forEach((entry) => {
+                  if (entry.isIntersecting && activeRef.current !== id) {
+                     activeRef.current = id
+                     setActive(id)
+                  }
+               })
+            },
+            { threshold: 0.4, rootMargin: "0px 0px -30% 0px" }
+         )
+
+         obs.observe(el)
+         observers.push(obs)
+      })
+
+      return () => observers.forEach((o) => o.disconnect())
    }, [])
 
    useEffect(() => {
       document.body.style.overflow = menuOpen ? "hidden" : ""
-      return () => (document.body.style.overflow = "")
+      return () => {
+         document.body.style.overflow = ""
+      }
    }, [menuOpen])
 
    const headerClass = scrolled
-      ? "bg-bg-deep/80 backdrop-blur-md border-b border-purple-dim/20 shadow-md"
+      ? "bg-bg-deep/75 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_1px_30px_rgba(0,0,0,0.35)]"
       : "bg-transparent border-b border-transparent"
 
-   const handleLinkClick = () => setMenuOpen(false)
+   const close = () => setMenuOpen(false)
 
    return (
       <>
@@ -67,76 +97,85 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             className={
-               "fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex items-center justify-between transition-all duration-500 " +
+               "fixed top-0 left-0 right-0 z-50 px-6 md:px-12 py-4 flex items-center justify-between transition-all duration-500 ease-in-out " +
                headerClass
             }
          >
-            {/* Logo */}
             <a
                href="#hero"
-               onClick={handleLinkClick}
+               onClick={close}
+               aria-label="Voltar ao topo"
                className="text-text-primary font-semibold text-lg tracking-tight hover:text-neon-base transition-colors duration-300"
             >
                Arthur<span className="text-neon-base">.</span>
             </a>
 
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden md:flex items-center gap-8" aria-label="Navegacao principal">
                {navLinks.map((link) => (
                   <a
                      key={link.href}
                      href={link.href}
-                     className="text-text-secondary text-sm font-medium hover:text-text-primary transition-colors duration-300 relative group"
+                     className={
+                        "text-sm font-medium transition-colors duration-300 relative group " +
+                        (active === link.id
+                           ? "text-text-primary"
+                           : "text-text-secondary hover:text-text-primary")
+                     }
                   >
                      {link.label}
-                     <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-neon-base transition-all duration-300 group-hover:w-full"></span>
+                     <span
+                        className={
+                           "absolute -bottom-0.5 left-0 h-px bg-neon-base transition-all duration-300 " +
+                           (active === link.id ? "w-full" : "w-0 group-hover:w-full")
+                        }
+                     />
                   </a>
                ))}
             </nav>
 
-            {/* CTA desktop */}
             <a
                href="#contato"
+               aria-label="Fale comigo"
                className="hidden md:inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium border border-purple-dim/40 text-text-secondary hover:border-neon-base/50 hover:text-neon-base transition-all duration-300"
             >
                Fale comigo
             </a>
 
-            {/* Mobile button */}
             <button
                onClick={() => setMenuOpen(!menuOpen)}
+               aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
                className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded-lg hover:bg-bg-elevated transition-colors duration-300"
-               aria-label="Menu"
             >
                <motion.span
                   animate={menuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-                  className="block w-5 h-px bg-text-secondary"
+                  transition={{ duration: 0.3 }}
+                  className="block w-5 h-px bg-text-secondary origin-center"
                />
                <motion.span
                   animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-                  className="block w-5 h-px bg-text-secondary"
+                  transition={{ duration: 0.2 }}
+                  className="block w-5 h-px bg-text-secondary origin-center"
                />
                <motion.span
                   animate={menuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-                  className="block w-5 h-px bg-text-secondary"
+                  transition={{ duration: 0.3 }}
+                  className="block w-5 h-px bg-text-secondary origin-center"
                />
             </button>
          </motion.header>
 
-         {/* Mobile menu */}
          <AnimatePresence>
             {menuOpen && (
                <>
-                  {/* overlay */}
                   <motion.div
                      initial={{ opacity: 0 }}
                      animate={{ opacity: 1 }}
                      exit={{ opacity: 0 }}
-                     onClick={() => setMenuOpen(false)}
+                     transition={{ duration: 0.25 }}
+                     onClick={close}
                      className="fixed inset-0 z-40 bg-bg-deep/60 backdrop-blur-sm md:hidden"
                   />
 
-                  {/* menu */}
                   <motion.div
                      variants={menuVariants}
                      initial="hidden"
@@ -149,17 +188,35 @@ export default function Navbar() {
                            key={link.href}
                            href={link.href}
                            variants={linkVariants}
-                           onClick={handleLinkClick}
-                           className="flex items-center justify-between px-4 py-3 rounded-xl text-text-secondary font-medium hover:text-text-primary hover:bg-bg-elevated transition-all duration-200 group"
+                           onClick={close}
+                           className={
+                              "flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 group " +
+                              (active === link.id
+                                 ? "text-text-primary bg-bg-elevated"
+                                 : "text-text-secondary hover:text-text-primary hover:bg-bg-elevated")
+                           }
                         >
                            <span>{link.label}</span>
+
+                           <svg
+                              className="w-3.5 h-3.5 text-text-muted opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                           >
+                              <path d="M5 12h14" />
+                              <path d="M12 5l7 7-7 7" />
+                           </svg>
                         </motion.a>
                      ))}
 
                      <div className="mt-2 pt-4 border-t border-purple-dim/20">
                         <a
                            href="#contato"
-                           onClick={handleLinkClick}
+                           onClick={close}
                            className="flex items-center justify-center w-full px-4 py-3 rounded-xl border border-purple-dim/40 text-text-secondary hover:border-neon-base/50 hover:text-neon-base font-medium text-sm transition-all duration-300"
                         >
                            Fale comigo
