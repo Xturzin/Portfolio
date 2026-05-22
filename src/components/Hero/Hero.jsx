@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { useEffect, useState } from "react"
 
 const HeroBackground = dynamic(() => import("./HeroBackground"), { ssr: false })
 
@@ -13,35 +14,60 @@ const containerVariants = {
 }
 
 const itemVariants = {
-   hidden: {
-      opacity: 0,
-      y: 32,
-      filter: "blur(10px)",
-   },
+   hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
    visible: {
       opacity: 1,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 1.0, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
    },
 }
 
 export default function Hero() {
+   const [isTouch, setIsTouch] = useState(false)
+
+   useEffect(() => {
+      const touch =
+         window.matchMedia("(pointer: coarse)").matches ||
+         window.innerWidth < 768
+
+      setIsTouch(touch)
+   }, [])
+
    const mouseX = useMotionValue(0)
    const mouseY = useMotionValue(0)
 
-   // springs corretos (AGORA USADOS DE VERDADE)
-   const springX = useSpring(mouseX, { stiffness: 35, damping: 22 })
-   const springY = useSpring(mouseY, { stiffness: 35, damping: 22 })
+   const springCfg = { stiffness: 28, damping: 26, mass: 1 }
+   const springX = useSpring(mouseX, springCfg)
+   const springY = useSpring(mouseY, springCfg)
 
-   // transforms baseados nos springs (isso que estava errado antes)
-   const rotateX = useTransform(springY, [-0.5, 0.5], [2, -2])
-   const rotateY = useTransform(springX, [-0.5, 0.5], [-2, 2])
+   const rotateX = useTransform(
+      springY,
+      [-0.5, 0.5],
+      isTouch ? [0, 0] : [1.5, -1.5]
+   )
 
-   const translateX = useTransform(springX, [-0.5, 0.5], [-6, 6])
-   const translateY = useTransform(springY, [-0.5, 0.5], [-4, 4])
+   const rotateY = useTransform(
+      springX,
+      [-0.5, 0.5],
+      isTouch ? [0, 0] : [-1.5, 1.5]
+   )
+
+   const tx = useTransform(
+      springX,
+      [-0.5, 0.5],
+      isTouch ? [0, 0] : [-5, 5]
+   )
+
+   const ty = useTransform(
+      springY,
+      [-0.5, 0.5],
+      isTouch ? [0, 0] : [-3, 3]
+   )
 
    const handleMouseMove = (e) => {
+      if (isTouch) return
+
       mouseX.set(e.clientX / window.innerWidth - 0.5)
       mouseY.set(e.clientY / window.innerHeight - 0.5)
    }
@@ -49,7 +75,8 @@ export default function Hero() {
    return (
       <section
          id="hero"
-         className="relative w-full h-screen flex items-center justify-center overflow-hidden"
+         aria-label="Introdução"
+         className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
          onMouseMove={handleMouseMove}
       >
          <HeroBackground />
@@ -60,25 +87,25 @@ export default function Hero() {
             style={{
                rotateX,
                rotateY,
-               x: translateX,
-               y: translateY,
+               x: tx,
+               y: ty,
                transformPerspective: 1400,
             }}
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto"
+            className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 w-full max-w-4xl mx-auto"
          >
             <motion.span
                variants={itemVariants}
-               className="text-neon-base text-sm font-medium tracking-widest uppercase mb-6"
+               className="text-neon-base text-xs md:text-sm font-medium tracking-widest uppercase mb-4 md:mb-6 text-glow-neon"
             >
                Full Stack Developer
             </motion.span>
 
             <motion.h1
                variants={itemVariants}
-               className="text-5xl md:text-7xl font-bold text-text-primary leading-tight tracking-tight mb-6"
+               className="text-[2rem] sm:text-5xl md:text-7xl font-bold text-text-primary leading-[1.15] tracking-tight mb-4 md:mb-6"
             >
                Arthur{" "}
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
@@ -88,29 +115,31 @@ export default function Hero() {
 
             <motion.p
                variants={itemVariants}
-               className="text-text-secondary text-lg md:text-xl max-w-2xl leading-relaxed mb-10"
+               className="text-text-secondary text-sm sm:text-base md:text-xl max-w-xs sm:max-w-xl md:max-w-2xl leading-relaxed mb-8 md:mb-10"
             >
                Desenvolvedor full stack focado em construir{" "}
                <span className="text-text-primary font-medium">
-                  aplicacoes web completas
+                  aplicações web completas
                </span>{" "}
                do zero ao deploy.
             </motion.p>
 
             <motion.div
                variants={itemVariants}
-               className="flex items-center gap-4 flex-wrap justify-center"
+               className="flex items-center gap-3 flex-wrap justify-center"
             >
                <a
                   href="#projetos"
-                  className="px-6 py-3 rounded-full bg-purple-base hover:bg-purple-light text-white font-medium text-sm transition-all duration-300 shadow-purple-md hover:shadow-purple-lg hover:scale-105 active:scale-95"
+                  aria-label="Ver projetos de Arthur Couto"
+                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-purple-base hover:bg-purple-light text-white font-medium text-sm transition-all duration-300 shadow-purple-md hover:shadow-purple-lg hover:scale-105 active:scale-[0.97]"
                >
                   Ver projetos
                </a>
 
                <a
                   href="#contato"
-                  className="px-6 py-3 rounded-full border border-purple-dim/50 text-text-secondary hover:border-neon-base/50 hover:text-neon-base font-medium text-sm transition-all duration-300 hover:scale-105 active:scale-95"
+                  aria-label="Entrar em contato com Arthur Couto"
+                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-purple-dim/50 text-text-secondary hover:border-neon-base/50 hover:text-neon-base font-medium text-sm transition-all duration-300 hover:scale-105 active:scale-[0.97]"
                >
                   Fale comigo
                </a>
@@ -120,7 +149,8 @@ export default function Hero() {
          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2.0, duration: 1.0 }}
+            transition={{ delay: 2, duration: 1 }}
+            aria-hidden="true"
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
          >
             <span className="text-text-muted text-xs tracking-widest uppercase">
