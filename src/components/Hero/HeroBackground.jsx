@@ -96,13 +96,13 @@ function AuroraPlane() {
    useFrame(({ clock }) => {
       if (pausedRef.current) return
 
-      targetRef.current.x += (mouseRef.current.x - targetRef.current.x) * 0.03
-      targetRef.current.y += (mouseRef.current.y - targetRef.current.y) * 0.03
+      targetRef.current.x += (mouseRef.current.x - targetRef.current.x) * 0.015
+      targetRef.current.y += (mouseRef.current.y - targetRef.current.y) * 0.015
 
-      meshRef.current.material.uniforms.uTime.value  = clock.getElapsedTime()
+      meshRef.current.material.uniforms.uTime.value  = clock.getElapsedTime() * 0.55
       meshRef.current.material.uniforms.uMouse.value = [
-         targetRef.current.x,
-         targetRef.current.y,
+         targetRef.current.x * 0.5,
+         targetRef.current.y * 0.5,
       ]
    })
 

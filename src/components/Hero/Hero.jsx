@@ -22,13 +22,13 @@ const itemVariants = {
 }
 
 const ORBS = [
-   { cx: "15%", cy: "25%", size: 3, color: "#00e87a", dur: 4.2, delay: 0 },
-   { cx: "80%", cy: "18%", size: 2, color: "#a855f7", dur: 5.8, delay: 1.1 },
-   { cx: "65%", cy: "72%", size: 2, color: "#3b82f6", dur: 4.8, delay: 0.7 },
-   { cx: "28%", cy: "68%", size: 3, color: "#00e87a", dur: 6.2, delay: 2.0 },
-   { cx: "90%", cy: "55%", size: 2, color: "#c084fc", dur: 5.0, delay: 0.4 },
-   { cx: "8%", cy: "52%", size: 2, color: "#3b82f6", dur: 4.6, delay: 1.6 },
-   { cx: "50%", cy: "88%", size: 3, color: "#a855f7", dur: 5.4, delay: 0.9 },
+   { cx: "15%", cy: "25%", size: 1.5, color: "#00e87a", dur: 7.5, delay: 0   },
+   { cx: "80%", cy: "18%", size: 1.5, color: "#a855f7", dur: 9.0, delay: 1.4 },
+   { cx: "65%", cy: "72%", size: 1.5, color: "#3b82f6", dur: 8.2, delay: 0.9 },
+   { cx: "28%", cy: "68%", size: 1.5, color: "#00e87a", dur: 9.6, delay: 2.4 },
+   { cx: "90%", cy: "55%", size: 1.5, color: "#c084fc", dur: 8.0, delay: 0.5 },
+   { cx: "8%",  cy: "52%", size: 1.5, color: "#3b82f6", dur: 7.8, delay: 1.9 },
+   { cx: "50%", cy: "88%", size: 1.5, color: "#a855f7", dur: 8.6, delay: 1.1 },
 ]
 
 function FloatingOrbs() {
@@ -46,7 +46,7 @@ function FloatingOrbs() {
                   backgroundColor: orb.color,
                   boxShadow: `0 0 ${orb.size * 4}px ${orb.color}`,
                }}
-               animate={{ y: [0, -18, 0], opacity: [0.4, 1, 0.4] }}
+               animate={{ y: [0, -7, 0], opacity: [0.15, 0.40, 0.15] }}
                transition={{
                   duration: orb.dur,
                   repeat: Infinity,
@@ -72,29 +72,29 @@ export default function Hero() {
    const mouseX = useMotionValue(0)
    const mouseY = useMotionValue(0)
 
-   const springCfg = { stiffness: 28, damping: 26, mass: 1 }
+   const springCfg = { stiffness: 16, damping: 32, mass: 1.2 }
    const springX = useSpring(mouseX, springCfg)
    const springY = useSpring(mouseY, springCfg)
 
    const rotateX = useTransform(
       springY,
       [-0.5, 0.5],
-      isTouch ? [0, 0] : [1.5, -1.5]
+      isTouch ? [0, 0] : [0.8, -0.8]
    )
    const rotateY = useTransform(
       springX,
       [-0.5, 0.5],
-      isTouch ? [0, 0] : [-1.5, 1.5]
+      isTouch ? [0, 0] : [-0.8, 0.8]
    )
    const tx = useTransform(
       springX,
       [-0.5, 0.5],
-      isTouch ? [0, 0] : [-5, 5]
+      isTouch ? [0, 0] : [-3, 3]
    )
    const ty = useTransform(
       springY,
       [-0.5, 0.5],
-      isTouch ? [0, 0] : [-3, 3]
+      isTouch ? [0, 0] : [-2, 2]
    )
 
    const handleMouseMove = (e) => {
