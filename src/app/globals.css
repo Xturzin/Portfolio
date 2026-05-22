@@ -2,67 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Variáveis CSS nativas para uso no Three.js e lógica JS */
 :root {
-   --color-bg-deep:      #07070f;
-   --color-bg-surface:   #0f0f1a;
-   --color-purple-base:  #7c3aed;
-   --color-purple-light: #a855f7;
-   --color-purple-glow:  #c084fc;
-   --color-neon-base:    #00e87a;
-   --color-neon-bright:  #39ff9a;
-   --color-blue-base:    #3b82f6;
-   --color-red-base:     #ef4444;
-   --color-text-primary: #f1f0ff;
+   --color-bg-deep:        #07070f;
+   --color-bg-surface:     #0f0f1a;
+   --color-purple-base:    #7c3aed;
+   --color-purple-light:   #a855f7;
+   --color-purple-glow:    #c084fc;
+   --color-neon-base:      #00e87a;
+   --color-neon-bright:    #39ff9a;
+   --color-blue-base:      #3b82f6;
+   --color-red-base:       #ef4444;
+   --color-text-primary:   #f1f0ff;
    --color-text-secondary: #a09ab8;
 }
 
-/* Reset e base */
 *, *::before, *::after {
    box-sizing: border-box;
-   margin: 0;
-   padding: 0;
+   margin:     0;
+   padding:    0;
 }
 
 html {
    scroll-behavior: smooth;
-   -webkit-font-smoothing: antialiased;
+   -webkit-font-smoothing:  antialiased;
    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
    background-color: var(--color-bg-deep);
-   color: var(--color-text-primary);
-   font-family: var(--font-space-grotesk), system-ui, sans-serif;
-   overflow-x: hidden;
-   line-height: 1.6;
+   color:            var(--color-text-primary);
+   font-family:      var(--font-space-grotesk), system-ui, sans-serif;
+   overflow-x:       hidden;
+   line-height:      1.6;
 }
 
-/* Scrollbar customizada - discreta e alinhada com a paleta */
-::-webkit-scrollbar {
-   width: 5px;
-}
+::-webkit-scrollbar         { width: 5px; }
+::-webkit-scrollbar-track   { background: var(--color-bg-deep); }
+::-webkit-scrollbar-thumb   { background: #3d2a6e; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-purple-base); }
 
-::-webkit-scrollbar-track {
-   background: var(--color-bg-deep);
-}
-
-::-webkit-scrollbar-thumb {
-   background: #3d2a6e;
-   border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-   background: var(--color-purple-base);
-}
-
-/* Seleção de texto */
 ::selection {
    background: rgba(124, 58, 237, 0.35);
-   color: #f1f0ff;
+   color:      #f1f0ff;
 }
 
-/* Utilitário de glow para texto */
+:focus:not(:focus-visible) {
+   outline: none;
+}
+
+:focus-visible {
+   outline:        2px solid var(--color-neon-base);
+   outline-offset: 3px;
+   border-radius:  4px;
+}
+
+@media (pointer: fine) {
+   * { cursor: none !important; }
+}
+
+@media (pointer: coarse) {
+   * { cursor: auto !important; }
+}
+
+* {
+   -webkit-overflow-scrolling: touch;
+}
+
 @layer utilities {
    .text-glow-neon {
       text-shadow:
@@ -89,23 +94,11 @@ body {
    }
 }
 
-/* Scroll suave em Safari mobile */
-* {
-   -webkit-overflow-scrolling: touch;
-}
-
-:focus:not(:focus-visible) {
-   outline: none;
-}
-
-:focus-visible {
-   outline: 2px solid var(--color-neon-base);
-   outline-offset: 3px;
-   border-radius: 4px;
-}
-
-@media (pointer: fine) {
-   * {
-      cursor: none !important;
+@media (prefers-reduced-motion: reduce) {
+   *, *::before, *::after {
+      animation-duration:   0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration:  0.01ms !important;
+      scroll-behavior:      auto !important;
    }
 }

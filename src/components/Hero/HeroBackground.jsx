@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useMemo } from "react"
+import { useRef, useMemo, useEffect, useState } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 
 const vertexShader = `
@@ -47,12 +47,9 @@ const fragmentShader = `
 
    void main() {
       vec2 uv = vUv;
+      uv += uMouse * 0.055;
 
-      vec2 mouseInfluence = uMouse * 0.055;
-      uv += mouseInfluence;
-
-      float t = uTime * 0.09;
-
+      float t  = uTime * 0.09;
       float n1 = fbm(uv * 1.8 + vec2(t * 0.7,  t * 0.5));
       float n2 = fbm(uv * 2.6 - vec2(t * 0.5,  t * 0.3) + n1 * 0.5);
       float n3 = fbm(uv * 1.1 + vec2(t * 0.25, t * 0.7) + n2 * 0.3);
@@ -69,12 +66,9 @@ const fragmentShader = `
       color = mix(color, colorNeon,   smoothstep(0.56, 0.84, n2) * 0.16);
       color = mix(color, colorBlue,   smoothstep(0.44, 0.74, n1 * n2) * 0.22);
 
-      float dist     = length(vUv - 0.5);
-      float vignette = 1.0 - smoothstep(0.25, 1.1, dist * 1.7);
+      float vignette = 1.0 - smoothstep(0.25, 1.1, length(vUv - 0.5) * 1.7);
       color *= vignette;
-
-      float topFade = smoothstep(0.0, 0.18, vUv.y);
-      color *= mix(0.25, 1.0, topFade);
+      color *= mix(0.25, 1.0, smoothstep(0.0, 0.18, vUv.y));
 
       gl_FragColor = vec4(color, 1.0);
    }
@@ -84,13 +78,24 @@ function AuroraPlane() {
    const meshRef   = useRef()
    const mouseRef  = useRef({ x: 0, y: 0 })
    const targetRef = useRef({ x: 0, y: 0 })
+   const pausedRef = useRef(false)
 
    const uniforms = useMemo(() => ({
       uTime:  { value: 0 },
       uMouse: { value: [0, 0] },
    }), [])
 
+   useEffect(() => {
+      const onVisibility = () => {
+         pausedRef.current = document.hidden
+      }
+      document.addEventListener("visibilitychange", onVisibility)
+      return () => document.removeEventListener("visibilitychange", onVisibility)
+   }, [])
+
    useFrame(({ clock }) => {
+      if (pausedRef.current) return
+
       targetRef.current.x += (mouseRef.current.x - targetRef.current.x) * 0.03
       targetRef.current.y += (mouseRef.current.y - targetRef.current.y) * 0.03
 
@@ -117,13 +122,26 @@ function AuroraPlane() {
    )
 }
 
+function StaticFallback() {
+   return (
+      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-bg-deep via-purple-dim/20 to-bg-deep"></div>
+   )
+}
+
 export default function HeroBackground() {
+   const [webglFailed, setWebglFailed] = useState(false)
+
    const handleMouseMove = (e) => {
       if (typeof window !== "undefined" && window.__auroraMouseRef) {
-         const x =  (e.clientX / window.innerWidth  - 0.5) * 2
-         const y = -(e.clientY / window.innerHeight - 0.5) * 2
-         window.__auroraMouseRef.current = { x, y }
+         window.__auroraMouseRef.current = {
+            x:  (e.clientX / window.innerWidth  - 0.5) * 2,
+            y: -(e.clientY / window.innerHeight - 0.5) * 2,
+         }
       }
+   }
+
+   if (webglFailed) {
+      return <StaticFallback />
    }
 
    return (
@@ -134,7 +152,10 @@ export default function HeroBackground() {
          <Canvas
             camera={{ position: [0, 0, 1] }}
             dpr={[1, 1.5]}
-            gl={{ antialias: false, powerPreference: "high-performance" }}
+            gl={{ antialias: false, powerPreference: "high-performance", failIfMajorPerformanceCaveat: true }}
+            onCreated={({ gl }) => {
+               if (!gl) setWebglFailed(true)
+            }}
          >
             <AuroraPlane />
          </Canvas>
