@@ -1,141 +1,179 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import dynamic from "next/dynamic"
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
+import { useEffect, useState } from "react"
 
-const ENERGY_LINES = [
-   { y: 0.18, speed: 0.00022, amplitude: 38, color: "124,58,237",  width: 0.8, alpha: 0.18 },
-   { y: 0.34, speed: 0.00018, amplitude: 52, color: "0,232,122",   width: 0.6, alpha: 0.12 },
-   { y: 0.52, speed: 0.00026, amplitude: 44, color: "59,130,246",  width: 0.7, alpha: 0.14 },
-   { y: 0.68, speed: 0.00020, amplitude: 60, color: "124,58,237",  width: 0.5, alpha: 0.10 },
-   { y: 0.82, speed: 0.00024, amplitude: 36, color: "239,68,68",   width: 0.6, alpha: 0.10 },
-]
+const HeroBackground = dynamic(() => import("./HeroBackground"), { ssr: false })
+
+const containerVariants = {
+   hidden:  {},
+   visible: { transition: { staggerChildren: 0.2, delayChildren: 0.55 } },
+}
+
+const itemVariants = {
+   hidden:  { opacity: 0, y: 28, filter: "blur(8px)" },
+   visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 1.0, ease: [0.22, 1, 0.36, 1] },
+   },
+}
 
 const ORBS = [
-   { x: 0.15, y: 0.12, r: 280, color: "124,58,237", alpha: 0.055, speed: 0.00014 },
-   { x: 0.82, y: 0.28, r: 320, color: "0,232,122",  alpha: 0.035, speed: 0.00018 },
-   { x: 0.45, y: 0.65, r: 260, color: "59,130,246", alpha: 0.045, speed: 0.00012 },
-   { x: 0.88, y: 0.78, r: 300, color: "124,58,237", alpha: 0.040, speed: 0.00016 },
+   { cx: "8%",  cy: "20%", size: 2, color: "#00e87a", dur: 5.2, delay: 0 },
+   { cx: "88%", cy: "15%", size: 2, color: "#a855f7", dur: 6.4, delay: 1.4 },
+   { cx: "82%", cy: "78%", size: 2, color: "#3b82f6", dur: 5.8, delay: 0.8 },
+   { cx: "12%", cy: "75%", size: 2, color: "#a855f7", dur: 6.0, delay: 2.2 },
 ]
 
-const GRID_STEP = 72
+function FloatingOrbs() {
+   return (
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
+         {ORBS.map((orb, i) => (
+            <motion.div
+               key={i}
+               className="absolute rounded-full"
+               style={{
+                  left: orb.cx,
+                  top: orb.cy,
+                  width: orb.size,
+                  height: orb.size,
+                  backgroundColor: orb.color,
+                  boxShadow: "0 0 8px " + orb.color,
+               }}
+               animate={{ y: [0, -14, 0], opacity: [0.25, 0.7, 0.25] }}
+               transition={{
+                  duration: orb.dur,
+                  repeat: Infinity,
+                  delay: orb.delay,
+                  ease: "easeInOut",
+               }}
+            />
+         ))}
+      </div>
+   )
+}
 
-export default function GlobalBackground() {
-   const canvasRef = useRef(null)
+export default function Hero() {
+   const [isTouch, setIsTouch] = useState(false)
 
    useEffect(() => {
-      const canvas = canvasRef.current
-      if (!canvas) return
-
-      const ctx = canvas.getContext("2d")
-      let raf    = null
-      let paused = false
-      let t      = 0
-      let W      = 0
-      let H      = 0
-
-      const resize = () => {
-         W = canvas.width  = window.innerWidth
-         H = canvas.height = window.innerHeight
+      const check = () => {
+         setIsTouch(
+            window.matchMedia("(pointer: coarse)").matches ||
+            window.innerWidth < 768
+         )
       }
-
-      const drawGrid = () => {
-         const pulse = Math.sin(t * 0.0008) * 0.008 + 0.018
-         ctx.fillStyle = "rgba(124,58,237," + pulse + ")"
-         const cols = Math.ceil(W / GRID_STEP) + 1
-         const rows = Math.ceil(H / GRID_STEP) + 1
-         for (let c = 0; c < cols; c++) {
-            for (let r = 0; r < rows; r++) {
-               ctx.beginPath()
-               ctx.arc(c * GRID_STEP, r * GRID_STEP, 0.7, 0, Math.PI * 2)
-               ctx.fill()
-            }
-         }
-      }
-
-      const drawOrbs = () => {
-         ORBS.forEach((orb) => {
-            const ox    = orb.x * W + Math.sin(t * orb.speed * 0.7) * 60
-            const oy    = orb.y * H + Math.cos(t * orb.speed)       * 40
-            const pulse = Math.sin(t * orb.speed * 3) * 0.015 + orb.alpha
-            const grad  = ctx.createRadialGradient(ox, oy, 0, ox, oy, orb.r)
-            grad.addColorStop(0,   "rgba(" + orb.color + "," + pulse + ")")
-            grad.addColorStop(0.5, "rgba(" + orb.color + "," + (pulse * 0.3) + ")")
-            grad.addColorStop(1,   "rgba(" + orb.color + ",0)")
-            ctx.fillStyle = grad
-            ctx.beginPath()
-            ctx.arc(ox, oy, orb.r, 0, Math.PI * 2)
-            ctx.fill()
-         })
-      }
-
-      const drawEnergyLines = () => {
-         ENERGY_LINES.forEach((line) => {
-            const baseY  = line.y * H
-            const points = Math.ceil(W / 6) + 2
-            const pulse  = Math.sin(t * line.speed * 0.5) * 0.04 + line.alpha
-
-            ctx.beginPath()
-            ctx.lineWidth   = line.width
-            ctx.strokeStyle = "rgba(" + line.color + "," + pulse + ")"
-
-            for (let i = 0; i <= points; i++) {
-               const x   = (i / points) * W
-               const phase1 = Math.sin(x * 0.008 + t * line.speed * 1000) * line.amplitude
-               const phase2 = Math.sin(x * 0.003 + t * line.speed * 600 + 1.2) * (line.amplitude * 0.4)
-               const y   = baseY + phase1 + phase2
-
-               if (i === 0) ctx.moveTo(x, y)
-               else         ctx.lineTo(x, y)
-            }
-
-            ctx.stroke()
-
-            const glowPulse = Math.sin(t * line.speed * 1500 + line.y * 10)
-            if (glowPulse > 0.7) {
-               const glowX = ((glowPulse - 0.7) / 0.3) * W
-               const glowY = line.y * H + Math.sin(glowX * 0.008 + t * line.speed * 1000) * line.amplitude
-               const grad  = ctx.createRadialGradient(glowX, glowY, 0, glowX, glowY, 20)
-               grad.addColorStop(0, "rgba(" + line.color + ",0.35)")
-               grad.addColorStop(1, "rgba(" + line.color + ",0)")
-               ctx.fillStyle = grad
-               ctx.beginPath()
-               ctx.arc(glowX, glowY, 20, 0, Math.PI * 2)
-               ctx.fill()
-            }
-         })
-      }
-
-      const tick = () => {
-         if (!paused) {
-            t++
-            ctx.clearRect(0, 0, W, H)
-            drawGrid()
-            drawOrbs()
-            drawEnergyLines()
-         }
-         raf = requestAnimationFrame(tick)
-      }
-
-      const onVisibility = () => { paused = document.hidden }
-
-      resize()
-      raf = requestAnimationFrame(tick)
-      window.addEventListener("resize",           resize)
-      document.addEventListener("visibilitychange", onVisibility)
-
-      return () => {
-         cancelAnimationFrame(raf)
-         window.removeEventListener("resize", resize)
-         document.removeEventListener("visibilitychange", onVisibility)
-      }
+      check()
+      window.addEventListener("resize", check)
+      return () => window.removeEventListener("resize", check)
    }, [])
 
+   const mouseX = useMotionValue(0)
+   const mouseY = useMotionValue(0)
+
+   const springCfg = { stiffness: 28, damping: 26, mass: 1 }
+   const springX = useSpring(mouseX, springCfg)
+   const springY = useSpring(mouseY, springCfg)
+
+   const rotateX = useTransform(springY, [-0.5, 0.5], isTouch ? [0, 0] : [1.5, -1.5])
+   const rotateY = useTransform(springX, [-0.5, 0.5], isTouch ? [0, 0] : [-1.5, 1.5])
+   const tx = useTransform(springX, [-0.5, 0.5], isTouch ? [0, 0] : [-5, 5])
+   const ty = useTransform(springY, [-0.5, 0.5], isTouch ? [0, 0] : [-3, 3])
+
+   const handleMouseMove = (e) => {
+      if (isTouch) return
+      mouseX.set(e.clientX / window.innerWidth - 0.5)
+      mouseY.set(e.clientY / window.innerHeight - 0.5)
+   }
+
    return (
-      <canvas
-         ref={canvasRef}
-         aria-hidden="true"
-         className="fixed inset-0 w-full h-full pointer-events-none z-0"
-         style={{ opacity: 0.45 }}
-      />
+      <section
+         id="hero"
+         aria-label="Introducao"
+         className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
+         onMouseMove={handleMouseMove}
+      >
+         <HeroBackground />
+         <FloatingOrbs />
+
+         <div className="absolute inset-0 bg-gradient-to-b from-bg-deep/15 via-transparent to-bg-deep pointer-events-none" />
+
+         <motion.div
+            style={{ rotateX, rotateY, x: tx, y: ty, transformPerspective: 1400 }}
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 w-full max-w-4xl mx-auto"
+         >
+            <motion.span
+               variants={itemVariants}
+               className="text-neon-base text-xs md:text-sm font-medium tracking-widest uppercase mb-4 md:mb-6 text-glow-neon"
+            >
+               Full Stack Developer
+            </motion.span>
+
+            <motion.h1
+               variants={itemVariants}
+               className="text-[2rem] sm:text-5xl md:text-7xl font-bold text-text-primary leading-[1.15] tracking-tight mb-4 md:mb-6"
+            >
+               Arthur{" "}
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
+                  Couto
+               </span>
+            </motion.h1>
+
+            <motion.p
+               variants={itemVariants}
+               className="text-text-secondary text-sm sm:text-base md:text-xl max-w-xs sm:max-w-xl md:max-w-2xl leading-relaxed mb-8 md:mb-10"
+            >
+               Desenvolvedor full stack focado em construir{" "}
+               <span className="text-text-primary font-medium">
+                  aplicações web completas
+               </span>{" "}
+               do zero ao deploy.
+            </motion.p>
+
+            <motion.div
+               variants={itemVariants}
+               className="flex items-center gap-3 flex-wrap justify-center"
+            >
+               <a
+                  href="#projetos"
+                  aria-label="Ver projetos de Arthur Couto"
+                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-purple-base hover:bg-purple-light text-white font-medium text-sm transition-all duration-300 shadow-purple-md hover:shadow-purple-lg hover:scale-105 active:scale-[0.97]"
+               >
+                  Ver projetos
+               </a>
+
+               <a
+                  href="#contato"
+                  aria-label="Entrar em contato com Arthur Couto"
+                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-purple-dim/50 text-text-secondary hover:border-neon-base/50 hover:text-neon-base font-medium text-sm transition-all duration-300 hover:scale-105 active:scale-[0.97]"
+               >
+                  Fale comigo
+               </a>
+            </motion.div>
+         </motion.div>
+
+         <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.0, duration: 1.0 }}
+            aria-hidden="true"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+         >
+            <span className="text-text-muted text-xs tracking-widest uppercase">
+               Scroll
+            </span>
+            <motion.div
+               animate={{ y: [0, 8, 0] }}
+               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+               className="w-px h-8 bg-gradient-to-b from-purple-base to-transparent"
+            />
+         </motion.div>
+      </section>
    )
 }
