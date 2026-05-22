@@ -1,179 +1,119 @@
 "use client"
 
-import dynamic from "next/dynamic"
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { useEffect, useState } from "react"
-
-const HeroBackground = dynamic(() => import("./HeroBackground"), { ssr: false })
-
-const containerVariants = {
-   hidden:  {},
-   visible: { transition: { staggerChildren: 0.2, delayChildren: 0.55 } },
-}
-
-const itemVariants = {
-   hidden:  { opacity: 0, y: 28, filter: "blur(8px)" },
-   visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 1.0, ease: [0.22, 1, 0.36, 1] },
-   },
-}
+import { useEffect, useRef } from "react"
 
 const ORBS = [
-   { cx: "8%",  cy: "20%", size: 2, color: "#00e87a", dur: 5.2, delay: 0 },
-   { cx: "88%", cy: "15%", size: 2, color: "#a855f7", dur: 6.4, delay: 1.4 },
-   { cx: "82%", cy: "78%", size: 2, color: "#3b82f6", dur: 5.8, delay: 0.8 },
-   { cx: "12%", cy: "75%", size: 2, color: "#a855f7", dur: 6.0, delay: 2.2 },
+   { x: 0.10, y: 0.08, r: 400, color: "124,58,237", alpha: 0.022, speed: 0.00010 },
+   { x: 0.88, y: 0.30, r: 440, color: "0,232,122",  alpha: 0.014, speed: 0.00014 },
+   { x: 0.50, y: 0.72, r: 360, color: "59,130,246", alpha: 0.018, speed: 0.00009 },
 ]
 
-function FloatingOrbs() {
-   return (
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
-         {ORBS.map((orb, i) => (
-            <motion.div
-               key={i}
-               className="absolute rounded-full"
-               style={{
-                  left: orb.cx,
-                  top: orb.cy,
-                  width: orb.size,
-                  height: orb.size,
-                  backgroundColor: orb.color,
-                  boxShadow: "0 0 8px " + orb.color,
-               }}
-               animate={{ y: [0, -14, 0], opacity: [0.25, 0.7, 0.25] }}
-               transition={{
-                  duration: orb.dur,
-                  repeat: Infinity,
-                  delay: orb.delay,
-                  ease: "easeInOut",
-               }}
-            />
-         ))}
-      </div>
-   )
-}
+const LINES = [
+   { y: 0.30, speed: 0.00012, amp: 24, color: "124,58,237", alpha: 0.07 },
+   { y: 0.62, speed: 0.00010, amp: 32, color: "0,232,122",  alpha: 0.05 },
+]
 
-export default function Hero() {
-   const [isTouch, setIsTouch] = useState(false)
+const GRID = 88
+
+export default function GlobalBackground() {
+   const canvasRef = useRef(null)
 
    useEffect(() => {
-      const check = () => {
-         setIsTouch(
-            window.matchMedia("(pointer: coarse)").matches ||
-            window.innerWidth < 768
-         )
+      const canvas = canvasRef.current
+      if (!canvas) return
+
+      const ctx  = canvas.getContext("2d")
+      let raf    = null
+      let paused = false
+      let t      = 0
+      let W = 0, H = 0
+
+      const resize = () => {
+         W = canvas.width  = window.innerWidth
+         H = canvas.height = window.innerHeight
       }
-      check()
-      window.addEventListener("resize", check)
-      return () => window.removeEventListener("resize", check)
+
+      const drawGrid = () => {
+         const a = Math.sin(t * 0.0005) * 0.004 + 0.011
+         ctx.fillStyle = "rgba(124,58,237," + a + ")"
+         const cols = Math.ceil(W / GRID) + 1
+         const rows = Math.ceil(H / GRID) + 1
+         for (let c = 0; c < cols; c++) {
+            for (let r = 0; r < rows; r++) {
+               ctx.beginPath()
+               ctx.arc(c * GRID, r * GRID, 0.55, 0, Math.PI * 2)
+               ctx.fill()
+            }
+         }
+      }
+
+      const drawOrbs = () => {
+         ORBS.forEach((orb) => {
+            const ox = orb.x * W + Math.sin(t * orb.speed * 0.5) * 40
+            const oy = orb.y * H + Math.cos(t * orb.speed)       * 28
+            const a  = Math.sin(t * orb.speed * 2) * 0.005 + orb.alpha
+            const g  = ctx.createRadialGradient(ox, oy, 0, ox, oy, orb.r)
+            g.addColorStop(0,   "rgba(" + orb.color + "," + a + ")")
+            g.addColorStop(0.5, "rgba(" + orb.color + "," + (a * 0.15) + ")")
+            g.addColorStop(1,   "rgba(" + orb.color + ",0)")
+            ctx.fillStyle = g
+            ctx.beginPath()
+            ctx.arc(ox, oy, orb.r, 0, Math.PI * 2)
+            ctx.fill()
+         })
+      }
+
+      const drawLines = () => {
+         LINES.forEach((line) => {
+            const baseY  = line.y * H
+            const pts    = Math.ceil(W / 10) + 2
+            const a      = Math.sin(t * line.speed * 0.3) * 0.018 + line.alpha
+            ctx.beginPath()
+            ctx.lineWidth   = 0.45
+            ctx.strokeStyle = "rgba(" + line.color + "," + a + ")"
+            for (let i = 0; i <= pts; i++) {
+               const x = (i / pts) * W
+               const y = baseY
+                  + Math.sin(x * 0.005  + t * line.speed * 800) * line.amp
+                  + Math.sin(x * 0.0018 + t * line.speed * 400 + 1.6) * (line.amp * 0.3)
+               if (i === 0) ctx.moveTo(x, y)
+               else         ctx.lineTo(x, y)
+            }
+            ctx.stroke()
+         })
+      }
+
+      const tick = () => {
+         if (!paused) {
+            t++
+            ctx.clearRect(0, 0, W, H)
+            drawGrid()
+            drawOrbs()
+            drawLines()
+         }
+         raf = requestAnimationFrame(tick)
+      }
+
+      const onVis = () => { paused = document.hidden }
+
+      resize()
+      raf = requestAnimationFrame(tick)
+      window.addEventListener("resize", resize)
+      document.addEventListener("visibilitychange", onVis)
+
+      return () => {
+         cancelAnimationFrame(raf)
+         window.removeEventListener("resize", resize)
+         document.removeEventListener("visibilitychange", onVis)
+      }
    }, [])
 
-   const mouseX = useMotionValue(0)
-   const mouseY = useMotionValue(0)
-
-   const springCfg = { stiffness: 28, damping: 26, mass: 1 }
-   const springX = useSpring(mouseX, springCfg)
-   const springY = useSpring(mouseY, springCfg)
-
-   const rotateX = useTransform(springY, [-0.5, 0.5], isTouch ? [0, 0] : [1.5, -1.5])
-   const rotateY = useTransform(springX, [-0.5, 0.5], isTouch ? [0, 0] : [-1.5, 1.5])
-   const tx = useTransform(springX, [-0.5, 0.5], isTouch ? [0, 0] : [-5, 5])
-   const ty = useTransform(springY, [-0.5, 0.5], isTouch ? [0, 0] : [-3, 3])
-
-   const handleMouseMove = (e) => {
-      if (isTouch) return
-      mouseX.set(e.clientX / window.innerWidth - 0.5)
-      mouseY.set(e.clientY / window.innerHeight - 0.5)
-   }
-
    return (
-      <section
-         id="hero"
-         aria-label="Introducao"
-         className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
-         onMouseMove={handleMouseMove}
-      >
-         <HeroBackground />
-         <FloatingOrbs />
-
-         <div className="absolute inset-0 bg-gradient-to-b from-bg-deep/15 via-transparent to-bg-deep pointer-events-none" />
-
-         <motion.div
-            style={{ rotateX, rotateY, x: tx, y: ty, transformPerspective: 1400 }}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="relative z-10 flex flex-col items-center text-center px-4 sm:px-6 w-full max-w-4xl mx-auto"
-         >
-            <motion.span
-               variants={itemVariants}
-               className="text-neon-base text-xs md:text-sm font-medium tracking-widest uppercase mb-4 md:mb-6 text-glow-neon"
-            >
-               Full Stack Developer
-            </motion.span>
-
-            <motion.h1
-               variants={itemVariants}
-               className="text-[2rem] sm:text-5xl md:text-7xl font-bold text-text-primary leading-[1.15] tracking-tight mb-4 md:mb-6"
-            >
-               Arthur{" "}
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
-                  Couto
-               </span>
-            </motion.h1>
-
-            <motion.p
-               variants={itemVariants}
-               className="text-text-secondary text-sm sm:text-base md:text-xl max-w-xs sm:max-w-xl md:max-w-2xl leading-relaxed mb-8 md:mb-10"
-            >
-               Desenvolvedor full stack focado em construir{" "}
-               <span className="text-text-primary font-medium">
-                  aplicações web completas
-               </span>{" "}
-               do zero ao deploy.
-            </motion.p>
-
-            <motion.div
-               variants={itemVariants}
-               className="flex items-center gap-3 flex-wrap justify-center"
-            >
-               <a
-                  href="#projetos"
-                  aria-label="Ver projetos de Arthur Couto"
-                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-purple-base hover:bg-purple-light text-white font-medium text-sm transition-all duration-300 shadow-purple-md hover:shadow-purple-lg hover:scale-105 active:scale-[0.97]"
-               >
-                  Ver projetos
-               </a>
-
-               <a
-                  href="#contato"
-                  aria-label="Entrar em contato com Arthur Couto"
-                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-purple-dim/50 text-text-secondary hover:border-neon-base/50 hover:text-neon-base font-medium text-sm transition-all duration-300 hover:scale-105 active:scale-[0.97]"
-               >
-                  Fale comigo
-               </a>
-            </motion.div>
-         </motion.div>
-
-         <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.0, duration: 1.0 }}
-            aria-hidden="true"
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-         >
-            <span className="text-text-muted text-xs tracking-widest uppercase">
-               Scroll
-            </span>
-            <motion.div
-               animate={{ y: [0, 8, 0] }}
-               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-               className="w-px h-8 bg-gradient-to-b from-purple-base to-transparent"
-            />
-         </motion.div>
-      </section>
+      <canvas
+         ref={canvasRef}
+         aria-hidden="true"
+         className="fixed inset-0 w-full h-full pointer-events-none z-0"
+         style={{ opacity: 0.22 }}
+      />
    )
 }

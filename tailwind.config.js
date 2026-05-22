@@ -8,72 +8,78 @@ module.exports = {
    theme: {
       extend: {
          colors: {
-            // Fundos
             bg: {
-               deep:    "#07070f",   // fundo raiz - quase preto com toque roxo
-               surface: "#0f0f1a",   // cards e seções alternadas
-               elevated:"#16162a",   // elementos elevados
+               deep:     "#07070f",
+               surface:  "#0f0f1a",
+               elevated: "#16162a",
             },
-            // Roxo - cor principal
             purple: {
-               dim:    "#3d2a6e",    // bordas sutis, glow fraco
-               base:   "#7c3aed",    // cor base
-               light:  "#a855f7",    // hover, destaques
-               glow:   "#c084fc",    // brilho máximo
+               dim:   "#3d2a6e",
+               base:  "#7c3aed",
+               light: "#a855f7",
+               glow:  "#c084fc",
             },
-            // Verde neon - destaque principal
             neon: {
-               dim:    "#00804a",    // versão escura para bordas
-               base:   "#00e87a",    // cor base
-               bright: "#39ff9a",    // hover / glow
+               dim:    "#00804a",
+               base:   "#00e87a",
+               bright: "#39ff9a",
             },
-            // Energia visual
             blue: {
-               dim:    "#1e3a8a",
-               base:   "#3b82f6",
-               light:  "#60a5fa",
+               dim:   "#1e3a8a",
+               base:  "#3b82f6",
+               light: "#60a5fa",
             },
             red: {
-               dim:    "#7f1d1d",
-               base:   "#ef4444",
-               light:  "#f87171",
+               dim:   "#7f1d1d",
+               base:  "#ef4444",
+               light: "#f87171",
             },
-            // Texto
             text: {
-               primary:   "#f1f0ff",  // quase branco com toque frio
-               secondary: "#a09ab8",  // cinza com toque roxo
-               muted:     "#5c5875",  // muted, labels
+               primary:   "#f1f0ff",
+               secondary: "#a09ab8",
+               muted:     "#5c5875",
             },
          },
          fontFamily: {
             sans: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
          },
+         fontSize: {
+            "display":  ["clamp(2.75rem, 7vw, 5rem)",    { lineHeight: "1.08", letterSpacing: "-0.03em", fontWeight: "700" }],
+            "heading":  ["clamp(1.75rem, 4vw, 2.75rem)", { lineHeight: "1.15", letterSpacing: "-0.025em", fontWeight: "700" }],
+            "subhead":  ["clamp(1.1rem, 2vw, 1.35rem)",  { lineHeight: "1.35", letterSpacing: "-0.015em", fontWeight: "600" }],
+            "body-lg":  ["1.0625rem",                    { lineHeight: "1.75", letterSpacing: "-0.005em", fontWeight: "400" }],
+            "body":     ["0.9375rem",                    { lineHeight: "1.7",  letterSpacing: "0em",      fontWeight: "400" }],
+            "caption":  ["0.8125rem",                    { lineHeight: "1.5",  letterSpacing: "0.005em",  fontWeight: "400" }],
+            "label":    ["0.6875rem",                    { lineHeight: "1",    letterSpacing: "0.1em",    fontWeight: "500" }],
+         },
+         spacing: {
+            "section": "8rem",
+            "section-sm": "5rem",
+         },
          animation: {
-            "fade-in":     "fadeIn 0.6s ease forwards",
-            "slide-up":    "slideUp 0.7s ease forwards",
-            "glow-pulse":  "glowPulse 3s ease-in-out infinite",
+            "fade-in":    "fadeIn 0.75s cubic-bezier(0.22,1,0.36,1) forwards",
+            "slide-up":   "slideUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards",
+            "glow-pulse": "glowPulse 4s ease-in-out infinite",
          },
          keyframes: {
-            fadeIn: {
-               from: { opacity: "0" },
-               to:   { opacity: "1" },
-            },
-            slideUp: {
-               from: { opacity: "0", transform: "translateY(24px)" },
-               to:   { opacity: "1", transform: "translateY(0)" },
-            },
-            glowPulse: {
-               "0%, 100%": { opacity: "0.6" },
-               "50%":      { opacity: "1" },
-            },
+            fadeIn:    { from: { opacity: "0" },                            to: { opacity: "1" } },
+            slideUp:   { from: { opacity: "0", transform: "translateY(20px)" }, to: { opacity: "1", transform: "translateY(0)" } },
+            glowPulse: { "0%,100%": { opacity: "0.5" }, "50%": { opacity: "1" } },
          },
          boxShadow: {
-            "neon-sm":  "0 0 8px 0px rgba(0, 232, 122, 0.4)",
-            "neon-md":  "0 0 20px 2px rgba(0, 232, 122, 0.35)",
-            "neon-lg":  "0 0 40px 4px rgba(0, 232, 122, 0.25)",
-            "purple-sm":"0 0 8px 0px rgba(168, 85, 247, 0.4)",
-            "purple-md":"0 0 20px 2px rgba(168, 85, 247, 0.35)",
-            "purple-lg":"0 0 40px 4px rgba(168, 85, 247, 0.25)",
+            "neon-sm":   "0 0 10px 0px rgba(0,232,122,0.25)",
+            "neon-md":   "0 0 22px 2px rgba(0,232,122,0.18)",
+            "neon-lg":   "0 0 40px 4px rgba(0,232,122,0.14)",
+            "purple-sm": "0 0 10px 0px rgba(124,58,237,0.25)",
+            "purple-md": "0 0 22px 2px rgba(124,58,237,0.18)",
+            "purple-lg": "0 0 40px 4px rgba(124,58,237,0.14)",
+         },
+         transitionTimingFunction: {
+            "premium": "cubic-bezier(0.22, 1, 0.36, 1)",
+         },
+         transitionDuration: {
+            "hover": "220ms",
+            "enter": "750ms",
          },
       },
    },
