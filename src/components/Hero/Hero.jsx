@@ -106,8 +106,8 @@ export default function Hero() {
    return (
       <section
          id="hero"
-         aria-label="Introdução"
-         className="relative w-full h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
+         aria-label="Introducao"
+         className="relative w-full h-svh min-h-[540px] flex items-center justify-center overflow-hidden"
          onMouseMove={handleMouseMove}
       >
          <HeroBackground />

@@ -7,7 +7,7 @@ export default function PageLoader() {
    const [loading, setLoading] = useState(true)
 
    useEffect(() => {
-      const timer = setTimeout(() => setLoading(false), 900)
+      const timer = setTimeout(() => setLoading(false), 750)
       return () => clearTimeout(timer)
    }, [])
 
@@ -18,7 +18,7 @@ export default function PageLoader() {
                key="loader"
                initial={{ opacity: 1 }}
                exit={{ opacity: 0 }}
-               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                className="fixed inset-0 z-[99999] bg-bg-deep flex items-center justify-center pointer-events-none"
             >
                <motion.div

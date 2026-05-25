@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const navLinks = [
-   { label: "Sobre",      href: "#sobre",     id: "sobre" },
-   { label: "O que faco", href: "#what-i-do", id: "what-i-do" },
-   { label: "Skills",     href: "#skills",    id: "skills" },
-   { label: "Projetos",   href: "#projetos",  id: "projetos" },
-   { label: "Contato",    href: "#contato",   id: "contato" },
+   { label: "Sobre",     labelMobile: "Sobre",     href: "#sobre",    id: "sobre"     },
+   { label: "O que faco",labelMobile: "O que faco",href: "#what-i-do",id: "what-i-do" },
+   { label: "Skills",    labelMobile: "Skills",    href: "#skills",   id: "skills"    },
+   { label: "Projetos",  labelMobile: "Projetos",  href: "#projetos", id: "projetos"  },
+   { label: "Contato",   labelMobile: "Contato",   href: "#contato",  id: "contato"   },
 ]
 
 const menuVariants = {
@@ -189,12 +189,7 @@ export default function Navbar() {
                            href={link.href}
                            variants={linkVariants}
                            onClick={close}
-                           className={
-                              "flex items-center justify-between px-4 py-3 rounded-xl font-medium transition-all duration-200 group " +
-                              (active === link.id
-                                 ? "text-text-primary bg-bg-elevated"
-                                 : "text-text-secondary hover:text-text-primary hover:bg-bg-elevated")
-                           }
+                           className={"flex items-center justify-between px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group min-h-[44px] " + (active === link.id ? "text-text-primary bg-bg-elevated" : "text-text-secondary hover:text-text-primary hover:bg-bg-elevated")}
                         >
                            <span>{link.label}</span>
 

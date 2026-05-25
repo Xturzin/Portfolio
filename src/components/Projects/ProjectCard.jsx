@@ -48,9 +48,20 @@ export default function ProjectCard({ project, index, featured = false }) {
       }
    }
 
+   const handleMouseEnter = () => {
+      if (isMobile) return
+      if (cardRef.current) {
+         cardRef.current.style.transition = "transform 0.12s ease, box-shadow 0.3s ease, border-color 0.3s ease"
+      }
+   }
+
    const handleMouseLeave = () => {
+      if (isMobile) return
       tiltRef.current = { x: 0, y: 0 }
-      applyTilt()
+      if (cardRef.current) {
+         cardRef.current.style.transition = "transform 0.65s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease"
+         applyTilt()
+      }
    }
 
    const dotColor = project.isPurple ? "bg-purple-light" : "bg-neon-base"
@@ -104,6 +115,7 @@ export default function ProjectCard({ project, index, featured = false }) {
             delay: index * 0.12,
          }}
          onMouseMove={handleMouseMove}
+         onMouseEnter={handleMouseEnter}
          onMouseLeave={handleMouseLeave}
          className={"group relative rounded-3xl border overflow-hidden " + (featured ? "border-purple-dim/25" : "border-purple-dim/12") + " " + borderHover + " " + glowHover}
       >
