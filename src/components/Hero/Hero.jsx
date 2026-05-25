@@ -58,7 +58,7 @@ function FloatingOrbs() {
       </div>
    )
 }
-
+   
 export default function Hero() {
    const [isTouch, setIsTouch] = useState(false)
 
@@ -130,14 +130,14 @@ export default function Hero() {
          >
             <motion.span
                variants={itemVariants}
-               className="text-neon-base text-xs md:text-sm font-medium tracking-widest uppercase mb-4 md:mb-6 text-glow-neon"
+               className="text-neon-base text-xs md:text-sm font-medium tracking-widest uppercase mb-6 md:mb-8 text-glow-neon"
             >
                Full Stack Developer
             </motion.span>
 
             <motion.h1
                variants={itemVariants}
-               className="text-[2rem] sm:text-5xl md:text-7xl font-bold text-text-primary leading-[1.15] tracking-tight mb-4 md:mb-6"
+               className="text-[2rem] sm:text-5xl md:text-7xl font-bold text-text-primary leading-[1.04] tracking-tight mb-5 md:mb-7"
             >
                Arthur{" "}
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
@@ -147,7 +147,7 @@ export default function Hero() {
 
             <motion.p
                variants={itemVariants}
-               className="text-text-secondary text-sm sm:text-base md:text-xl max-w-xs sm:max-w-xl md:max-w-2xl leading-relaxed mb-8 md:mb-10"
+               className="text-text-secondary text-sm sm:text-base md:text-xl max-w-xs sm:max-w-lg md:max-w-xl leading-relaxed mb-10 md:mb-14"
             >
                Desenvolvedor full stack focado em construir{" "}
                <span className="text-text-primary font-medium">

@@ -16,8 +16,8 @@ const education = [
 
 export default function About() {
    return (
-      <SectionWrapper id="sobre" variant="fadeLeft" className="py-section px-6 md:px-12 max-w-6xl mx-auto">
-         <div className="flex flex-col md:flex-row gap-12 md:gap-20 items-start">
+      <SectionWrapper id="sobre" variant="fadeLeft" className="pt-20 md:pt-28 pb-28 md:pb-36 px-6 md:px-16 max-w-6xl mx-auto">
+         <div className="flex flex-col md:flex-row gap-12 md:gap-28 items-start">
 
             <motion.div
                initial={{ opacity: 0, x: -20 }}
@@ -64,7 +64,7 @@ export default function About() {
 
             <div className="flex-1 flex flex-col gap-8">
 
-               <div className="flex flex-col gap-3">
+               <div className="flex flex-col gap-4">
                   <span className="section-label">Sobre mim</span>
                   <h2>
                      Construindo do zero

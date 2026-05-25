@@ -7,10 +7,14 @@ import Projects from "@/components/Projects/Projects"
 import Contact from "@/components/Contact/Contact"
 import Footer from "@/components/shared/Footer"
 
-function Divider() {
+function Divider({ weight = "normal" }) {
+   const opacity = weight === "light"  ? "via-purple-dim/10"
+                 : weight === "strong" ? "via-purple-dim/30"
+                 : "via-purple-dim/18"
+
    return (
-      <div className="w-full px-6 md:px-12">
-         <div className="max-w-6xl mx-auto h-px bg-gradient-to-r from-transparent via-purple-dim/20 to-transparent"></div>
+      <div className="w-full px-6 md:px-16">
+         <div className={"max-w-5xl mx-auto h-px bg-gradient-to-r from-transparent " + opacity + " to-transparent"}></div>
       </div>
    )
 }
@@ -20,15 +24,15 @@ export default function Home() {
       <main>
          <Navbar />
          <Hero />
-         <Divider />
+         <Divider weight="light" />
          <About />
-         <Divider />
+         <Divider weight="normal" />
          <WhatIDo />
-         <Divider />
+         <Divider weight="light" />
          <Skills />
-         <Divider />
+         <Divider weight="strong" />
          <Projects />
-         <Divider />
+         <Divider weight="normal" />
          <Contact />
          <Footer />
       </main>

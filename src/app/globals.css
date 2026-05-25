@@ -174,8 +174,8 @@
       font-weight:    500;
       letter-spacing: -0.005em;
       transition:     border-color var(--dur-hover) var(--ease),
-                      color        var(--dur-hover) var(--ease),
-                      transform    var(--dur-hover) var(--ease);
+                     color        var(--dur-hover) var(--ease),
+                     transform    var(--dur-hover) var(--ease);
    }
 
    .btn-ghost:hover  { border-color: var(--border-neon); color: var(--color-neon-base); transform: scale(1.04); }

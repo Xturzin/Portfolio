@@ -17,12 +17,8 @@ export default function Contact() {
    }
 
    return (
-      <SectionWrapper
-         id="contato"
-         variant="scaleIn"
-         className="py-section px-6 md:px-12"
-      >
-         <div className="max-w-2xl mx-auto flex flex-col items-center text-center gap-10">
+      <SectionWrapper id="contato" variant="scaleIn" className="pt-32 md:pt-48 pb-24 md:pb-36 px-6 md:px-12">
+         <div className="max-w-xl mx-auto flex flex-col items-center text-center gap-12">
 
             {/* HEADER */}
             <div className="flex flex-col items-center gap-4">

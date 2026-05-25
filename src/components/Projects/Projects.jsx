@@ -6,8 +6,8 @@ import { projects }  from "@/data/projects"
 
 export default function Projects() {
    return (
-      <SectionWrapper id="projetos" variant="fadeRight" className="py-32 px-6 md:px-12">
-         <div className="max-w-6xl mx-auto flex flex-col gap-16">
+      <SectionWrapper id="projetos" variant="fadeRight" className="py-28 md:py-44 px-6 md:px-16">
+         <div className="max-w-5xl mx-auto flex flex-col gap-20">
 
             <div className="flex flex-col gap-2">
                <span className="text-neon-base text-xs font-medium tracking-widest uppercase">
