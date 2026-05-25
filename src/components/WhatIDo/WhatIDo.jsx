@@ -57,9 +57,9 @@ export default function WhatIDo() {
       <SectionWrapper id="what-i-do" variant="fadeUp" className="py-32 px-6 md:px-12">
          <div className="max-w-6xl mx-auto flex flex-col gap-12">
 
-            <div className="flex flex-col gap-2">
-               <span className="text-neon-base text-xs font-medium tracking-widest uppercase">O que faco</span>
-               <h2 className="text-3xl md:text-4xl font-bold text-text-primary leading-tight">
+            <div className="flex flex-col gap-4">
+               <span className="section-label">O que faco</span>
+               <h2>
                   Desenvolvimento completo,
                   <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">

@@ -111,9 +111,9 @@ export default function Skills() {
       <SectionWrapper id="skills" variant="scaleIn" className="py-28 md:py-40 px-6 md:px-16">
          <div className="max-w-6xl mx-auto flex flex-col gap-16">
 
-            <div className="flex flex-col gap-2">
-               <span className="text-neon-base text-xs font-medium tracking-widest uppercase">Stack</span>
-               <h2 className="text-3xl md:text-4xl font-bold text-text-primary leading-tight">
+            <div className="flex flex-col gap-4">
+               <span className="section-label">Stack</span>
+               <h2>
                   Tecnologias que
                   <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
@@ -124,7 +124,7 @@ export default function Skills() {
 
             <div className="flex flex-col gap-5">
                <div className="flex items-center gap-4">
-                  <span className="text-text-muted text-xs uppercase tracking-wider whitespace-nowrap">Core Stack</span>
+                  <span className="text-label text-text-muted uppercase tracking-wide whitespace-nowrap">Core Stack</span>
                   <div className="flex-1 h-px bg-purple-dim/20"></div>
                </div>
                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -136,7 +136,7 @@ export default function Skills() {
 
             <div className="flex flex-col gap-5">
                <div className="flex items-center gap-4">
-                  <span className="text-text-muted text-xs uppercase tracking-wider whitespace-nowrap">Outras Tecnologias</span>
+                  <span className="text-label text-text-muted uppercase tracking-wide whitespace-nowrap">Outras Tecnologias</span>
                   <div className="flex-1 h-px bg-purple-dim/20"></div>
                </div>
                <div className="flex flex-wrap gap-3">

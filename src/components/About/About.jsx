@@ -43,7 +43,7 @@ export default function About() {
                   <div className="flex flex-col gap-3.5">
                      {info.map((item) => (
                         <div key={item.label} className="flex flex-col gap-0.5">
-                           <span className="text-label text-text-muted uppercase tracking-widest">{item.label}</span>
+                           <span className="text-label text-text-muted uppercase tracking-widest">{item.label}</span><span className="text-label text-text-muted uppercase tracking-wide">{item.label}</span>
                            <span className="text-caption text-text-secondary font-medium">{item.value}</span>
                         </div>
                      ))}
@@ -53,8 +53,8 @@ export default function About() {
 
                   <div className="flex items-center gap-2">
                      <span className="relative flex h-1.5 w-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-base opacity-60"></span>
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-neon-base"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-base opacity-30"></span>
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-neon-base opacity-80"></span>
                      </span>
                      <span className="text-neon-base text-label tracking-wide">Disponivel para projetos</span>
                   </div>
@@ -85,7 +85,7 @@ export default function About() {
                </div>
 
                <div className="flex flex-col gap-3">
-                  <span className="text-label text-text-muted uppercase tracking-widest">Formacao</span>
+                  <span className="text-label text-text-muted uppercase tracking-widest">Formacao</span><span className="text-label text-text-muted uppercase tracking-wide">Formacao</span>
                   <div className="flex flex-col gap-3">
                      {education.map((item) => (
                         <div key={item.course} className="flex items-start gap-3">
