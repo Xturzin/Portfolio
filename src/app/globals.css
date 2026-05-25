@@ -54,33 +54,33 @@
    }
 
    h1 {
-      font-size:      clamp(2.75rem, 7vw, 5rem);
+      font-size:      clamp(3rem, 7.5vw, 5.5rem);
       font-weight:    700;
-      line-height:    1.08;
-      letter-spacing: -0.03em;
+      line-height:    1.04;
+      letter-spacing: -0.035em;
       color:          var(--color-text-primary);
    }
 
    h2 {
       font-size:      clamp(1.75rem, 4vw, 2.75rem);
       font-weight:    700;
-      line-height:    1.15;
-      letter-spacing: -0.025em;
+      line-height:    1.18;
+      letter-spacing: -0.028em;
       color:          var(--color-text-primary);
    }
 
    h3 {
-      font-size:      clamp(1.1rem, 2vw, 1.35rem);
+      font-size:      clamp(1.05rem, 2vw, 1.25rem);
       font-weight:    600;
-      line-height:    1.35;
-      letter-spacing: -0.015em;
+      line-height:    1.4;
+      letter-spacing: -0.018em;
       color:          var(--color-text-primary);
    }
 
    p {
       font-size:      0.9375rem;
-      line-height:    1.75;
-      letter-spacing: -0.003em;
+      line-height:    1.85;
+      letter-spacing: -0.006em;
       color:          var(--color-text-secondary);
    }
 
@@ -119,9 +119,10 @@
    .section-label {
       font-size:      0.6875rem;
       font-weight:    500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color:          var(--color-neon-base);
+      opacity:        0.85;
    }
 
    .card-base {
@@ -130,9 +131,10 @@
       background:     rgba(15,15,26,0.80);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      line-height:    1.78;
       transition:     border-color var(--dur-hover) var(--ease),
-                      box-shadow   var(--dur-hover) var(--ease),
-                      transform    var(--dur-hover) var(--ease);
+                     box-shadow   var(--dur-hover) var(--ease),
+                     transform    var(--dur-hover) var(--ease);
    }
 
    .card-base:hover {
