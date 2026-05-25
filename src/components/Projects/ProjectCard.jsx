@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react"
 import { motion } from "framer-motion"
 
-export default function ProjectCard({ project, index }) {
+export default function ProjectCard({ project, index, featured = false }) {
    const cardRef   = useRef(null)
    const tiltRef   = useRef({ x: 0, y: 0 })
    const rafRef    = useRef(null)
@@ -60,9 +60,13 @@ export default function ProjectCard({ project, index }) {
       ? "hover:border-purple-base/50"
       : "hover:border-neon-base/40"
 
-   const glowHover = project.isPurple
-      ? "hover:shadow-[0_8px_60px_rgba(124,58,237,0.18)]"
-      : "hover:shadow-[0_8px_60px_rgba(0,232,122,0.12)]"
+   const glowHover   = featured
+      ? (project.isPurple
+         ? "hover:shadow-[0_8px_80px_rgba(124,58,237,0.22)]"
+         : "hover:shadow-[0_8px_80px_rgba(0,232,122,0.16)]")
+      : (project.isPurple
+         ? "hover:shadow-[0_4px_40px_rgba(124,58,237,0.12)]"
+         : "hover:shadow-[0_4px_40px_rgba(0,232,122,0.08)]")
 
    const gradFrom = project.isPurple
       ? "from-purple-base/8"
@@ -101,12 +105,7 @@ export default function ProjectCard({ project, index }) {
          }}
          onMouseMove={handleMouseMove}
          onMouseLeave={handleMouseLeave}
-         className={
-            "group relative rounded-3xl border border-purple-dim/20 overflow-hidden will-change-transform " +
-            borderHover +
-            " " +
-            glowHover
-         }
+         className={"group relative rounded-3xl border overflow-hidden will-change-transform " + (featured ? "border-purple-dim/25" : "border-purple-dim/12") + " " + borderHover + " " + glowHover}
       >
          {/* background */}
          <div
@@ -127,8 +126,7 @@ export default function ProjectCard({ project, index }) {
             }
          />
 
-         <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row gap-10 md:gap-16 items-start">
-
+         <div className={"relative z-10 flex flex-col md:flex-row items-start " + (featured ? "p-10 md:p-16 gap-12 md:gap-20" : "p-7 md:p-10 gap-8 md:gap-14")}>
             {/* LEFT */}
             <div className="flex-1 flex flex-col gap-6">
 
@@ -143,7 +141,7 @@ export default function ProjectCard({ project, index }) {
                      </span>
                   </div>
 
-                  <h3 className="text-text-primary font-bold text-2xl md:text-3xl">
+                  <h3 className={"text-text-primary font-bold tracking-tight " + (featured ? "text-3xl md:text-4xl" : "text-xl md:text-2xl")}>
                      {project.name}
                   </h3>
 
@@ -198,7 +196,7 @@ export default function ProjectCard({ project, index }) {
             </div>
 
             {/* RIGHT MOCKUP */}
-            <div className="w-full md:w-72 lg:w-80 flex-shrink-0">
+            <div className={"w-full flex-shrink-0 " + (featured ? "md:w-80 lg:w-[26rem]" : "md:w-60 lg:w-72")}>
 
                <div className={
                   "relative rounded-2xl border border-purple-dim/20 bg-bg-elevated/60 backdrop-blur-sm overflow-hidden aspect-video transition-all duration-500 " +

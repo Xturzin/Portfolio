@@ -9,22 +9,31 @@ export default function Projects() {
       <SectionWrapper id="projetos" variant="fadeRight" className="py-28 md:py-44 px-6 md:px-16">
          <div className="max-w-5xl mx-auto flex flex-col gap-20">
 
-            <div className="flex flex-col gap-2">
-               <span className="text-neon-base text-xs font-medium tracking-widest uppercase">
-                  Projetos
-               </span>
-               <h2 className="text-3xl md:text-4xl font-bold text-text-primary leading-tight">
+            <div className="flex flex-col gap-4">
+               <div className="flex items-center gap-4">
+                  <span className="section-label">Projetos</span>
+                  <span className="text-text-muted text-label tracking-widest">0{projects.length}</span>
+               </div>
+               <h2>
                   Produtos que
                   <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
                      estao no ar
                   </span>
                </h2>
+               <p className="text-caption text-text-muted max-w-sm" style={{ marginTop: "0.25rem" }}>
+                  Aplicacoes completas, do desenvolvimento ao deploy em producao.
+               </p>
             </div>
 
             <div className="flex flex-col gap-6">
                {projects.map((project, index) => (
-                  <ProjectCard key={project.id} project={project} index={index} />
+                  <ProjectCard
+                     key={project.id}
+                     project={project}
+                     index={index}
+                     featured={index === 0}
+                  />
                ))}
             </div>
 
