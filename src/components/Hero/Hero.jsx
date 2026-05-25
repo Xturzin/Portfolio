@@ -163,7 +163,7 @@ export default function Hero() {
                <a
                   href="#projetos"
                   aria-label="Ver projetos de Arthur Couto"
-                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-purple-base hover:bg-purple-light text-white font-medium text-sm transition-all duration-300 shadow-purple-md hover:shadow-purple-lg hover:scale-105 active:scale-[0.97]"
+                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-purple-base hover:bg-purple-light text-white font-medium text-sm transition-all duration-300 shadow-purple-md hover:shadow-purple-lg hover:scale-[1.02] active:scale-[0.98]"
                >
                   Ver projetos
                </a>
@@ -171,7 +171,7 @@ export default function Hero() {
                <a
                   href="#contato"
                   aria-label="Entrar em contato com Arthur Couto"
-                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-purple-dim/50 text-text-secondary hover:border-neon-base/50 hover:text-neon-base font-medium text-sm transition-all duration-300 hover:scale-105 active:scale-[0.97]"
+                  className="px-5 md:px-6 py-2.5 md:py-3 rounded-full border border-purple-dim/50 text-text-secondary hover:border-neon-base/50 hover:text-neon-base font-medium text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                >
                   Fale comigo
                </a>

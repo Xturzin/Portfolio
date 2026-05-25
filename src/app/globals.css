@@ -139,8 +139,8 @@
 
    .card-base:hover {
       border-color: var(--border-visible);
-      box-shadow:   var(--glow-purple);
-      transform:    translateY(-2px);
+      box-shadow:   0 0 18px rgba(124,58,237,0.12);
+      transform:    translateY(-1px);
    }
 
    .btn-primary {
@@ -159,8 +159,8 @@
                        transform   var(--dur-hover) var(--ease);
    }
 
-   .btn-primary:hover  { background: var(--color-purple-light); box-shadow: var(--glow-purple); transform: scale(1.04); }
-   .btn-primary:active { transform: scale(0.97); }
+   .btn-primary:hover  { background: var(--color-purple-light); box-shadow: var(--glow-purple); transform: scale(1.02); }
+   .btn-primary:active { transform: scale(0.98); }
 
    .btn-ghost {
       display:        inline-flex;
@@ -178,8 +178,18 @@
                      transform    var(--dur-hover) var(--ease);
    }
 
-   .btn-ghost:hover  { border-color: var(--border-neon); color: var(--color-neon-base); transform: scale(1.04); }
-   .btn-ghost:active { transform: scale(0.97); }
+   .btn-ghost:hover  { border-color: var(--border-neon); color: var(--color-neon-base); transform: scale(1.02); }
+   .btn-ghost:active { transform: scale(0.98); }
+
+   .global-bg-canvas {
+      opacity: 0.22;
+   }
+
+   @media (max-width: 767px) {
+      .global-bg-canvas {
+         opacity: 0.12;
+      }
+   }
 }
 
 @media (pointer: fine)   { * { cursor: none !important; } }

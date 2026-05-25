@@ -105,7 +105,7 @@ export default function ProjectCard({ project, index, featured = false }) {
          }}
          onMouseMove={handleMouseMove}
          onMouseLeave={handleMouseLeave}
-         className={"group relative rounded-3xl border overflow-hidden will-change-transform " + (featured ? "border-purple-dim/25" : "border-purple-dim/12") + " " + borderHover + " " + glowHover}
+         className={"group relative rounded-3xl border overflow-hidden " + (featured ? "border-purple-dim/25" : "border-purple-dim/12") + " " + borderHover + " " + glowHover}
       >
          {/* background */}
          <div

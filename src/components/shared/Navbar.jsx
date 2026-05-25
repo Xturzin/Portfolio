@@ -85,7 +85,7 @@ export default function Navbar() {
    }, [menuOpen])
 
    const headerClass = scrolled
-      ? "bg-bg-deep/75 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_1px_30px_rgba(0,0,0,0.35)]"
+      ? "bg-bg-deep/85 backdrop-blur-xl border-b border-white/[0.05] shadow-[0_1px_20px_rgba(0,0,0,0.25)]"
       : "bg-transparent border-b border-transparent"
 
    const close = () => setMenuOpen(false)

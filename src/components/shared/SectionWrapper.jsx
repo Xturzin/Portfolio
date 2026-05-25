@@ -4,20 +4,20 @@ import { motion } from "framer-motion"
 
 const sectionVariants = {
    fadeUp: {
-      hidden:  { opacity: 0, y: 40 },
+      hidden:  { opacity: 0, y: 18 },
       visible: { opacity: 1, y: 0  },
    },
    fadeLeft: {
-      hidden:  { opacity: 0, x: -40 },
+      hidden:  { opacity: 0, x: -18 },
       visible: { opacity: 1, x: 0   },
    },
    fadeRight: {
-      hidden:  { opacity: 0, x: 40 },
+      hidden:  { opacity: 0, x: 18 },
       visible: { opacity: 1, x: 0  },
    },
    scaleIn: {
-      hidden:  { opacity: 0, scale: 0.97 },
-      visible: { opacity: 1, scale: 1    },
+      hidden:  { opacity: 0, scale: 0.985 },
+      visible: { opacity: 1, scale: 1     },
    },
 }
 
@@ -42,11 +42,11 @@ export function StaggerItem({ children, className = "" }) {
    return (
       <motion.div
          variants={{
-            hidden:  { opacity: 0, y: 20 },
+            hidden:  { opacity: 0, y: 10 },
             visible: {
                opacity: 1,
                y: 0,
-               transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+               transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
             },
          }}
          className={className}
