@@ -26,7 +26,7 @@ export default function About() {
                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
                className="w-full md:w-72 flex-shrink-0"
             >
-               <div className="card-base rounded-2xl p-6 flex flex-col gap-5">
+               <div className="card-base rounded-2xl p-6 flex flex-col gap-5" style={{ boxShadow: "inset 1px 0 0 rgba(124,58,237,0.12), inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 12px rgba(0,0,0,0.25)" }}>
 
                   <div className="flex items-center gap-3">
                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-base to-neon-dim flex items-center justify-center font-bold text-xs text-white flex-shrink-0">

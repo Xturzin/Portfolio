@@ -85,7 +85,7 @@ export default function Navbar() {
    }, [menuOpen])
 
    const headerClass = scrolled
-      ? "bg-bg-deep/85 backdrop-blur-xl border-b border-white/[0.05] shadow-[0_1px_20px_rgba(0,0,0,0.25)]"
+      ? "bg-bg-deep/80 backdrop-blur-xl border-b border-white/[0.04] shadow-[0_1px_24px_rgba(0,0,0,0.30),inset_0_1px_0_rgba(255,255,255,0.04)]"
       : "bg-transparent border-b border-transparent"
 
    const close = () => setMenuOpen(false)
@@ -181,7 +181,7 @@ export default function Navbar() {
                      initial="hidden"
                      animate="visible"
                      exit="exit"
-                     className="fixed top-16 left-4 right-4 z-50 md:hidden rounded-2xl border border-purple-dim/25 bg-bg-surface/95 backdrop-blur-md p-6 flex flex-col gap-2"
+                     className="fixed top-16 left-4 right-4 z-50 md:hidden rounded-2xl border border-purple-dim/20 bg-bg-surface/90 p-6 flex flex-col gap-2" style={{ backdropFilter: "blur(20px) saturate(1.6)", WebkitBackdropFilter: "blur(20px) saturate(1.6)", boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)" }}
                   >
                      {navLinks.map((link) => (
                         <motion.a

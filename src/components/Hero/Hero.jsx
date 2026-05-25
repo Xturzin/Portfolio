@@ -113,7 +113,10 @@ export default function Hero() {
          <HeroBackground />
          <FloatingOrbs />
 
-         <div className="absolute inset-0 bg-gradient-to-b from-bg-deep/15 via-transparent to-bg-deep pointer-events-none" />
+         <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-b from-bg-deep/20 via-transparent to-bg-deep"></div>
+            <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(7,7,15,0.55) 100%)" }}></div>
+         </div>
 
          <motion.div
             style={{
@@ -190,10 +193,10 @@ export default function Hero() {
             </span>
 
             <motion.div
-               animate={{ y: [0, 8, 0] }}
-               transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+               animate={{ y: [0, 6, 0], opacity: [0.5, 1, 0.5] }}
+               transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
                className="w-px h-8 bg-gradient-to-b from-purple-base to-transparent"
-            />
+            ></motion.div>
          </motion.div>
       </section>
    )
