@@ -79,8 +79,38 @@ export default function Navbar() {
 
    useEffect(() => {
       document.body.style.overflow = menuOpen ? "hidden" : ""
+
+      if (!menuOpen) return
+
+      const handleKeyDown = (e) => {
+         if (e.key === "Escape") {
+            setMenuOpen(false)
+            return
+         }
+         if (e.key !== "Tab") return
+
+         const menuEl = document.getElementById("mobile-menu")
+         if (!menuEl) return
+
+         const focusable = menuEl.querySelectorAll(
+            "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"
+         )
+         const first = focusable[0]
+         const last  = focusable[focusable.length - 1]
+
+         if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault()
+            last.focus()
+         } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault()
+            first.focus()
+         }
+      }
+
+      document.addEventListener("keydown", handleKeyDown)
       return () => {
          document.body.style.overflow = ""
+         document.removeEventListener("keydown", handleKeyDown)
       }
    }, [menuOpen])
 
@@ -177,6 +207,7 @@ export default function Navbar() {
                   />
 
                   <motion.div
+                     id="mobile-menu"
                      variants={menuVariants}
                      initial="hidden"
                      animate="visible"

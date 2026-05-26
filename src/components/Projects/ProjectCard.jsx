@@ -144,7 +144,7 @@ export default function ProjectCard({ project, index, featured = false }) {
 
                <div className="flex flex-col gap-3">
                   <div className="flex items-center gap-2.5">
-                     <span className="relative flex h-1.5 w-1.5">
+                     <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
                         <span className={"animate-ping absolute inline-flex h-full w-full rounded-full opacity-25 " + pingColor}></span>
                         <span className={"relative inline-flex rounded-full h-1.5 w-1.5 opacity-75 " + dotColor}></span>
                      </span>

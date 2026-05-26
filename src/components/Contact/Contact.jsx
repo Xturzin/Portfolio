@@ -66,10 +66,12 @@ export default function Contact() {
 
                   <button
                      onClick={handleCopy}
-                     aria-label="Copiar email"
+                     aria-label={copied ? "Email copiado" : "Copiar email"}
                      className="flex-shrink-0 px-2.5 py-1 rounded-lg border border-purple-dim/25 text-text-muted hover:text-text-secondary hover:border-purple-dim/50 transition-all duration-[220ms] text-label tracking-wide"
                   >
-                     {copied ? "Copiado" : "Copiar"}
+                     <span aria-live="polite" aria-atomic="true">
+                        {copied ? "Copiado" : "Copiar"}
+                     </span>
                   </button>
 
                </div>

@@ -52,7 +52,7 @@ export default function About() {
                   <div className="h-px bg-purple-dim/20"></div>
 
                   <div className="flex items-center gap-2">
-                     <span className="relative flex h-1.5 w-1.5">
+                     <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-base opacity-30"></span>
                         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-neon-base opacity-80"></span>
                      </span>

@@ -4,10 +4,10 @@ export const projects = [
       name:        "Fora Perrengue",
       tagline:     "Organizacao pessoal inteligente",
       description: "Aplicacao web completa para organizacao pessoal. Interface limpa, experiencia fluida e foco total na produtividade do usuario no dia a dia.",
-      url:         "https://test-perrengue.vercel.app",
+      url:         "https://fora-perrengue.vercel.app",
       github:      null,
-      displayUrl:  "test-perrengue.vercel.app",
-      stack:       ["React", "Node.js", "JavaScript"],
+      displayUrl:  "fora-perrengue.vercel.app",
+      stack:       ["JavaScript", "CSS", "HTML"],
       isPurple:    true,
    },
    {
@@ -18,7 +18,7 @@ export const projects = [
       url:         "https://vamos-fazer.vercel.app",
       github:      null,
       displayUrl:  "vamos-fazer.vercel.app",
-      stack:       ["React", "JavaScript", "CSS"],
+      stack:       ["JavaScript", "CSS", "HTML"],
       isPurple:    false,
    },
 ]

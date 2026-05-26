@@ -13,8 +13,8 @@ function Divider({ weight = "normal" }) {
                  : "via-purple-dim/18"
 
    return (
-      <div className="w-full px-6 md:px-16">
-         <div className={"max-w-5xl mx-auto h-px bg-gradient-to-r from-transparent " + opacity + " to-transparent"}></div>
+      <div className="w-full px-6 md:px-16" aria-hidden="true">
+         <hr className={"border-none max-w-5xl mx-auto h-px bg-gradient-to-r from-transparent " + opacity + " to-transparent"} />
       </div>
    )
 }

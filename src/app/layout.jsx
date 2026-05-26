@@ -52,6 +52,13 @@ export default function RootLayout({ children }) {
    return (
       <html lang="pt-BR" className={spaceGrotesk.variable}>
          <body className="bg-bg-deep text-text-primary antialiased">
+            <a
+               href="#sobre"
+               className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-neon-base focus:text-bg-deep focus:font-medium focus:text-sm focus:outline-none"
+            >
+               Pular para o conteúdo
+            </a>
+
             <GlobalBackground />
             <PageLoader />
             <CustomCursor />
