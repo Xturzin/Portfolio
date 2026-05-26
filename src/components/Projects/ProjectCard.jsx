@@ -93,7 +93,7 @@ export default function ProjectCard({ project, index, featured = false }) {
 
    const mockupAccent = project.isPurple
       ? "from-purple-base to-purple-dim"
-      : "from-neon-dim to-bg-elevated"
+      : "from-neon-base/25 to-bg-elevated"
 
    const letterColor = project.isPurple
       ? "text-purple-glow"

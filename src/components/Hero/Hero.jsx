@@ -133,7 +133,7 @@ export default function Hero() {
          >
             <motion.span
                variants={itemVariants}
-               className="text-neon-base text-xs md:text-sm font-medium tracking-widest uppercase mb-6 md:mb-8 text-glow-neon"
+               className="text-neon-base text-xs md:text-sm font-medium tracking-widest uppercase mb-6 md:mb-8"
             >
                Full Stack Developer
             </motion.span>

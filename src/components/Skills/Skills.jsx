@@ -89,19 +89,6 @@ function CoreCard({ tech, index }) {
          </p>
 
          <div className={"relative z-10 h-px w-full bg-gradient-to-r from-transparent transition-all duration-500 " + (hovered ? "via-purple-base/40 to-transparent opacity-100" : "via-purple-dim/20 to-transparent opacity-60")}></div>
-
-         <motion.div
-            animate={{ x: hovered ? 0 : -4, opacity: hovered ? 1 : 0 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-10 flex items-center gap-1.5 text-text-muted text-xs"
-         >
-            <span>Core</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-               <path d="M5 12h14"></path>
-               <path d="M12 5l7 7-7 7"></path>
-            </svg>
-         </motion.div>
-
       </motion.div>
    )
 }
