@@ -43,7 +43,7 @@ export default function About() {
                   <div className="flex flex-col gap-3.5">
                      {info.map((item) => (
                         <div key={item.label} className="flex flex-col gap-0.5">
-                           <span className="text-label text-text-muted uppercase tracking-widest">{item.label}</span>
+                           <span className="text-label text-text-muted">{item.label}</span>
                            <span className="text-caption text-text-secondary font-medium">{item.value}</span>
                         </div>
                      ))}
@@ -69,7 +69,7 @@ export default function About() {
                   <h2>
                      Construindo do zero
                      <br />
-                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
+                     <span className="text-text-primary">
                         ao deploy
                      </span>
                   </h2>
@@ -85,7 +85,7 @@ export default function About() {
                </div>
 
                <div className="flex flex-col gap-3">
-                  <span className="text-label text-text-muted uppercase tracking-widest">Formacao</span>
+                  <span className="text-label text-text-muted">Formacao</span>
                   <div className="flex flex-col gap-3">
                      {education.map((item) => (
                         <div key={item.course} className="flex items-start gap-3">

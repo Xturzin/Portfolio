@@ -103,7 +103,7 @@ export default function Skills() {
                <h2>
                   Tecnologias que
                   <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
+                  <span className="text-text-primary">
                      uso no dia a dia
                   </span>
                </h2>

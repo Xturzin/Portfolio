@@ -62,7 +62,7 @@ export default function WhatIDo() {
                <h2>
                   Desenvolvimento completo,
                   <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
+                  <span className="text-text-primary">
                      do inicio ao fim
                   </span>
                </h2>

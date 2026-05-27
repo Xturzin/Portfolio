@@ -19,9 +19,7 @@ export default function ProjectCard({ project, index, featured = false }) {
 
    const applyTilt = () => {
       if (!cardRef.current) return
-
       const { x, y } = tiltRef.current
-
       cardRef.current.style.transform =
          `perspective(1200px) rotateX(${x}deg) rotateY(${y}deg)`
    }
@@ -31,13 +29,12 @@ export default function ProjectCard({ project, index, featured = false }) {
       if (!cardRef.current) return
 
       const rect = cardRef.current.getBoundingClientRect()
-
       const cx = (e.clientX - rect.left) / rect.width - 0.5
       const cy = (e.clientY - rect.top) / rect.height - 0.5
 
       tiltRef.current = {
-         x: cy * -5,
-         y: cx * 5,
+         x: cy * -2.5,
+         y: cx * 2.5,
       }
 
       if (!rafRef.current) {
@@ -71,13 +68,13 @@ export default function ProjectCard({ project, index, featured = false }) {
       ? "hover:border-purple-base/50"
       : "hover:border-neon-base/40"
 
-   const glowHover   = featured
+   const glowHover = featured
       ? (project.isPurple
-         ? "hover:shadow-[0_8px_80px_rgba(124,58,237,0.22)]"
-         : "hover:shadow-[0_8px_80px_rgba(0,232,122,0.16)]")
-      : (project.isPurple
          ? "hover:shadow-[0_4px_40px_rgba(124,58,237,0.12)]"
-         : "hover:shadow-[0_4px_40px_rgba(0,232,122,0.08)]")
+         : "hover:shadow-[0_4px_40px_rgba(0,232,122,0.10)]")
+      : (project.isPurple
+         ? "hover:shadow-[0_2px_20px_rgba(124,58,237,0.06)]"
+         : "hover:shadow-[0_2px_20px_rgba(0,232,122,0.05)]")
 
    const gradFrom = project.isPurple
       ? "from-purple-base/8"
@@ -119,7 +116,6 @@ export default function ProjectCard({ project, index, featured = false }) {
          onMouseLeave={handleMouseLeave}
          className={"group relative rounded-3xl border overflow-hidden " + (featured ? "border-purple-dim/25" : "border-purple-dim/12") + " " + borderHover + " " + glowHover}
       >
-         {/* background */}
          <div
             className={
                "absolute inset-0 bg-gradient-to-br " +
@@ -139,7 +135,6 @@ export default function ProjectCard({ project, index, featured = false }) {
          />
 
          <div className={"relative z-10 flex flex-col md:flex-row items-start " + (featured ? "p-10 md:p-16 gap-12 md:gap-20" : "p-7 md:p-10 gap-8 md:gap-14")}>
-            {/* LEFT */}
             <div className="flex-1 flex flex-col gap-6">
 
                <div className="flex flex-col gap-3">
@@ -177,7 +172,6 @@ export default function ProjectCard({ project, index, featured = false }) {
                   ))}
                </div>
 
-               {/* CTA */}
                <div className="flex items-center gap-3 pt-2">
 
                   <a
@@ -198,16 +192,15 @@ export default function ProjectCard({ project, index, featured = false }) {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Ver código de ${project.name} no GitHub`}
+                        aria-label={`Ver codigo de ${project.name} no GitHub`}
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium border border-purple-dim/30 text-text-muted hover:border-purple-base/40 hover:text-text-secondary transition-all duration-300 hover:scale-105 active:scale-[0.97]"
                      >
-                        <span>Código</span>
+                        <span>Codigo</span>
                      </a>
                   )}
                </div>
             </div>
 
-            {/* RIGHT MOCKUP */}
             <div className={"w-full flex-shrink-0 " + (featured ? "md:w-80 lg:w-[26rem]" : "md:w-60 lg:w-72")}>
 
                <div className={

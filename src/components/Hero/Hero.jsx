@@ -2,33 +2,27 @@
 
 import dynamic from "next/dynamic"
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-import { useEffect, useState } from "react"
 
 const HeroBackground = dynamic(() => import("./HeroBackground"), { ssr: false })
 
 const containerVariants = {
    hidden: {},
-   visible: { transition: { staggerChildren: 0.2, delayChildren: 0.55 } },
+   visible: { transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
 }
 
 const itemVariants = {
-   hidden: { opacity: 0, y: 28, filter: "blur(8px)" },
+   hidden: { opacity: 0, y: 16 },
    visible: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 1.0, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
    },
 }
 
 const ORBS = [
-   { cx: "15%", cy: "25%", size: 1.5, color: "#00e87a", dur: 7.5, delay: 0   },
-   { cx: "80%", cy: "18%", size: 1.5, color: "#a855f7", dur: 9.0, delay: 1.4 },
-   { cx: "65%", cy: "72%", size: 1.5, color: "#3b82f6", dur: 8.2, delay: 0.9 },
-   { cx: "28%", cy: "68%", size: 1.5, color: "#00e87a", dur: 9.6, delay: 2.4 },
-   { cx: "90%", cy: "55%", size: 1.5, color: "#c084fc", dur: 8.0, delay: 0.5 },
-   { cx: "8%",  cy: "52%", size: 1.5, color: "#3b82f6", dur: 7.8, delay: 1.9 },
-   { cx: "50%", cy: "88%", size: 1.5, color: "#a855f7", dur: 8.6, delay: 1.1 },
+   { cx: "12%", cy: "20%", size: 1.5, color: "#00e87a", dur: 9.0, delay: 0 },
+   { cx: "82%", cy: "15%", size: 1.5, color: "#a855f7", dur: 10.0, delay: 1.8 },
+   { cx: "55%", cy: "78%", size: 1.5, color: "#3b82f6", dur: 9.5, delay: 0.9 },
 ]
 
 function FloatingOrbs() {
@@ -58,17 +52,8 @@ function FloatingOrbs() {
       </div>
    )
 }
-   
+
 export default function Hero() {
-   const [isTouch, setIsTouch] = useState(false)
-
-   useEffect(() => {
-      const touch =
-         window.matchMedia("(pointer: coarse)").matches ||
-         window.innerWidth < 768
-      setIsTouch(touch)
-   }, [])
-
    const mouseX = useMotionValue(0)
    const mouseY = useMotionValue(0)
 
@@ -76,29 +61,10 @@ export default function Hero() {
    const springX = useSpring(mouseX, springCfg)
    const springY = useSpring(mouseY, springCfg)
 
-   const rotateX = useTransform(
-      springY,
-      [-0.5, 0.5],
-      isTouch ? [0, 0] : [0.8, -0.8]
-   )
-   const rotateY = useTransform(
-      springX,
-      [-0.5, 0.5],
-      isTouch ? [0, 0] : [-0.8, 0.8]
-   )
-   const tx = useTransform(
-      springX,
-      [-0.5, 0.5],
-      isTouch ? [0, 0] : [-3, 3]
-   )
-   const ty = useTransform(
-      springY,
-      [-0.5, 0.5],
-      isTouch ? [0, 0] : [-2, 2]
-   )
+   const tx = useTransform(springX, [-0.5, 0.5], [-3, 3])
+   const ty = useTransform(springY, [-0.5, 0.5], [-2, 2])
 
    const handleMouseMove = (e) => {
-      if (isTouch) return
       mouseX.set(e.clientX / window.innerWidth - 0.5)
       mouseY.set(e.clientY / window.innerHeight - 0.5)
    }
@@ -119,13 +85,7 @@ export default function Hero() {
          </div>
 
          <motion.div
-            style={{
-               rotateX,
-               rotateY,
-               x: tx,
-               y: ty,
-               transformPerspective: 1400,
-            }}
+            style={{ x: tx, y: ty }}
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -154,7 +114,7 @@ export default function Hero() {
             >
                Desenvolvedor full stack focado em construir{" "}
                <span className="text-text-primary font-medium">
-                  aplicações web completas
+                  aplicacoes web completas
                </span>{" "}
                do zero ao deploy.
             </motion.p>
@@ -184,7 +144,7 @@ export default function Hero() {
          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 2.0, duration: 1.0 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
             aria-hidden="true"
             className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
          >
