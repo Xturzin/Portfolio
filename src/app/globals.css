@@ -227,7 +227,6 @@
    }
 }
 
-@media (pointer: fine)   { * { cursor: none !important; } }
 @media (pointer: coarse) { * { cursor: auto !important; } }
 
 * { -webkit-overflow-scrolling: touch; }

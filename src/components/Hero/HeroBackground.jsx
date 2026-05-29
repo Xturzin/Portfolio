@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useMemo, useEffect, useState } from "react"
+import { useRef, useMemo, useEffect, Component } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 
 const vertexShader = `
@@ -86,11 +86,16 @@ function AuroraPlane() {
    }), [])
 
    useEffect(() => {
+      window.__auroraMouseRef = mouseRef
+
       const onVisibility = () => {
          pausedRef.current = document.hidden
       }
       document.addEventListener("visibilitychange", onVisibility)
-      return () => document.removeEventListener("visibilitychange", onVisibility)
+      return () => {
+         document.removeEventListener("visibilitychange", onVisibility)
+         window.__auroraMouseRef = null
+      }
    }, [])
 
    useFrame(({ clock }) => {
@@ -105,10 +110,6 @@ function AuroraPlane() {
          targetRef.current.y * 0.5,
       ]
    })
-
-   if (typeof window !== "undefined") {
-      window.__auroraMouseRef = mouseRef
-   }
 
    return (
       <mesh ref={meshRef}>
@@ -128,11 +129,23 @@ function StaticFallback() {
    )
 }
 
-export default function HeroBackground() {
-   const [webglFailed, setWebglFailed] = useState(false)
+class CanvasErrorBoundary extends Component {
+   constructor(props) {
+      super(props)
+      this.state = { failed: false }
+   }
+   static getDerivedStateFromError() {
+      return { failed: true }
+   }
+   render() {
+      if (this.state.failed) return <StaticFallback />
+      return this.props.children
+   }
+}
 
+export default function HeroBackground() {
    const handleMouseMove = (e) => {
-      if (typeof window !== "undefined" && window.__auroraMouseRef) {
+      if (window.__auroraMouseRef) {
          window.__auroraMouseRef.current = {
             x:  (e.clientX / window.innerWidth  - 0.5) * 2,
             y: -(e.clientY / window.innerHeight - 0.5) * 2,
@@ -140,25 +153,20 @@ export default function HeroBackground() {
       }
    }
 
-   if (webglFailed) {
-      return <StaticFallback />
-   }
-
    return (
       <div
          className="absolute inset-0 w-full h-full"
          onMouseMove={handleMouseMove}
       >
-         <Canvas
-            camera={{ position: [0, 0, 1] }}
-            dpr={[1, 1.5]}
-            gl={{ antialias: false, powerPreference: "high-performance", failIfMajorPerformanceCaveat: true }}
-            onCreated={({ gl }) => {
-               if (!gl) setWebglFailed(true)
-            }}
-         >
-            <AuroraPlane />
-         </Canvas>
+         <CanvasErrorBoundary>
+            <Canvas
+               camera={{ position: [0, 0, 1] }}
+               dpr={[1, 1.5]}
+               gl={{ antialias: false, powerPreference: "default" }}
+            >
+               <AuroraPlane />
+            </Canvas>
+         </CanvasErrorBoundary>
       </div>
    )
 }

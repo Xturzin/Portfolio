@@ -17,6 +17,15 @@ export default function ProjectCard({ project, index, featured = false }) {
       return () => window.removeEventListener("resize", check)
    }, [])
 
+   useEffect(() => {
+      return () => {
+         if (rafRef.current) {
+            cancelAnimationFrame(rafRef.current)
+            rafRef.current = null
+         }
+      }
+   }, [])
+
    const applyTilt = () => {
       if (!cardRef.current) return
       const { x, y } = tiltRef.current

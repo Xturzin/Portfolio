@@ -1,0 +1,16 @@
+{
+   "name": "Arthur Couto — Full Stack Developer",
+   "short_name": "Arthur Couto",
+   "description": "Desenvolvedor Full Stack. Do zero ao deploy.",
+   "start_url": "/",
+   "display": "browser",
+   "background_color": "#07070f",
+   "theme_color": "#07070f",
+   "icons": [
+      {
+         "src": "/favicon.ico",
+         "sizes": "48x48",
+         "type": "image/x-icon"
+      }
+   ]
+}
