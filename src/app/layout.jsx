@@ -42,7 +42,7 @@ export const metadata = {
       description: "React, Node.js, JavaScript, Python. Do zero ao deploy.",
       images:      ["/og-image.png"],
    },
-   icons:    { icon: "/favicon.ico" },
+   icons:    { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
    manifest: "/site.webmanifest",
    other:    { "theme-color": "#07070f" },
 }
