@@ -18,11 +18,11 @@ export default function Projects() {
                   Produtos que
                   <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
-                     estao no ar
+                     estão no ar
                   </span>
                </h2>
                <p className="text-caption text-text-muted max-w-sm" style={{ marginTop: "0.25rem" }}>
-                  Aplicacoes completas, do desenvolvimento ao deploy em producao.
+                  Aplicações completas, do desenvolvimento ao deploy em produção.
                </p>
             </div>
 

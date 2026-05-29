@@ -39,9 +39,21 @@
 
    html {
       scroll-behavior:         smooth;
+      scroll-snap-type:        y mandatory;
+      scroll-padding-top:      72px;
       -webkit-font-smoothing:  antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering:          optimizeLegibility;
+   }
+
+   section[id] {
+      scroll-snap-align: start;
+      scroll-snap-stop:  always;
+      min-height:        100vh;
+   }
+
+   #projetos {
+      scroll-snap-stop: normal;
    }
 
    body {

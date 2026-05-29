@@ -1,7 +1,6 @@
 import { Space_Grotesk }    from "next/font/google"
 import "./globals.css"
 import ScrollProgress       from "@/components/shared/ScrollProgress"
-import GlobalBackground     from "@/components/shared/GlobalBackground"
 import CustomCursor         from "@/components/shared/CustomCursor"
 
 const spaceGrotesk = Space_Grotesk({
@@ -64,7 +63,6 @@ export default function RootLayout({ children }) {
                Pular para o conteúdo
             </a>
 
-            <GlobalBackground />
             <CustomCursor />
             <ScrollProgress />
             <div className="relative z-10">

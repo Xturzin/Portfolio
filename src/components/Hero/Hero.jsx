@@ -1,92 +1,52 @@
 "use client"
 
-import dynamic from "next/dynamic"
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
-
-const HeroBackground = dynamic(() => import("./HeroBackground"), { ssr: false })
+import { motion } from "framer-motion"
 
 const containerVariants = {
    hidden: {},
-   visible: { transition: { staggerChildren: 0.15, delayChildren: 0.2 } },
+   visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
 }
 
 const itemVariants = {
-   hidden: { opacity: 0, y: 16 },
+   hidden: { opacity: 0, y: 22 },
    visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
    },
 }
 
-const ORBS = [
-   { cx: "12%", cy: "20%", size: 420, color: "#00e87a", dur: 9.0,  delay: 0   },
-   { cx: "82%", cy: "15%", size: 340, color: "#a855f7", dur: 10.0, delay: 1.8 },
-   { cx: "55%", cy: "78%", size: 500, color: "#3b82f6", dur: 9.5,  delay: 0.9 },
-]
-
-function FloatingOrbs() {
-   return (
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
-         {ORBS.map((orb, i) => (
-            <motion.div
-               key={i}
-               className="absolute rounded-full"
-               style={{
-                  left:       orb.cx,
-                  top:        orb.cy,
-                  width:      orb.size,
-                  height:     orb.size,
-                  marginLeft: -(orb.size / 2),
-                  marginTop:  -(orb.size / 2),
-                  background: `radial-gradient(circle, ${orb.color}18 0%, ${orb.color}07 45%, transparent 70%)`,
-               }}
-               animate={{ y: [0, -28, 0], opacity: [0.55, 0.95, 0.55] }}
-               transition={{
-                  duration: orb.dur,
-                  repeat: Infinity,
-                  delay: orb.delay,
-                  ease: "easeInOut",
-               }}
-            />
-         ))}
-      </div>
-   )
-}
-
 export default function Hero() {
-   const mouseX = useMotionValue(0)
-   const mouseY = useMotionValue(0)
-
-   const springCfg = { stiffness: 16, damping: 32, mass: 1.2 }
-   const springX = useSpring(mouseX, springCfg)
-   const springY = useSpring(mouseY, springCfg)
-
-   const tx = useTransform(springX, [-0.5, 0.5], [-3, 3])
-   const ty = useTransform(springY, [-0.5, 0.5], [-2, 2])
-
-   const handleMouseMove = (e) => {
-      mouseX.set(e.clientX / window.innerWidth - 0.5)
-      mouseY.set(e.clientY / window.innerHeight - 0.5)
-   }
-
    return (
       <section
          id="hero"
-         aria-label="Introducao"
+         aria-label="Introdução"
          className="relative w-full h-svh min-h-[540px] flex items-center justify-center overflow-hidden"
-         onMouseMove={handleMouseMove}
       >
-         <HeroBackground />
-         <FloatingOrbs />
+         {/* Gradientes CSS estáticos — sem JS, sem GPU extra */}
+         <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+            <div className="absolute rounded-full" style={{
+               width: 640, height: 640,
+               top: "-10%", left: "-10%",
+               background: "radial-gradient(circle, rgba(124,58,237,0.13) 0%, transparent 68%)",
+            }} />
+            <div className="absolute rounded-full" style={{
+               width: 520, height: 520,
+               bottom: "-5%", right: "-5%",
+               background: "radial-gradient(circle, rgba(0,232,122,0.08) 0%, transparent 68%)",
+            }} />
+            <div className="absolute rounded-full" style={{
+               width: 700, height: 700,
+               top: "20%", left: "28%",
+               background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 65%)",
+            }} />
+         </div>
 
-         <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute inset-0 bg-gradient-to-b from-bg-deep/20 via-transparent to-bg-deep"></div>
-            <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, rgba(7,7,15,0.55) 100%)" }}></div>
+         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+            <div className="absolute inset-0 bg-gradient-to-b from-bg-deep/20 via-transparent to-bg-deep" />
          </div>
 
          <motion.div
-            style={{ x: tx, y: ty }}
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -115,7 +75,7 @@ export default function Hero() {
             >
                Desenvolvedor full stack focado em construir{" "}
                <span className="text-text-primary font-medium">
-                  aplicacoes web completas
+                  aplicações web completas
                </span>{" "}
                do zero ao deploy.
             </motion.p>
@@ -145,19 +105,15 @@ export default function Hero() {
          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
             aria-hidden="true"
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2"
          >
-            <span className="text-text-muted text-xs tracking-widest uppercase">
-               Scroll
-            </span>
-
             <motion.div
-               animate={{ y: [0, 6, 0], opacity: [0.5, 1, 0.5] }}
-               transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-               className="w-px h-8 bg-gradient-to-b from-purple-base to-transparent"
-            ></motion.div>
+               animate={{ y: [0, 8, 0], opacity: [0.35, 0.75, 0.35] }}
+               transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+               className="w-px h-8 bg-gradient-to-b from-purple-base to-transparent mx-auto"
+            />
          </motion.div>
       </section>
    )

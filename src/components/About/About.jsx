@@ -33,7 +33,7 @@ function ProfilePhoto() {
          width={56}
          height={56}
          onError={() => setError(true)}
-         className="w-14 h-14 rounded-full object-cover object-top flex-shrink-0 ring-2 ring-purple-base/30"
+         className="w-14 h-14 rounded-full object-cover object-center flex-shrink-0 ring-2 ring-purple-base/30"
       />
    )
 }
@@ -99,10 +99,10 @@ export default function About() {
 
                <div className="flex flex-col gap-4">
                   <p>
-                     Cinco anos construindo aplicações web completas — do banco de dados à interface. Não só frontend, não só backend: o sistema inteiro, com responsabilidade por cada camada.
+                     Cinco anos construindo aplicações web do começo ao fim. Frontend, backend, banco de dados, deploy. O sistema inteiro, cada parte.
                   </p>
                   <p>
-                     Trabalho com produto em mente. Cada decisão técnica precisa fazer sentido para quem usa. Prefiro sistemas menores e bem-feitos a soluções grandes e frágeis.
+                     Penso em produto antes de pensar em código. Cada decisão técnica precisa fazer sentido pra quem usa no final. Sistema simples e bem-feito vale mais do que sistema complexo que quebra.
                   </p>
                </div>
 
