@@ -3,6 +3,160 @@
 import { useRef, useState, useEffect } from "react"
 import { motion } from "framer-motion"
 
+function OrganizerMockup({ isPurple }) {
+   const accentBg  = isPurple ? "rgba(168,85,247,0.18)" : "rgba(0,232,122,0.15)"
+   const accentLine= isPurple ? "rgba(168,85,247,0.25)" : "rgba(0,232,122,0.22)"
+   const checkColor= isPurple ? "#c084fc" : "#00e87a"
+   const tagBg     = isPurple ? "rgba(124,58,237,0.25)" : "rgba(0,232,122,0.18)"
+   const tagBorder = isPurple ? "rgba(168,85,247,0.40)" : "rgba(0,232,122,0.35)"
+
+   return (
+      <div className="absolute inset-0 pt-7 px-4 pb-3 flex flex-col gap-2.5 overflow-hidden">
+         <div className="flex items-center justify-between">
+            <div className="h-2 w-12 rounded-full" style={{ background: accentLine, opacity: 0.8 }} />
+            <div className="h-4 w-4 rounded-full flex items-center justify-center" style={{ background: accentBg }}>
+               <svg width="7" height="7" viewBox="0 0 8 8" fill="none">
+                  <path d="M1 4h6M4 1v6" stroke={checkColor} strokeWidth="1.4" strokeLinecap="round"/>
+               </svg>
+            </div>
+         </div>
+
+         {[
+            { checked: false, w: "78%", tag: "hoje"   },
+            { checked: true,  w: "52%", tag: null      },
+            { checked: false, w: "88%", tag: "urgente" },
+         ].map((item, i) => (
+            <div key={i} className="flex items-center gap-2">
+               <div
+                  className="w-3.5 h-3.5 rounded-sm border flex-shrink-0 flex items-center justify-center"
+                  style={{
+                     borderColor: item.checked ? checkColor : "rgba(124,58,237,0.25)",
+                     background:  item.checked ? accentBg : "transparent",
+                  }}
+               >
+                  {item.checked && (
+                     <svg width="7" height="7" viewBox="0 0 8 8" fill="none">
+                        <path d="M1.5 4l2 2 3-3.5" stroke={checkColor} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                     </svg>
+                  )}
+               </div>
+               <div
+                  className="h-1.5 rounded-full flex-1"
+                  style={{ width: item.w, background: accentLine, opacity: item.checked ? 0.25 : 0.55 }}
+               />
+               {item.tag && (
+                  <div
+                     className="h-3 px-1.5 rounded-full text-[6px] font-medium flex items-center"
+                     style={{ background: tagBg, border: `1px solid ${tagBorder}`, color: checkColor }}
+                  >
+                     {item.tag}
+                  </div>
+               )}
+            </div>
+         ))}
+
+         <div className="mt-auto flex items-center gap-2 pt-1">
+            <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+               <div
+                  className="h-full rounded-full w-2/3"
+                  style={{ background: `linear-gradient(90deg, ${checkColor}60, ${checkColor})` }}
+               />
+            </div>
+            <span style={{ fontSize: 7, color: "rgba(255,255,255,0.35)", fontWeight: 500 }}>2/3</span>
+         </div>
+      </div>
+   )
+}
+
+function TasksMockup({ isPurple }) {
+   const accent    = isPurple ? "#a855f7" : "#00e87a"
+   const accentBg  = isPurple ? "rgba(124,58,237,0.14)" : "rgba(0,232,122,0.10)"
+   const activeBg  = isPurple ? "rgba(124,58,237,0.28)" : "rgba(0,232,122,0.22)"
+   const activeBorder = isPurple ? "rgba(168,85,247,0.45)" : "rgba(0,232,122,0.40)"
+
+   return (
+      <div className="absolute inset-0 pt-7 px-3 pb-3 flex flex-col gap-2 overflow-hidden">
+         <div className="flex gap-1.5 mb-0.5">
+            {[
+               { label: "A fazer",  active: false },
+               { label: "Fazendo",  active: true  },
+               { label: "Feito",    active: false },
+            ].map((tab) => (
+               <div
+                  key={tab.label}
+                  className="px-2 rounded-full flex items-center font-medium"
+                  style={{
+                     height: 14,
+                     fontSize: 6,
+                     background:   tab.active ? activeBg   : "rgba(255,255,255,0.04)",
+                     border:       `1px solid ${tab.active ? activeBorder : "rgba(255,255,255,0.06)"}`,
+                     color:        tab.active ? accent      : "rgba(255,255,255,0.25)",
+                  }}
+               >
+                  {tab.label}
+               </div>
+            ))}
+         </div>
+
+         {[
+            { label: "Revisar design do card", done: false, dot: accent           },
+            { label: "Implementar animação",   done: true,  dot: "rgba(255,255,255,0.15)" },
+            { label: "Deploy em produção",     done: false, dot: accent           },
+         ].map((task, i) => (
+            <div
+               key={i}
+               className="flex items-center gap-2 rounded-lg px-2.5"
+               style={{
+                  height: 26,
+                  background: accentBg,
+                  border: `1px solid ${i === 0 ? activeBorder : "rgba(255,255,255,0.05)"}`,
+               }}
+            >
+               <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: task.dot }} />
+               <span
+                  style={{
+                     fontSize: 7,
+                     color: task.done ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.60)",
+                     textDecoration: task.done ? "line-through" : "none",
+                     flex: 1,
+                     overflow: "hidden",
+                     textOverflow: "ellipsis",
+                     whiteSpace: "nowrap",
+                  }}
+               >
+                  {task.label}
+               </span>
+            </div>
+         ))}
+
+         <div className="flex items-center gap-2 mt-auto pt-1">
+            <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+               <div
+                  className="h-full rounded-full"
+                  style={{ width: "60%", background: `linear-gradient(90deg, ${accent}55, ${accent})` }}
+               />
+            </div>
+            <span style={{ fontSize: 7, color: "rgba(255,255,255,0.35)", fontWeight: 500 }}>60%</span>
+         </div>
+      </div>
+   )
+}
+
+function MockupContent({ project }) {
+   if (project.mockup === "organizer") return <OrganizerMockup isPurple={project.isPurple} />
+   if (project.mockup === "tasks")     return <TasksMockup     isPurple={project.isPurple} />
+
+   const mockupAccent = project.isPurple ? "from-purple-base to-purple-dim" : "from-neon-base/25 to-bg-elevated"
+   const letterColor  = project.isPurple ? "text-purple-glow"               : "text-neon-base"
+   return (
+      <div className="absolute inset-0 pt-7 flex flex-col items-center justify-center gap-3 p-5">
+         <div className={`w-9 h-9 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg ${mockupAccent}`}>
+            <span className={`text-sm font-bold ${letterColor}`}>{project.name.charAt(0)}</span>
+         </div>
+      </div>
+   )
+}
+
 export default function ProjectCard({ project, index, featured = false }) {
    const cardRef   = useRef(null)
    const tiltRef   = useRef({ x: 0, y: 0 })
@@ -73,7 +227,7 @@ export default function ProjectCard({ project, index, featured = false }) {
       }
    }
 
-   const dotColor = project.isPurple ? "bg-purple-light" : "bg-neon-base"
+   const dotColor  = project.isPurple ? "bg-purple-light" : "bg-neon-base"
    const pingColor = project.isPurple ? "bg-purple-light" : "bg-neon-base"
 
    const borderHover = project.isPurple
@@ -82,11 +236,11 @@ export default function ProjectCard({ project, index, featured = false }) {
 
    const glowHover = featured
       ? (project.isPurple
-         ? "hover:shadow-[0_4px_40px_rgba(124,58,237,0.12)]"
-         : "hover:shadow-[0_4px_40px_rgba(0,232,122,0.10)]")
+         ? "hover:shadow-[0_4px_40px_rgba(124,58,237,0.14)]"
+         : "hover:shadow-[0_4px_40px_rgba(0,232,122,0.12)]")
       : (project.isPurple
-         ? "hover:shadow-[0_2px_20px_rgba(124,58,237,0.06)]"
-         : "hover:shadow-[0_2px_20px_rgba(0,232,122,0.05)]")
+         ? "hover:shadow-[0_2px_20px_rgba(124,58,237,0.08)]"
+         : "hover:shadow-[0_2px_20px_rgba(0,232,122,0.06)]")
 
    const gradFrom = project.isPurple
       ? "from-purple-base/8"
@@ -116,14 +270,6 @@ export default function ProjectCard({ project, index, featured = false }) {
       ? "border-purple-base/50 text-purple-light hover:bg-purple-base/10 hover:border-purple-light/60 hover:shadow-purple-sm"
       : "border-neon-base/40 text-neon-base hover:bg-neon-base/10 hover:border-neon-base/60 hover:shadow-neon-sm"
 
-   const mockupAccent = project.isPurple
-      ? "from-purple-base to-purple-dim"
-      : "from-neon-base/25 to-bg-elevated"
-
-   const letterColor = project.isPurple
-      ? "text-purple-glow"
-      : "text-neon-base"
-
    const mockupBorder = project.isPurple
       ? "group-hover:border-purple-base/30"
       : "group-hover:border-neon-base/30"
@@ -131,11 +277,11 @@ export default function ProjectCard({ project, index, featured = false }) {
    return (
       <motion.div
          ref={cardRef}
-         initial={{ opacity: 0, y: 32 }}
+         initial={{ opacity: 0, y: 40 }}
          whileInView={{ opacity: 1, y: 0 }}
          viewport={{ once: true, margin: "-60px" }}
          transition={{
-            duration: 0.75,
+            duration: 0.85,
             ease: [0.22, 1, 0.36, 1],
             delay: index * 0.12,
          }}
@@ -144,7 +290,7 @@ export default function ProjectCard({ project, index, featured = false }) {
          onMouseLeave={handleMouseLeave}
          className={"group relative rounded-3xl border overflow-hidden " + (featured ? "border-purple-dim/25" : "border-purple-dim/12") + " " + borderHover + " " + glowHover}
       >
-         {/* blob de luz ambiente — identidade visual única por projeto */}
+         {/* blob de luz ambiente */}
          <div
             aria-hidden="true"
             className="absolute pointer-events-none overflow-hidden rounded-full"
@@ -156,7 +302,7 @@ export default function ProjectCard({ project, index, featured = false }) {
             }}
          />
 
-         {/* gradiente direcional — visível sempre, intensifica no hover */}
+         {/* gradiente direcional */}
          <div
             className={
                "absolute inset-0 bg-gradient-to-br " +
@@ -208,6 +354,11 @@ export default function ProjectCard({ project, index, featured = false }) {
                      <span className="text-text-muted text-xs font-medium tracking-wider uppercase">
                         Live Project
                      </span>
+                     {project.category && (
+                        <span className="px-2 py-0.5 rounded-full border border-purple-dim/25 text-text-muted text-[10px] uppercase tracking-wider">
+                           {project.category}
+                        </span>
+                     )}
                   </div>
 
                   <h3 className={"text-text-primary font-bold tracking-tight " + (featured ? "text-3xl md:text-4xl" : "text-xl md:text-2xl")}>
@@ -254,10 +405,10 @@ export default function ProjectCard({ project, index, featured = false }) {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Ver codigo de ${project.name} no GitHub`}
+                        aria-label={`Ver código de ${project.name} no GitHub`}
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium border border-purple-dim/30 text-text-muted hover:border-purple-base/40 hover:text-text-secondary transition-all duration-300 hover:scale-105 active:scale-[0.97]"
                      >
-                        <span>Codigo</span>
+                        <span>Código</span>
                      </a>
                   )}
                </div>
@@ -282,16 +433,7 @@ export default function ProjectCard({ project, index, featured = false }) {
                      </div>
                   </div>
 
-                  <div className="absolute inset-0 pt-7 flex flex-col items-center justify-center gap-3 p-5">
-                     <div className={
-                        "w-9 h-9 rounded-xl bg-gradient-to-br flex items-center justify-center shadow-lg " +
-                        mockupAccent
-                     }>
-                        <span className={"text-sm font-bold " + letterColor}>
-                           {project.name.charAt(0)}
-                        </span>
-                     </div>
-                  </div>
+                  <MockupContent project={project} />
 
                </div>
             </div>

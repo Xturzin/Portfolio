@@ -20,9 +20,9 @@ const itemVariants = {
 }
 
 const ORBS = [
-   { cx: "12%", cy: "20%", size: 1.5, color: "#00e87a", dur: 9.0, delay: 0 },
-   { cx: "82%", cy: "15%", size: 1.5, color: "#a855f7", dur: 10.0, delay: 1.8 },
-   { cx: "55%", cy: "78%", size: 1.5, color: "#3b82f6", dur: 9.5, delay: 0.9 },
+   { cx: "12%", cy: "20%", size: 420, color: "#00e87a", dur: 9.0,  delay: 0   },
+   { cx: "82%", cy: "15%", size: 340, color: "#a855f7", dur: 10.0, delay: 1.8 },
+   { cx: "55%", cy: "78%", size: 500, color: "#3b82f6", dur: 9.5,  delay: 0.9 },
 ]
 
 function FloatingOrbs() {
@@ -33,14 +33,15 @@ function FloatingOrbs() {
                key={i}
                className="absolute rounded-full"
                style={{
-                  left: orb.cx,
-                  top: orb.cy,
-                  width: orb.size,
-                  height: orb.size,
-                  backgroundColor: orb.color,
-                  boxShadow: `0 0 ${orb.size * 4}px ${orb.color}`,
+                  left:       orb.cx,
+                  top:        orb.cy,
+                  width:      orb.size,
+                  height:     orb.size,
+                  marginLeft: -(orb.size / 2),
+                  marginTop:  -(orb.size / 2),
+                  background: `radial-gradient(circle, ${orb.color}18 0%, ${orb.color}07 45%, transparent 70%)`,
                }}
-               animate={{ y: [0, -7, 0], opacity: [0.15, 0.40, 0.15] }}
+               animate={{ y: [0, -28, 0], opacity: [0.55, 0.95, 0.55] }}
                transition={{
                   duration: orb.dur,
                   repeat: Infinity,

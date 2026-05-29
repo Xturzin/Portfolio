@@ -2,17 +2,41 @@
 
 import SectionWrapper from "@/components/shared/SectionWrapper"
 import { motion }     from "framer-motion"
+import { useState }   from "react"
 
 const info = [
-   { label: "Localizacao", value: "Cabo Frio, RJ"       },
-   { label: "Experiencia", value: "~5 anos programando" },
-   { label: "Foco",        value: "Full Stack Web"      },
+   { label: "Localização", value: "Cabo Frio, RJ"     },
+   { label: "Experiência", value: "5 anos programando" },
+   { label: "Foco",        value: "Full Stack"          },
 ]
 
 const education = [
-   { course: "Analise e Desenvolvimento de Sistemas", start: "ago/2025" },
-   { course: "Ciencias da Computacao",                start: "fev/2026" },
+   { course: "Análise e Desenvolvimento de Sistemas", start: "ago/2025" },
+   { course: "Ciências da Computação",                start: "fev/2026" },
 ]
+
+function ProfilePhoto() {
+   const [error, setError] = useState(false)
+
+   if (error) {
+      return (
+         <div className="w-14 h-14 rounded-full bg-gradient-to-br from-purple-light to-purple-base flex items-center justify-center font-bold text-sm text-white flex-shrink-0">
+            AC
+         </div>
+      )
+   }
+
+   return (
+      <img
+         src="/foto.jpg"
+         alt="Arthur Couto"
+         width={56}
+         height={56}
+         onError={() => setError(true)}
+         className="w-14 h-14 rounded-full object-cover object-top flex-shrink-0 ring-2 ring-purple-base/30"
+      />
+   )
+}
 
 export default function About() {
    return (
@@ -29,9 +53,7 @@ export default function About() {
                <div className="card-base rounded-2xl p-6 flex flex-col gap-5" style={{ boxShadow: "inset 1px 0 0 rgba(124,58,237,0.12), inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 12px rgba(0,0,0,0.25)" }}>
 
                   <div className="flex items-center gap-3">
-                     <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-light to-purple-base flex items-center justify-center font-bold text-xs text-white flex-shrink-0">
-                        AC
-                     </div>
+                     <ProfilePhoto />
                      <div className="flex flex-col">
                         <p className="text-text-primary font-semibold text-caption">Arthur Couto</p>
                         <p className="text-text-muted text-label tracking-wide mt-0.5">Full Stack Developer</p>
@@ -56,7 +78,7 @@ export default function About() {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-base opacity-30"></span>
                         <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-neon-base opacity-80"></span>
                      </span>
-                     <span className="text-neon-base text-label tracking-wide">Disponivel para projetos</span>
+                     <span className="text-neon-base text-label tracking-wide">Disponível para projetos</span>
                   </div>
 
                </div>
@@ -77,22 +99,22 @@ export default function About() {
 
                <div className="flex flex-col gap-4">
                   <p>
-                     Cinco anos construindo aplicacoes web reais de forma independente. Nao so interfaces, nao so APIs, mas o sistema inteiro, do banco de dados ao browser do usuario.
+                     Cinco anos construindo aplicações web completas — do banco de dados à interface. Não só frontend, não só backend: o sistema inteiro, com responsabilidade por cada camada.
                   </p>
                   <p>
-                     Trabalho com produto em mente. Cada decisao tecnica passa pelo impacto real na experiencia de quem usa. Codigo limpo nao e objetivo, e consequencia de pensar bem antes de escrever.
+                     Trabalho com produto em mente. Cada decisão técnica precisa fazer sentido para quem usa. Prefiro sistemas menores e bem-feitos a soluções grandes e frágeis.
                   </p>
                </div>
 
                <div className="flex flex-col gap-3">
-                  <span className="text-label text-text-muted">Formacao</span>
+                  <span className="text-label text-text-muted">Formação</span>
                   <div className="flex flex-col gap-3">
                      {education.map((item) => (
                         <div key={item.course} className="flex items-start gap-3">
                            <span className="mt-[7px] w-1 h-1 rounded-full bg-purple-base flex-shrink-0"></span>
                            <div className="flex flex-col">
                               <p className="text-caption text-text-secondary font-medium" style={{ color: "var(--color-text-secondary)" }}>{item.course}</p>
-                              <span className="text-label text-text-muted tracking-wide mt-0.5">Inicio: {item.start}</span>
+                              <span className="text-label text-text-muted tracking-wide mt-0.5">Início: {item.start}</span>
                            </div>
                         </div>
                      ))}

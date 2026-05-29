@@ -69,13 +69,13 @@ const fragmentShader = `
 
       vec3 color = colorBg;
       color = mix(color, colorDeep,   smoothstep(0.20, 0.60, n3) * 0.75);
-      color = mix(color, colorPurple, smoothstep(0.35, 0.72, n1) * 0.58);
-      color = mix(color, colorNeon,   smoothstep(0.56, 0.84, n2) * 0.16);
-      color = mix(color, colorBlue,   smoothstep(0.44, 0.74, n1 * n2) * 0.22);
+      color = mix(color, colorPurple, smoothstep(0.35, 0.72, n1) * 0.65);
+      color = mix(color, colorNeon,   smoothstep(0.56, 0.84, n2) * 0.26);
+      color = mix(color, colorBlue,   smoothstep(0.44, 0.74, n1 * n2) * 0.28);
 
       float vignette = 1.0 - smoothstep(0.25, 1.1, length(vUv - 0.5) * 1.7);
       color *= vignette;
-      color *= mix(0.25, 1.0, smoothstep(0.0, 0.18, vUv.y));
+      color *= mix(0.35, 1.0, smoothstep(0.0, 0.18, vUv.y));
 
       gl_FragColor = vec4(color, 1.0);
    }
