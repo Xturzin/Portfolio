@@ -93,6 +93,22 @@ export default function ProjectCard({ project, index, featured = false }) {
       ? "via-purple-base/35"
       : "via-neon-base/25"
 
+   const blobColor = project.isPurple
+      ? "rgba(124,58,237,0.13)"
+      : "rgba(0,232,122,0.09)"
+
+   const blobPos = featured
+      ? { top: "-30%", right: "-10%", width: "70%", paddingBottom: "70%" }
+      : { bottom: "-40%", left: "-12%", width: "60%", paddingBottom: "60%" }
+
+   const sweepColor = project.isPurple
+      ? "rgba(168,85,247,0.07)"
+      : "rgba(0,232,122,0.05)"
+
+   const borderGlow = project.isPurple
+      ? "rgba(124,58,237,0.55)"
+      : "rgba(0,232,122,0.45)"
+
    const ctaClass = project.isPurple
       ? "border-purple-base/50 text-purple-light hover:bg-purple-base/10 hover:border-purple-light/60 hover:shadow-purple-sm"
       : "border-neon-base/40 text-neon-base hover:bg-neon-base/10 hover:border-neon-base/60 hover:shadow-neon-sm"
@@ -125,22 +141,56 @@ export default function ProjectCard({ project, index, featured = false }) {
          onMouseLeave={handleMouseLeave}
          className={"group relative rounded-3xl border overflow-hidden " + (featured ? "border-purple-dim/25" : "border-purple-dim/12") + " " + borderHover + " " + glowHover}
       >
+         {/* blob de luz ambiente — identidade visual única por projeto */}
+         <div
+            aria-hidden="true"
+            className="absolute pointer-events-none overflow-hidden rounded-full"
+            style={{
+               ...blobPos,
+               background: "radial-gradient(circle, " + blobColor + " 0%, transparent 70%)",
+               filter: "blur(32px)",
+               position: "absolute",
+            }}
+         />
+
+         {/* gradiente direcional — visível sempre, intensifica no hover */}
          <div
             className={
                "absolute inset-0 bg-gradient-to-br " +
                gradFrom +
-               " to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+               " to-transparent opacity-30 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
             }
          />
 
+         {/* superfície base */}
          <div className="absolute inset-0 bg-bg-surface/80 backdrop-blur-sm pointer-events-none" />
 
+         {/* light sweep diagonal no hover */}
+         <motion.div
+            aria-hidden="true"
+            animate={{
+               opacity: hovered ? 1 : 0,
+               x:       hovered ? "100%" : "-100%",
+            }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-0 pointer-events-none"
+            style={{
+               background: "linear-gradient(105deg, transparent 30%, " + sweepColor + " 50%, transparent 70%)",
+            }}
+         />
+
+         {/* borda superior iluminada */}
          <div
             className={
                "absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent " +
                accentVia +
-               " to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+               " to-transparent transition-opacity duration-500 pointer-events-none"
             }
+            style={{
+               opacity: hovered ? 1 : 0.35,
+               boxShadow: hovered ? "0 0 12px 0 " + borderGlow : "none",
+               transition: "opacity 0.5s ease, box-shadow 0.5s ease",
+            }}
          />
 
          <div className={"relative z-10 flex flex-col md:flex-row items-start " + (featured ? "p-10 md:p-16 gap-12 md:gap-20" : "p-7 md:p-10 gap-8 md:gap-14")}>
