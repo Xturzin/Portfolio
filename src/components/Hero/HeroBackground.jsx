@@ -47,12 +47,19 @@ const fragmentShader = `
 
    void main() {
       vec2 uv = vUv;
-      uv += uMouse * 0.055;
 
       float t  = uTime * 0.09;
-      float n1 = fbm(uv * 1.8 + vec2(t * 0.7,  t * 0.5));
-      float n2 = fbm(uv * 2.6 - vec2(t * 0.5,  t * 0.3) + n1 * 0.5);
-      float n3 = fbm(uv * 1.1 + vec2(t * 0.25, t * 0.7) + n2 * 0.3);
+
+      // parallax procedural por camada:
+      // cada layer recebe deslocamento de mouse com intensidade diferente,
+      // simulando profundidade — layer distante move pouco, layer próxima move mais
+      vec2 mouse0 = uMouse * 0.04;   // fundo — quase estático
+      vec2 mouse1 = uMouse * 0.09;   // camada média
+      vec2 mouse2 = uMouse * 0.16;   // camada próxima — mais responsiva
+
+      float n1 = fbm((uv + mouse1) * 1.8 + vec2(t * 0.7,  t * 0.5));
+      float n2 = fbm((uv + mouse2) * 2.6 - vec2(t * 0.5,  t * 0.3) + n1 * 0.5);
+      float n3 = fbm((uv + mouse0) * 1.1 + vec2(t * 0.25, t * 0.7) + n2 * 0.3);
 
       vec3 colorBg     = vec3(0.027, 0.027, 0.059);
       vec3 colorDeep   = vec3(0.10,  0.03,  0.20);
@@ -101,13 +108,15 @@ function AuroraPlane() {
    useFrame(({ clock }) => {
       if (pausedRef.current) return
 
-      targetRef.current.x += (mouseRef.current.x - targetRef.current.x) * 0.015
-      targetRef.current.y += (mouseRef.current.y - targetRef.current.y) * 0.015
+      // lerp 0.040: inércia presente mas mouse é claramente perceptível
+      targetRef.current.x += (mouseRef.current.x - targetRef.current.x) * 0.040
+      targetRef.current.y += (mouseRef.current.y - targetRef.current.y) * 0.040
 
       meshRef.current.material.uniforms.uTime.value  = clock.getElapsedTime() * 0.55
+      // multiplicador 1.0: envia posição normalizada completa ao shader
       meshRef.current.material.uniforms.uMouse.value = [
-         targetRef.current.x * 0.5,
-         targetRef.current.y * 0.5,
+         targetRef.current.x,
+         targetRef.current.y,
       ]
    })
 
@@ -163,6 +172,7 @@ export default function HeroBackground() {
                camera={{ position: [0, 0, 1] }}
                dpr={[1, 1.5]}
                gl={{ antialias: false, powerPreference: "default" }}
+               style={{ width: "100%", height: "100%", display: "block" }}
             >
                <AuroraPlane />
             </Canvas>
