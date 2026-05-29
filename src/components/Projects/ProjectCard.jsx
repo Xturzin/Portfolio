@@ -9,6 +9,7 @@ export default function ProjectCard({ project, index, featured = false }) {
    const rafRef    = useRef(null)
 
    const [isMobile, setIsMobile] = useState(false)
+   const [hovered, setHovered] = useState(false)
 
    useEffect(() => {
       const check = () => setIsMobile(window.innerWidth < 768)
@@ -56,6 +57,7 @@ export default function ProjectCard({ project, index, featured = false }) {
 
    const handleMouseEnter = () => {
       if (isMobile) return
+      setHovered(true)
       if (cardRef.current) {
          cardRef.current.style.transition = "transform 0.12s ease, box-shadow 0.3s ease, border-color 0.3s ease"
       }
@@ -63,6 +65,7 @@ export default function ProjectCard({ project, index, featured = false }) {
 
    const handleMouseLeave = () => {
       if (isMobile) return
+      setHovered(false)
       tiltRef.current = { x: 0, y: 0 }
       if (cardRef.current) {
          cardRef.current.style.transition = "transform 0.65s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease"
