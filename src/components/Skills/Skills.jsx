@@ -2,6 +2,7 @@
 
 import { useState }       from "react"
 import SectionWrapper     from "@/components/shared/SectionWrapper"
+import AnimatedLabel      from "@/components/shared/AnimatedLabel"
 import { motion }         from "framer-motion"
 
 const coreStack = [
@@ -58,32 +59,27 @@ const otherTech = [
    { id: "postgres", name: "PostgreSQL"  },
 ]
 
-const labelVariant = {
-   hidden:  { opacity: 0, x: -28 },
-   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-}
-
 const headingVariant = {
-   hidden:  { opacity: 0, y: -36, rotateX: -20 },
+   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
    visible: {
-      opacity: 1, y: 0, rotateX: 0,
-      transition: { type: "spring", damping: 20, stiffness: 90, mass: 0.9 },
+      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const coreCardVariant = {
-   hidden:  { opacity: 0, y: 56, rotateX: 12, scale: 0.94 },
+   hidden:  { opacity: 0, y: 52, rotateX: 18, rotateY: -3, scale: 0.90 },
    visible: {
-      opacity: 1, y: 0, rotateX: 0, scale: 1,
-      transition: { type: "spring", damping: 24, stiffness: 100, mass: 0.85 },
+      opacity: 1, y: 0, rotateX: 0, rotateY: 0, scale: 1,
+      transition: { type: "spring", damping: 22, stiffness: 135, mass: 0.6 },
    },
 }
 
 const tagVariant = {
-   hidden:  { opacity: 0, scale: 0.85, y: 12 },
+   hidden:  { opacity: 0, scale: 0.80, y: 14, filter: "blur(3px)" },
    visible: {
-      opacity: 1, scale: 1, y: 0,
-      transition: { type: "spring", damping: 22, stiffness: 120 },
+      opacity: 1, scale: 1, y: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 22, stiffness: 155, mass: 0.5 },
    },
 }
 
@@ -98,7 +94,6 @@ function CoreCard({ tech }) {
          className={"group relative rounded-2xl border bg-bg-surface/80 backdrop-blur-sm p-6 flex flex-col gap-4 transition-all duration-300 overflow-hidden cursor-default hover:-translate-y-1 " + (hovered ? "border-purple-base/30 " + tech.borderActive : "border-purple-dim/20")}
          style={{
             boxShadow: hovered ? ("0 0 32px " + tech.glowColor) : "none",
-            transformPerspective: 800,
          }}
       >
          <div className={"absolute inset-0 bg-gradient-to-br " + tech.gradientClass + " transition-opacity duration-300 pointer-events-none " + (hovered ? "opacity-100" : "opacity-0")} />
@@ -108,9 +103,7 @@ function CoreCard({ tech }) {
                <span className={"w-2.5 h-2.5 rounded-full flex-shrink-0 transition-all duration-300 " + tech.dotClass + (hovered ? " scale-125" : "")} />
                <h3 className="text-text-primary font-bold text-xl tracking-tight">{tech.name}</h3>
             </div>
-            <span className="text-text-muted text-[10px] uppercase tracking-widest border border-purple-dim/25 px-2 py-0.5 rounded-full">
-               {tech.label}
-            </span>
+            <span className="text-text-muted text-[10px] uppercase tracking-widest border border-purple-dim/25 px-2 py-0.5 rounded-full">{tech.label}</span>
          </div>
 
          <p className="relative z-10 text-text-secondary text-sm leading-relaxed">{tech.description}</p>
@@ -126,13 +119,13 @@ export default function Skills() {
          <div className="max-w-6xl mx-auto flex flex-col gap-16">
 
             <motion.div
-               variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.10, delayChildren: 0.08 } } }}
+               variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12, delayChildren: 0.06 } } }}
                initial="hidden"
                whileInView="visible"
                viewport={{ once: false, margin: "-60px" }}
                className="flex flex-col gap-4"
             >
-               <motion.span variants={labelVariant} className="section-label">Stack</motion.span>
+               <AnimatedLabel>Stack</AnimatedLabel>
                <motion.h2 variants={headingVariant} style={{ transformPerspective: 700 }}>
                   Tecnologias que
                   <br />
@@ -158,16 +151,14 @@ export default function Skills() {
                </motion.div>
 
                <motion.div
-                  variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.13, delayChildren: 0.10 } } }}
+                  variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12, delayChildren: 0.08 } } }}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false, margin: "-40px" }}
                   className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-                  style={{ perspective: "1200px" }}
+                  style={{ perspective: "1000px" }}
                >
-                  {coreStack.map((tech) => (
-                     <CoreCard key={tech.id} tech={tech} />
-                  ))}
+                  {coreStack.map((tech) => <CoreCard key={tech.id} tech={tech} />)}
                </motion.div>
             </div>
 
@@ -178,7 +169,7 @@ export default function Skills() {
                </div>
 
                <motion.div
-                  variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } } }}
+                  variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.055, delayChildren: 0.04 } } }}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: false, margin: "-40px" }}

@@ -1,6 +1,7 @@
 "use client"
 
 import SectionWrapper from "@/components/shared/SectionWrapper"
+import AnimatedLabel  from "@/components/shared/AnimatedLabel"
 import { motion }     from "framer-motion"
 import { useState }   from "react"
 
@@ -38,27 +39,28 @@ function ProfilePhoto() {
    )
 }
 
-const labelVariant = {
-   hidden:  { opacity: 0, x: -28 },
-   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-}
-
 const headingVariant = {
-   hidden:  { opacity: 0, y: -36, rotateX: -20 },
+   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
    visible: {
-      opacity: 1, y: 0, rotateX: 0,
-      transition: { type: "spring", damping: 20, stiffness: 90, mass: 0.9 },
+      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const textVariant = {
-   hidden:  { opacity: 0, y: 28 },
-   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+   hidden:  { opacity: 0, y: 26, filter: "blur(5px)" },
+   visible: {
+      opacity: 1, y: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 22, stiffness: 130, mass: 0.65 },
+   },
 }
 
 const eduVariant = {
-   hidden:  { opacity: 0, x: -16 },
-   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+   hidden:  { opacity: 0, x: -18, filter: "blur(3px)" },
+   visible: {
+      opacity: 1, x: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 22, stiffness: 140, mass: 0.6 },
+   },
 }
 
 export default function About() {
@@ -115,7 +117,7 @@ export default function About() {
                viewport={{ once: false, margin: "-60px" }}
             >
                <div className="flex flex-col gap-4">
-                  <motion.span variants={labelVariant} className="section-label">Sobre mim</motion.span>
+                  <AnimatedLabel>Sobre mim</AnimatedLabel>
                   <motion.h2 variants={headingVariant} style={{ transformPerspective: 700 }}>
                      Construindo do zero
                      <br />

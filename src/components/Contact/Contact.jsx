@@ -2,34 +2,33 @@
 
 import { useState }    from "react"
 import SectionWrapper  from "@/components/shared/SectionWrapper"
+import AnimatedLabel   from "@/components/shared/AnimatedLabel"
 import { motion }      from "framer-motion"
 
 const EMAIL = "arthur.coliveira@gmail.com"
 
-const labelVariant = {
-   hidden:  { opacity: 0, x: -28 },
-   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-}
-
 const headingVariant = {
-   hidden:  { opacity: 0, y: -36, rotateX: -20 },
+   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
    visible: {
-      opacity: 1, y: 0, rotateX: 0,
-      transition: { type: "spring", damping: 20, stiffness: 90, mass: 0.9 },
+      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const cardVariant = {
-   hidden:  { opacity: 0, y: 44, scale: 0.95 },
+   hidden:  { opacity: 0, y: 48, scale: 0.92, filter: "blur(4px)" },
    visible: {
-      opacity: 1, y: 0, scale: 1,
-      transition: { type: "spring", damping: 24, stiffness: 100, mass: 0.85 },
+      opacity: 1, y: 0, scale: 1, filter: "blur(0px)",
+      transition: { type: "spring", damping: 22, stiffness: 135, mass: 0.6 },
    },
 }
 
 const fadeVariant = {
-   hidden:  { opacity: 0, y: 18 },
-   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+   hidden:  { opacity: 0, y: 18, filter: "blur(4px)" },
+   visible: {
+      opacity: 1, y: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 22, stiffness: 140, mass: 0.6 },
+   },
 }
 
 export default function Contact() {
@@ -54,7 +53,7 @@ export default function Contact() {
          >
 
             <div className="flex flex-col items-center gap-4">
-               <motion.span variants={labelVariant} className="section-label">Contato</motion.span>
+               <AnimatedLabel>Contato</AnimatedLabel>
                <motion.h2 variants={headingVariant} style={{ transformPerspective: 700 }}>
                   Vamos construir
                   <br />

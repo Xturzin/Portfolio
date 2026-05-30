@@ -1,26 +1,25 @@
 "use client"
 
 import SectionWrapper from "@/components/shared/SectionWrapper"
+import AnimatedLabel  from "@/components/shared/AnimatedLabel"
 import ProjectCard    from "./ProjectCard"
 import { projects }  from "@/data/projects"
 import { motion }    from "framer-motion"
 
-const labelVariant = {
-   hidden:  { opacity: 0, x: -28 },
-   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-}
-
 const headingVariant = {
-   hidden:  { opacity: 0, y: -36, rotateX: -20 },
+   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
    visible: {
-      opacity: 1, y: 0, rotateX: 0,
-      transition: { type: "spring", damping: 20, stiffness: 90, mass: 0.9 },
+      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const textVariant = {
-   hidden:  { opacity: 0, y: 22 },
-   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+   hidden:  { opacity: 0, y: 22, filter: "blur(4px)" },
+   visible: {
+      opacity: 1, y: 0, filter: "blur(0px)",
+      transition: { type: "spring", damping: 22, stiffness: 140, mass: 0.6 },
+   },
 }
 
 export default function Projects() {
@@ -36,7 +35,7 @@ export default function Projects() {
                className="flex flex-col gap-4"
             >
                <div className="flex items-center gap-4">
-                  <motion.span variants={labelVariant} className="section-label">Projetos</motion.span>
+                  <AnimatedLabel>Projetos</AnimatedLabel>
                   <motion.span variants={textVariant} className="text-text-muted text-label tracking-widest">
                      0{projects.length}
                   </motion.span>
