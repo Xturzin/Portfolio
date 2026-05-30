@@ -152,10 +152,12 @@ export default function About() {
                      Construo produtos,
                      <br />
                      <span
-                        className="text-transparent bg-clip-text"
+                        className="text-transparent bg-clip-text inline-block"
                         style={{
-                           backgroundImage: "linear-gradient(90deg, #a855f7 0%, #3b82f6 55%, #00e87a 100%)",
+                           backgroundImage: "linear-gradient(90deg, #a855f7 0%, #00e87a 30%, #3b82f6 60%, #a855f7 100%)",
+                           backgroundSize: "300% 100%",
                            WebkitBackgroundClip: "text",
+                           animation: "gradientShift 18s ease infinite",
                         }}
                      >
                         não só código.
@@ -166,12 +168,35 @@ export default function About() {
                {/* Bio */}
                <motion.div variants={textVariant} className="flex flex-col gap-4">
                   <p className="text-text-secondary leading-relaxed">
-                     Cinco anos construindo aplicações web completas — frontend, backend, banco de dados e deploy.
-                     React, Node.js, Python, SQL. Cada camada da stack, construída sem delegar.
+                     Cinco anos construindo aplicações web completas: do frontend ao banco de dados ao deploy.{" "}
+                     <span
+                        className="text-transparent bg-clip-text font-medium"
+                        style={{
+                           backgroundImage: "linear-gradient(90deg, #a855f7 0%, #00e87a 30%, #3b82f6 60%, #a855f7 100%)",
+                           backgroundSize: "300% 100%",
+                           WebkitBackgroundClip: "text",
+                           animation: "gradientShift 18s ease infinite",
+                        }}
+                     >
+                        React, Node.js, Python, SQL.
+                     </span>{" "}
+                     Cada camada da stack, construída sem delegar.
                   </p>
                   <p className="text-text-secondary leading-relaxed">
-                     Penso em produto antes de pensar em código. Prefiro clareza a complexidade, solução a arquitetura.
-                     Cada decisão técnica tem que fazer sentido pra quem usa no final — não só pra quem escreve.
+                     Penso em{" "}
+                     <span
+                        className="text-transparent bg-clip-text font-medium"
+                        style={{
+                           backgroundImage: "linear-gradient(90deg, #a855f7 0%, #00e87a 30%, #3b82f6 60%, #a855f7 100%)",
+                           backgroundSize: "300% 100%",
+                           WebkitBackgroundClip: "text",
+                           animation: "gradientShift 18s ease infinite 3s",
+                        }}
+                     >
+                        produto
+                     </span>{" "}
+                     antes de pensar em código. Prefiro clareza a complexidade, solução a arquitetura.
+                     Cada decisão técnica tem que fazer sentido pra quem usa no final, não só pra quem escreve.
                   </p>
                </motion.div>
 
