@@ -84,34 +84,49 @@ export default function About() {
                </div>
             </motion.div>
 
-            <div className="flex-1 flex flex-col gap-8">
-
-               <div className="flex flex-col gap-4">
+            <motion.div
+               className="flex-1 flex flex-col gap-8"
+               variants={{
+                  hidden:  {},
+                  visible: { transition: { staggerChildren: 0.10, delayChildren: 0.15 } },
+               }}
+               initial="hidden"
+               whileInView="visible"
+               viewport={{ once: false, margin: "-60px" }}
+            >
+               <motion.div
+                  variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22,1,0.36,1] } } }}
+                  className="flex flex-col gap-4"
+               >
                   <span className="section-label">Sobre mim</span>
                   <h2>
                      Construindo do zero
                      <br />
-                     <span className="text-text-primary">
-                        ao deploy
-                     </span>
+                     <span className="text-text-primary">ao deploy</span>
                   </h2>
-               </div>
+               </motion.div>
 
-               <div className="flex flex-col gap-4">
+               <motion.div
+                  variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22,1,0.36,1] } } }}
+                  className="flex flex-col gap-4"
+               >
                   <p>
                      Cinco anos construindo aplicações web do começo ao fim. Frontend, backend, banco de dados, deploy. O sistema inteiro, cada parte.
                   </p>
                   <p>
                      Penso em produto antes de pensar em código. Cada decisão técnica precisa fazer sentido pra quem usa no final. Sistema simples e bem-feito vale mais do que sistema complexo que quebra.
                   </p>
-               </div>
+               </motion.div>
 
-               <div className="flex flex-col gap-3">
+               <motion.div
+                  variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22,1,0.36,1] } } }}
+                  className="flex flex-col gap-3"
+               >
                   <span className="text-label text-text-muted">Formação</span>
                   <div className="flex flex-col gap-3">
                      {education.map((item) => (
                         <div key={item.course} className="flex items-start gap-3">
-                           <span className="mt-[7px] w-1 h-1 rounded-full bg-purple-base flex-shrink-0"></span>
+                           <span className="mt-[7px] w-1 h-1 rounded-full bg-purple-base flex-shrink-0" />
                            <div className="flex flex-col">
                               <p className="text-caption text-text-secondary font-medium" style={{ color: "var(--color-text-secondary)" }}>{item.course}</p>
                               <span className="text-label text-text-muted tracking-wide mt-0.5">Início: {item.start}</span>
@@ -119,9 +134,9 @@ export default function About() {
                         </div>
                      ))}
                   </div>
-               </div>
+               </motion.div>
 
-            </div>
+            </motion.div>
 
          </div>
       </SectionWrapper>

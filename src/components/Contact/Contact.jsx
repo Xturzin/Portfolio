@@ -1,9 +1,20 @@
 "use client"
 
-import { useState } from "react"
-import SectionWrapper from "@/components/shared/SectionWrapper"
+import { useState }    from "react"
+import SectionWrapper  from "@/components/shared/SectionWrapper"
+import { motion }      from "framer-motion"
 
 const EMAIL = "arthur.coliveira@gmail.com"
+
+const stagger = {
+   hidden:  {},
+   visible: { transition: { staggerChildren: 0.10, delayChildren: 0.12 } },
+}
+
+const item = {
+   hidden:  { opacity: 0, y: 24 },
+   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+}
 
 export default function Contact() {
    const [copied, setCopied] = useState(false)
@@ -18,43 +29,37 @@ export default function Contact() {
 
    return (
       <SectionWrapper id="contato" variant="scaleIn" className="pt-32 md:pt-48 pb-24 md:pb-36 px-6 md:px-12">
-         <div className="max-w-xl mx-auto flex flex-col items-center text-center gap-12">
+         <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, margin: "-60px" }}
+            className="max-w-xl mx-auto flex flex-col items-center text-center gap-12"
+         >
 
-            {/* HEADER */}
-            <div className="flex flex-col items-center gap-4">
+            <motion.div variants={item} className="flex flex-col items-center gap-4">
                <span className="section-label">Contato</span>
-
                <h2>
                   Vamos construir
                   <br />
-                  <span className="text-text-primary">
-                     algo juntos
-                  </span>
+                  <span className="text-text-primary">algo juntos</span>
                </h2>
-
                <p className="text-body-lg max-w-md">
                   Aberto a projetos, colaborações e oportunidades.
                </p>
-            </div>
+            </motion.div>
 
-            {/* CARDS */}
-            <div className="w-full flex flex-col sm:flex-row gap-3 justify-center">
+            <motion.div variants={item} className="w-full flex flex-col sm:flex-row gap-3 justify-center">
 
-               {/* EMAIL */}
                <div className="group card-base flex items-center gap-3 px-5 py-4 hover:border-purple-base/40">
-
                   <div className="w-8 h-8 rounded-xl bg-purple-dim/20 flex items-center justify-center text-purple-light group-hover:text-neon-base transition-colors duration-[220ms]">
                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                         <rect x="2" y="4" width="20" height="16" rx="2" />
                         <path d="M2 7l10 7 10-7" />
                      </svg>
                   </div>
-
                   <div className="flex flex-col items-start flex-1 min-w-0">
-                     <span className="text-label text-text-muted tracking-widest uppercase">
-                        Email
-                     </span>
-
+                     <span className="text-label text-text-muted tracking-widest uppercase">Email</span>
                      <a
                         href={`mailto:${EMAIL}`}
                         aria-label="Enviar email para Arthur Couto"
@@ -63,20 +68,15 @@ export default function Contact() {
                         {EMAIL}
                      </a>
                   </div>
-
                   <button
                      onClick={handleCopy}
                      aria-label={copied ? "Email copiado" : "Copiar email"}
                      className="flex-shrink-0 px-2.5 py-1 rounded-lg border border-purple-dim/25 text-text-muted hover:text-text-secondary hover:border-purple-dim/50 transition-all duration-[220ms] text-label tracking-wide"
                   >
-                     <span aria-live="polite" aria-atomic="true">
-                        {copied ? "Copiado" : "Copiar"}
-                     </span>
+                     <span aria-live="polite" aria-atomic="true">{copied ? "Copiado" : "Copiar"}</span>
                   </button>
-
                </div>
 
-               {/* LINKEDIN */}
                <a
                   href="https://www.linkedin.com/in/arthurcoutooliveira/"
                   target="_blank"
@@ -91,28 +91,23 @@ export default function Contact() {
                         <circle cx="4" cy="4" r="2" />
                      </svg>
                   </div>
-
                   <div className="flex flex-col items-start">
-                     <span className="text-label text-text-muted tracking-widest uppercase">
-                        LinkedIn
-                     </span>
+                     <span className="text-label text-text-muted tracking-widest uppercase">LinkedIn</span>
                      <span className="text-caption text-text-primary group-hover:text-neon-base transition-colors duration-[220ms] font-medium">
                         arthurcoutooliveira
                      </span>
                   </div>
                </a>
 
-            </div>
+            </motion.div>
 
-            {/* DIVIDER */}
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-purple-dim/25 to-transparent" />
+            <motion.div variants={item} className="w-full h-px bg-gradient-to-r from-transparent via-purple-dim/25 to-transparent" />
 
-            {/* LOCATION */}
-            <span className="text-label text-text-muted tracking-wide">
+            <motion.span variants={item} className="text-label text-text-muted tracking-wide">
                Cabo Frio, Rio de Janeiro, Brasil
-            </span>
+            </motion.span>
 
-         </div>
+         </motion.div>
       </SectionWrapper>
    )
 }

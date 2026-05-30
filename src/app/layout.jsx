@@ -1,6 +1,7 @@
 import { Space_Grotesk }    from "next/font/google"
 import "./globals.css"
 import ScrollProgress       from "@/components/shared/ScrollProgress"
+import ScrollTransition     from "@/components/shared/ScrollTransition"
 import CustomCursor         from "@/components/shared/CustomCursor"
 
 const spaceGrotesk = Space_Grotesk({
@@ -64,6 +65,7 @@ export default function RootLayout({ children }) {
             </a>
 
             <CustomCursor />
+            <ScrollTransition />
             <ScrollProgress />
             <div className="relative z-10">
                {children}
