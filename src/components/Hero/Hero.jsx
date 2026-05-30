@@ -64,7 +64,15 @@ export default function Hero() {
                className="text-[2rem] sm:text-5xl md:text-7xl font-bold text-text-primary leading-[1.04] tracking-tight mb-5 md:mb-7"
             >
                Arthur{" "}
-               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-light to-neon-base">
+               <span
+                  className="text-transparent bg-clip-text inline-block"
+                  style={{
+                     backgroundImage: "linear-gradient(90deg, #a855f7 0%, #00e87a 30%, #3b82f6 60%, #a855f7 100%)",
+                     backgroundSize: "300% 100%",
+                     WebkitBackgroundClip: "text",
+                     animation: "gradientShift 18s ease infinite",
+                  }}
+               >
                   Couto
                </span>
             </motion.h1>

@@ -4,8 +4,11 @@ import { useState } from "react"
 import { motion }   from "framer-motion"
 
 const itemVariant = {
-   hidden:  { opacity: 0, y: 20 },
-   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+   hidden:  { opacity: 0, y: 26 },
+   visible: {
+      opacity: 1, y: 0,
+      transition: { type: "spring", damping: 24, stiffness: 100, mass: 0.8 },
+   },
 }
 
 function ProjectCover({ project }) {
@@ -19,9 +22,15 @@ function ProjectCover({ project }) {
       : "linear-gradient(135deg, rgba(0,80,46,0.40) 0%, rgba(15,15,26,0.90) 70%)"
 
    return (
-      <div className="relative w-full overflow-hidden rounded-t-3xl" style={{ height: 230 }}>
-
-         {/* Screenshot real */}
+      <motion.div
+         variants={{
+            hidden:  { clipPath: "inset(0 0 100% 0)" },
+            visible: { clipPath: "inset(0 0 0% 0)", transition: { duration: 1.0, ease: [0.76, 0, 0.24, 1] } },
+         }}
+         className="relative w-full overflow-hidden rounded-t-3xl"
+         style={{ height: 230 }}
+      >
+         {/* Screenshot real com curtain reveal */}
          {project.screenshot && !error && (
             <img
                src={project.screenshot}
@@ -33,23 +42,20 @@ function ProjectCover({ project }) {
             />
          )}
 
-         {/* Overlay de cor enquanto carrega ou no fallback */}
+         {/* Overlay de cor */}
          <div
             className="absolute inset-0 transition-opacity duration-700"
-            style={{
-               background: bgGrad,
-               opacity: loaded && !error ? 0.55 : 1,
-            }}
+            style={{ background: bgGrad, opacity: loaded && !error ? 0.50 : 1 }}
          />
 
-         {/* Glow radial de identidade */}
+         {/* Glow radial */}
          <div className="absolute rounded-full pointer-events-none" style={{
             width: 340, height: 340,
             top: "-25%", left: "-8%",
             background: `radial-gradient(circle, ${glow} 0%, transparent 70%)`,
          }} />
 
-         {/* Fade para o conteúdo abaixo */}
+         {/* Fade inferior */}
          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-bg-surface to-transparent pointer-events-none" />
 
          {/* URL badge */}
@@ -59,11 +65,11 @@ function ProjectCover({ project }) {
             <span className="text-[10px] text-text-muted font-medium">{project.displayUrl}</span>
          </div>
 
-      </div>
+      </motion.div>
    )
 }
 
-export default function ProjectCard({ project, index }) {
+export default function ProjectCard({ project }) {
    const [hovered, setHovered] = useState(false)
 
    const isPurple    = project.isPurple
@@ -81,10 +87,10 @@ export default function ProjectCard({ project, index }) {
 
    return (
       <motion.div
-         initial={{ opacity: 0, y: 32 }}
-         whileInView={{ opacity: 1, y: 0 }}
+         variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.12 } } }}
+         initial="hidden"
+         whileInView="visible"
          viewport={{ once: false, margin: "-40px" }}
-         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index * 0.10 }}
          onMouseEnter={() => setHovered(true)}
          onMouseLeave={() => setHovered(false)}
          className="group relative rounded-3xl overflow-hidden transition-all duration-300"

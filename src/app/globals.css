@@ -39,21 +39,9 @@
 
    html {
       scroll-behavior:         smooth;
-      scroll-snap-type:        y mandatory;
-      scroll-padding-top:      72px;
       -webkit-font-smoothing:  antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering:          optimizeLegibility;
-   }
-
-   section[id] {
-      scroll-snap-align: start;
-      scroll-snap-stop:  always;
-      min-height:        100vh;
-   }
-
-   #projetos {
-      scroll-snap-stop: normal;
    }
 
    body {
@@ -243,6 +231,11 @@ body.cursor-fine *  { cursor: none !important; }
 @media (pointer: coarse) { * { cursor: auto !important; } }
 
 * { -webkit-overflow-scrolling: touch; }
+
+@keyframes gradientShift {
+   0%, 100% { background-position: 0% 50%; }
+   50%       { background-position: 100% 50%; }
+}
 
 @media (prefers-reduced-motion: reduce) {
    *, *::before, *::after {

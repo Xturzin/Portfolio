@@ -38,16 +38,39 @@ function ProfilePhoto() {
    )
 }
 
+const labelVariant = {
+   hidden:  { opacity: 0, x: -28 },
+   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+}
+
+const headingVariant = {
+   hidden:  { opacity: 0, y: -36, rotateX: -20 },
+   visible: {
+      opacity: 1, y: 0, rotateX: 0,
+      transition: { type: "spring", damping: 20, stiffness: 90, mass: 0.9 },
+   },
+}
+
+const textVariant = {
+   hidden:  { opacity: 0, y: 28 },
+   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+}
+
+const eduVariant = {
+   hidden:  { opacity: 0, x: -16 },
+   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+}
+
 export default function About() {
    return (
       <SectionWrapper id="sobre" variant="fadeLeft" className="pt-20 md:pt-28 pb-28 md:pb-36 px-6 md:px-16 max-w-6xl mx-auto">
          <div className="flex flex-col md:flex-row gap-12 md:gap-28 items-start">
 
             <motion.div
-               initial={{ opacity: 0, x: -20 }}
+               initial={{ opacity: 0, x: -48 }}
                whileInView={{ opacity: 1, x: 0 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+               viewport={{ once: false, margin: "-60px" }}
+               transition={{ type: "spring", damping: 26, stiffness: 90, mass: 0.9 }}
                className="w-full md:w-72 flex-shrink-0"
             >
                <div className="card-base rounded-2xl p-6 flex flex-col gap-5" style={{ boxShadow: "inset 1px 0 0 rgba(124,58,237,0.12), inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 12px rgba(0,0,0,0.25)" }}>
@@ -60,7 +83,7 @@ export default function About() {
                      </div>
                   </div>
 
-                  <div className="h-px bg-purple-dim/20"></div>
+                  <div className="h-px bg-purple-dim/20" />
 
                   <div className="flex flex-col gap-3.5">
                      {info.map((item) => (
@@ -71,12 +94,12 @@ export default function About() {
                      ))}
                   </div>
 
-                  <div className="h-px bg-purple-dim/20"></div>
+                  <div className="h-px bg-purple-dim/20" />
 
                   <div className="flex items-center gap-2">
                      <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-base opacity-30"></span>
-                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-neon-base opacity-80"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon-base opacity-30" />
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-neon-base opacity-80" />
                      </span>
                      <span className="text-neon-base text-label tracking-wide">Disponível para projetos</span>
                   </div>
@@ -86,30 +109,21 @@ export default function About() {
 
             <motion.div
                className="flex-1 flex flex-col gap-8"
-               variants={{
-                  hidden:  {},
-                  visible: { transition: { staggerChildren: 0.10, delayChildren: 0.15 } },
-               }}
+               variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.14, delayChildren: 0.12 } } }}
                initial="hidden"
                whileInView="visible"
                viewport={{ once: false, margin: "-60px" }}
             >
-               <motion.div
-                  variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22,1,0.36,1] } } }}
-                  className="flex flex-col gap-4"
-               >
-                  <span className="section-label">Sobre mim</span>
-                  <h2>
+               <div className="flex flex-col gap-4">
+                  <motion.span variants={labelVariant} className="section-label">Sobre mim</motion.span>
+                  <motion.h2 variants={headingVariant} style={{ transformPerspective: 700 }}>
                      Construindo do zero
                      <br />
                      <span className="text-text-primary">ao deploy</span>
-                  </h2>
-               </motion.div>
+                  </motion.h2>
+               </div>
 
-               <motion.div
-                  variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22,1,0.36,1] } } }}
-                  className="flex flex-col gap-4"
-               >
+               <motion.div variants={textVariant} className="flex flex-col gap-4">
                   <p>
                      Cinco anos construindo aplicações web do começo ao fim. Frontend, backend, banco de dados, deploy. O sistema inteiro, cada parte.
                   </p>
@@ -118,22 +132,22 @@ export default function About() {
                   </p>
                </motion.div>
 
-               <motion.div
-                  variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22,1,0.36,1] } } }}
-                  className="flex flex-col gap-3"
-               >
+               <motion.div variants={textVariant} className="flex flex-col gap-3">
                   <span className="text-label text-text-muted">Formação</span>
-                  <div className="flex flex-col gap-3">
+                  <motion.div
+                     variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.10 } } }}
+                     className="flex flex-col gap-3"
+                  >
                      {education.map((item) => (
-                        <div key={item.course} className="flex items-start gap-3">
+                        <motion.div key={item.course} variants={eduVariant} className="flex items-start gap-3">
                            <span className="mt-[7px] w-1 h-1 rounded-full bg-purple-base flex-shrink-0" />
                            <div className="flex flex-col">
-                              <p className="text-caption text-text-secondary font-medium" style={{ color: "var(--color-text-secondary)" }}>{item.course}</p>
+                              <p className="text-caption text-text-secondary font-medium">{item.course}</p>
                               <span className="text-label text-text-muted tracking-wide mt-0.5">Início: {item.start}</span>
                            </div>
-                        </div>
+                        </motion.div>
                      ))}
-                  </div>
+                  </motion.div>
                </motion.div>
 
             </motion.div>

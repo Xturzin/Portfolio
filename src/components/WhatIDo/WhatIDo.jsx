@@ -53,19 +53,25 @@ const services = [
    },
 ]
 
-const heading = {
-   hidden:  {},
-   visible: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+const labelVariant = {
+   hidden:  { opacity: 0, x: -28 },
+   visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
 }
 
-const grid = {
-   hidden:  {},
-   visible: { transition: { staggerChildren: 0.10, delayChildren: 0.2 } },
+const headingVariant = {
+   hidden:  { opacity: 0, y: -36, rotateX: -20 },
+   visible: {
+      opacity: 1, y: 0, rotateX: 0,
+      transition: { type: "spring", damping: 20, stiffness: 90, mass: 0.9 },
+   },
 }
 
-const item = {
-   hidden:  { opacity: 0, y: 28 },
-   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+const cardVariant = {
+   hidden:  { opacity: 0, y: 56, rotateX: 12, scale: 0.94 },
+   visible: {
+      opacity: 1, y: 0, rotateX: 0, scale: 1,
+      transition: { type: "spring", damping: 24, stiffness: 100, mass: 0.85 },
+   },
 }
 
 export default function WhatIDo() {
@@ -74,14 +80,14 @@ export default function WhatIDo() {
          <div className="max-w-6xl mx-auto flex flex-col gap-12">
 
             <motion.div
-               variants={heading}
+               variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.10, delayChildren: 0.08 } } }}
                initial="hidden"
                whileInView="visible"
                viewport={{ once: false, margin: "-60px" }}
                className="flex flex-col gap-4"
             >
-               <motion.span variants={item} className="section-label">O que faço</motion.span>
-               <motion.h2 variants={item}>
+               <motion.span variants={labelVariant} className="section-label">O que faço</motion.span>
+               <motion.h2 variants={headingVariant} style={{ transformPerspective: 700 }}>
                   Desenvolvimento completo,
                   <br />
                   <span className="text-text-primary">do início ao fim</span>
@@ -89,24 +95,23 @@ export default function WhatIDo() {
             </motion.div>
 
             <motion.div
-               variants={grid}
+               variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.13, delayChildren: 0.15 } } }}
                initial="hidden"
                whileInView="visible"
                viewport={{ once: false, margin: "-40px" }}
                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+               style={{ perspective: "1200px" }}
             >
                {services.map((service) => (
                   <motion.div
                      key={service.id}
-                     variants={item}
+                     variants={cardVariant}
                      className="group relative rounded-2xl border border-purple-dim/20 bg-bg-surface/80 backdrop-blur-sm p-6 flex flex-col gap-4 transition-all duration-300 hover:border-purple-base/40 hover:bg-bg-elevated hover:-translate-y-1 hover:shadow-purple-md cursor-default overflow-hidden"
                   >
                      <div className="absolute inset-0 bg-gradient-to-br from-purple-base/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
                      <div className="relative z-10 w-9 h-9 rounded-xl bg-purple-dim/20 flex items-center justify-center text-purple-light group-hover:text-neon-base group-hover:bg-purple-dim/30 transition-all duration-300">
                         {service.icon}
                      </div>
-
                      <div className="relative z-10 flex flex-col gap-1.5">
                         <h3 className="text-text-primary font-semibold text-base">{service.title}</h3>
                         <p className="text-text-secondary text-sm leading-relaxed">{service.description}</p>
