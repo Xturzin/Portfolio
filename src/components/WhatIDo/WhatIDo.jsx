@@ -51,17 +51,17 @@ const services = [
 ]
 
 const headingVariant = {
-   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
+   hidden:  { opacity: 0, y: -32, rotateX: -16 },
    visible: {
-      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      opacity: 1, y: 0, rotateX: 0,
       transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const cardVariant = {
-   hidden:  { opacity: 0, y: 52, rotateX: 18, rotateY: 4, scale: 0.90 },
+   hidden:  { opacity: 0, y: 48, rotateX: 14, scale: 0.92 },
    visible: {
-      opacity: 1, y: 0, rotateX: 0, rotateY: 0, scale: 1,
+      opacity: 1, y: 0, rotateX: 0, scale: 1,
       transition: { type: "spring", damping: 22, stiffness: 135, mass: 0.6 },
    },
 }

@@ -60,25 +60,25 @@ const otherTech = [
 ]
 
 const headingVariant = {
-   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
+   hidden:  { opacity: 0, y: -32, rotateX: -16 },
    visible: {
-      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      opacity: 1, y: 0, rotateX: 0,
       transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const coreCardVariant = {
-   hidden:  { opacity: 0, y: 52, rotateX: 18, rotateY: -3, scale: 0.90 },
+   hidden:  { opacity: 0, y: 48, rotateX: 14, scale: 0.92 },
    visible: {
-      opacity: 1, y: 0, rotateX: 0, rotateY: 0, scale: 1,
+      opacity: 1, y: 0, rotateX: 0, scale: 1,
       transition: { type: "spring", damping: 22, stiffness: 135, mass: 0.6 },
    },
 }
 
 const tagVariant = {
-   hidden:  { opacity: 0, scale: 0.80, y: 14, filter: "blur(3px)" },
+   hidden:  { opacity: 0, scale: 0.82, y: 12 },
    visible: {
-      opacity: 1, scale: 1, y: 0, filter: "blur(0px)",
+      opacity: 1, scale: 1, y: 0,
       transition: { type: "spring", damping: 22, stiffness: 155, mass: 0.5 },
    },
 }

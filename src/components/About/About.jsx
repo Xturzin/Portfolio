@@ -40,25 +40,25 @@ function ProfilePhoto() {
 }
 
 const headingVariant = {
-   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
+   hidden:  { opacity: 0, y: -32, rotateX: -16 },
    visible: {
-      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      opacity: 1, y: 0, rotateX: 0,
       transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const textVariant = {
-   hidden:  { opacity: 0, y: 26, filter: "blur(5px)" },
+   hidden:  { opacity: 0, y: 26 },
    visible: {
-      opacity: 1, y: 0, filter: "blur(0px)",
+      opacity: 1, y: 0,
       transition: { type: "spring", damping: 22, stiffness: 130, mass: 0.65 },
    },
 }
 
 const eduVariant = {
-   hidden:  { opacity: 0, x: -18, filter: "blur(3px)" },
+   hidden:  { opacity: 0, x: -16 },
    visible: {
-      opacity: 1, x: 0, filter: "blur(0px)",
+      opacity: 1, x: 0,
       transition: { type: "spring", damping: 22, stiffness: 140, mass: 0.6 },
    },
 }

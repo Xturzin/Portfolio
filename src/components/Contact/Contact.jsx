@@ -8,25 +8,25 @@ import { motion }      from "framer-motion"
 const EMAIL = "arthur.coliveira@gmail.com"
 
 const headingVariant = {
-   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
+   hidden:  { opacity: 0, y: -32, rotateX: -16 },
    visible: {
-      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      opacity: 1, y: 0, rotateX: 0,
       transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const cardVariant = {
-   hidden:  { opacity: 0, y: 48, scale: 0.92, filter: "blur(4px)" },
+   hidden:  { opacity: 0, y: 44, scale: 0.93 },
    visible: {
-      opacity: 1, y: 0, scale: 1, filter: "blur(0px)",
+      opacity: 1, y: 0, scale: 1,
       transition: { type: "spring", damping: 22, stiffness: 135, mass: 0.6 },
    },
 }
 
 const fadeVariant = {
-   hidden:  { opacity: 0, y: 18, filter: "blur(4px)" },
+   hidden:  { opacity: 0, y: 16 },
    visible: {
-      opacity: 1, y: 0, filter: "blur(0px)",
+      opacity: 1, y: 0,
       transition: { type: "spring", damping: 22, stiffness: 140, mass: 0.6 },
    },
 }

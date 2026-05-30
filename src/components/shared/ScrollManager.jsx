@@ -6,60 +6,46 @@ const KEY = "portfolio_first_scroll_v1"
 
 export default function ScrollManager() {
    useEffect(() => {
-      // Se já scrollou tudo antes, scroll livre
       if (localStorage.getItem(KEY)) return
+      if (window.scrollY > 80) { localStorage.setItem(KEY, "1"); return }
 
-      // Só aplica snap se o usuário está no topo (primeira visita real)
-      if (window.scrollY > 80) {
-         localStorage.setItem(KEY, "1")
-         return
-      }
+      const html = document.documentElement
 
-      const html     = document.documentElement
-      const sections = Array.from(document.querySelectorAll("section[id]"))
+      // Aguarda um frame para garantir que as sections estão no DOM
+      const timer = setTimeout(() => {
+         const sections = Array.from(document.querySelectorAll("section[id]"))
+         if (!sections.length) return
 
-      const applySnap = () => {
-         html.style.scrollSnapType    = "y mandatory"
-         html.style.scrollPaddingTop  = "72px"
+         html.style.scrollSnapType   = "y mandatory"
+         html.style.scrollPaddingTop = "72px"
          sections.forEach((s) => {
             s.style.scrollSnapAlign = "start"
-            s.style.scrollSnapStop  = "always"
             s.style.minHeight       = "100vh"
+            // scroll-snap-stop: always removido — era o principal causador do "stuck"
          })
-      }
 
-      const removeSnap = () => {
-         html.style.scrollSnapType   = ""
-         html.style.scrollPaddingTop = ""
-         sections.forEach((s) => {
-            s.style.scrollSnapAlign = ""
-            s.style.scrollSnapStop  = ""
-            s.style.minHeight       = ""
-         })
-      }
+         const contact = document.getElementById("contato")
+         if (!contact) return
 
-      applySnap()
+         const observer = new IntersectionObserver(
+            ([entry]) => {
+               if (!entry.isIntersecting) return
+               html.style.scrollSnapType   = ""
+               html.style.scrollPaddingTop = ""
+               sections.forEach((s) => {
+                  s.style.scrollSnapAlign = ""
+                  s.style.minHeight       = ""
+               })
+               localStorage.setItem(KEY, "1")
+               observer.disconnect()
+            },
+            { threshold: 0.25 }
+         )
 
-      // Quando o usuário chegar na seção de contato (última), libera
-      const contact = document.getElementById("contato")
-      if (!contact) return
+         observer.observe(contact)
+      }, 80)
 
-      const observer = new IntersectionObserver(
-         ([entry]) => {
-            if (!entry.isIntersecting) return
-            removeSnap()
-            localStorage.setItem(KEY, "1")
-            observer.disconnect()
-         },
-         { threshold: 0.25 }
-      )
-
-      observer.observe(contact)
-
-      return () => {
-         observer.disconnect()
-         removeSnap()
-      }
+      return () => clearTimeout(timer)
    }, [])
 
    return null

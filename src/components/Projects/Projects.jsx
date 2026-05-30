@@ -7,17 +7,17 @@ import { projects }  from "@/data/projects"
 import { motion }    from "framer-motion"
 
 const headingVariant = {
-   hidden:  { opacity: 0, y: -32, rotateX: -18, filter: "blur(5px)" },
+   hidden:  { opacity: 0, y: -32, rotateX: -16 },
    visible: {
-      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      opacity: 1, y: 0, rotateX: 0,
       transition: { type: "spring", damping: 20, stiffness: 140, mass: 0.6 },
    },
 }
 
 const textVariant = {
-   hidden:  { opacity: 0, y: 22, filter: "blur(4px)" },
+   hidden:  { opacity: 0, y: 20 },
    visible: {
-      opacity: 1, y: 0, filter: "blur(0px)",
+      opacity: 1, y: 0,
       transition: { type: "spring", damping: 22, stiffness: 140, mass: 0.6 },
    },
 }
