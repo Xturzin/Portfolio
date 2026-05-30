@@ -142,12 +142,6 @@ export default function Contact() {
 
             </motion.div>
 
-            {/* Divider + location */}
-            <motion.div variants={fadeVariant} className="w-full h-px bg-gradient-to-r from-transparent via-purple-dim/25 to-transparent" />
-            <motion.span variants={fadeVariant} className="text-xs text-text-muted tracking-wide">
-               Cabo Frio, Rio de Janeiro, Brasil
-            </motion.span>
-
          </motion.div>
       </SectionWrapper>
    )
