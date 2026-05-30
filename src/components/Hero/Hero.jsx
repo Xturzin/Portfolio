@@ -3,12 +3,12 @@
 import { motion } from "framer-motion"
 
 const PARTICLES = [
-   { x: "14%",  y: "22%", size: 2.5, dur: 8,  delay: 0,   color: "#a855f7" },
-   { x: "78%",  y: "18%", size: 2,   dur: 11,  delay: 2.5, color: "#00e87a" },
-   { x: "88%",  y: "62%", size: 1.5, dur: 9.5, delay: 1.2, color: "#3b82f6" },
-   { x: "22%",  y: "72%", size: 2,   dur: 13,  delay: 3.8, color: "#a855f7" },
-   { x: "55%",  y: "82%", size: 1.5, dur: 10,  delay: 0.6, color: "#00e87a" },
-   { x: "68%",  y: "40%", size: 2,   dur: 12,  delay: 4.2, color: "#3b82f6" },
+   { id: "pp-tl", x: "14%", y: "22%", size: 2.5, dur: 8,   delay: 0,   color: "#a855f7" },
+   { id: "pn-tr", x: "78%", y: "18%", size: 2,   dur: 11,  delay: 2.5, color: "#00e87a" },
+   { id: "pb-br", x: "88%", y: "62%", size: 1.5, dur: 9.5, delay: 1.2, color: "#3b82f6" },
+   { id: "pp-bl", x: "22%", y: "72%", size: 2,   dur: 13,  delay: 3.8, color: "#a855f7" },
+   { id: "pn-bc", x: "55%", y: "82%", size: 1.5, dur: 10,  delay: 0.6, color: "#00e87a" },
+   { id: "pb-mr", x: "68%", y: "40%", size: 2,   dur: 12,  delay: 4.2, color: "#3b82f6" },
 ]
 
 const wordVariant = {
@@ -78,7 +78,7 @@ export default function Hero() {
             }}
          />
 
-         {/* Orbs CSS — zero JS */}
+         {/* Orbs CSS: zero JS */}
          <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
             <div style={{
                position: "absolute", borderRadius: "50%",
@@ -100,7 +100,7 @@ export default function Hero() {
             }} />
          </div>
 
-         {/* Glow central pulsante — destaque atrás do nome */}
+         {/* Glow central pulsante: destaque atrás do nome */}
          <div
             aria-hidden="true"
             style={{
@@ -134,9 +134,9 @@ export default function Hero() {
 
          {/* Partículas flutuantes */}
          <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
-            {PARTICLES.map((p, i) => (
+            {PARTICLES.map((p) => (
                <div
-                  key={i}
+                  key={p.id}
                   style={{
                      position: "absolute",
                      left: p.x, top: p.y,

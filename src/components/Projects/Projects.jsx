@@ -37,7 +37,7 @@ export default function Projects() {
                <div className="flex items-center gap-4">
                   <AnimatedLabel>Projetos</AnimatedLabel>
                   <motion.span variants={textVariant} className="text-text-muted text-label tracking-widest">
-                     0{projects.length}
+                     {String(projects.length).padStart(2, '0')}
                   </motion.span>
                </div>
 

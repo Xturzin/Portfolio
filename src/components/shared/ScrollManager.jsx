@@ -21,7 +21,7 @@ export default function ScrollManager() {
          sections.forEach((s) => {
             s.style.scrollSnapAlign = "start"
             s.style.minHeight       = "100vh"
-            // scroll-snap-stop: always removido — era o principal causador do "stuck"
+            // scroll-snap-stop: always removido, era o principal causador do "stuck"
          })
 
          const contact = document.getElementById("contato")

@@ -95,6 +95,7 @@ export default function Navbar() {
          const focusable = menuEl.querySelectorAll(
             "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])"
          )
+         if (focusable.length === 0) return
          const first = focusable[0]
          const last  = focusable[focusable.length - 1]
 
@@ -146,6 +147,7 @@ export default function Navbar() {
                   <a
                      key={link.href}
                      href={link.href}
+                     aria-current={active === link.id ? "location" : undefined}
                      className={
                         "text-sm font-medium transition-colors duration-300 relative group " +
                         (active === link.id
@@ -222,6 +224,7 @@ export default function Navbar() {
                            href={link.href}
                            variants={linkVariants}
                            onClick={close}
+                           aria-current={active === link.id ? "location" : undefined}
                            className={"flex items-center justify-between px-4 py-3.5 rounded-xl font-medium transition-all duration-200 group min-h-[44px] " + (active === link.id ? "text-text-primary bg-bg-elevated" : "text-text-secondary hover:text-text-primary hover:bg-bg-elevated")}
                         >
                            <span>{link.label}</span>

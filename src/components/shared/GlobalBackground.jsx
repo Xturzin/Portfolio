@@ -83,13 +83,21 @@ export default function GlobalBackground() {
          })
       }
 
-      const tick = () => {
+      const TARGET_FPS   = 30
+      const FRAME_MS     = 1000 / TARGET_FPS
+      let lastTime       = 0
+
+      const tick = (now) => {
          if (!paused) {
-            t++
-            ctx.clearRect(0, 0, W, H)
-            drawGrid()
-            drawOrbs()
-            drawLines()
+            const elapsed = now - lastTime
+            if (elapsed >= FRAME_MS) {
+               lastTime = now - (elapsed % FRAME_MS)
+               t++
+               ctx.clearRect(0, 0, W, H)
+               drawGrid()
+               drawOrbs()
+               drawLines()
+            }
          }
          raf = requestAnimationFrame(tick)
       }

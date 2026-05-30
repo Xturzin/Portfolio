@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata = {
    metadataBase: new URL("https://arthurcouto.dev"),
    title: {
-      default:  "Arthur Couto — Full Stack Developer | React, Node.js, Web Apps",
+      default:  "Arthur Couto · Full Stack Developer | React, Node.js, Web Apps",
       template: "%s | Arthur Couto",
    },
    description:
@@ -31,14 +31,14 @@ export const metadata = {
       type:        "website",
       locale:      "pt_BR",
       url:         "https://arthurcouto.dev",
-      title:       "Arthur Couto — Full Stack Developer",
+      title:       "Arthur Couto · Full Stack Developer",
       description: "Desenvolvedor Full Stack. Do zero ao deploy.",
       siteName:    "Arthur Couto",
-      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Arthur Couto — Full Stack Developer" }],
+      images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Arthur Couto · Full Stack Developer" }],
    },
    twitter: {
       card:        "summary_large_image",
-      title:       "Arthur Couto — Full Stack Developer",
+      title:       "Arthur Couto · Full Stack Developer",
       description: "React, Node.js, JavaScript, Python. Do zero ao deploy.",
       images:      ["/og-image.png"],
    },
@@ -53,10 +53,31 @@ export const metadata = {
    other:    { "theme-color": "#07070f" },
 }
 
+const jsonLd = {
+   "@context": "https://schema.org",
+   "@type":    "Person",
+   name:       "Arthur Couto",
+   jobTitle:   "Full Stack Developer",
+   url:        "https://arthurcouto.dev",
+   email:      "arthur.coliveira@gmail.com",
+   address: {
+      "@type":           "PostalAddress",
+      addressLocality:   "Cabo Frio",
+      addressRegion:     "RJ",
+      addressCountry:    "BR",
+   },
+   knowsAbout: ["React", "Node.js", "JavaScript", "Python", "Full Stack Development", "Web Development"],
+   sameAs:     ["https://www.linkedin.com/in/arthurcoutooliveira/"],
+}
+
 export default function RootLayout({ children }) {
    return (
       <html lang="pt-BR" className={spaceGrotesk.variable}>
          <body className="bg-bg-deep text-text-primary antialiased">
+            <script
+               type="application/ld+json"
+               dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <a
                href="#sobre"
                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-neon-base focus:text-bg-deep focus:font-medium focus:text-sm focus:outline-none"

@@ -52,10 +52,6 @@ module.exports = {
             "caption":  ["0.8125rem",                    { lineHeight: "1.6",  letterSpacing: "-0.002em", fontWeight: "400" }],
             "label":    ["0.6875rem",                    { lineHeight: "1.2",  letterSpacing: "0.06em",   fontWeight: "500" }],
          },
-         spacing: {
-            "section": "8rem",
-            "section-sm": "5rem",
-         },
          animation: {
             "fade-in":    "fadeIn 0.75s cubic-bezier(0.22,1,0.36,1) forwards",
             "slide-up":   "slideUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards",

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState }   from "react"
+import { useState, useRef, useEffect } from "react"
 import SectionWrapper from "@/components/shared/SectionWrapper"
 import AnimatedLabel  from "@/components/shared/AnimatedLabel"
 import { motion }     from "framer-motion"
@@ -33,13 +33,21 @@ const fadeVariant = {
 
 export default function Contact() {
    const [copied, setCopied] = useState(false)
+   const timerRef = useRef(null)
+
+   useEffect(() => {
+      return () => { if (timerRef.current) clearTimeout(timerRef.current) }
+   }, [])
 
    const handleCopy = async () => {
       try {
          await navigator.clipboard.writeText(EMAIL)
          setCopied(true)
-         setTimeout(() => setCopied(false), 2000)
-      } catch (_) {}
+         if (timerRef.current) clearTimeout(timerRef.current)
+         timerRef.current = setTimeout(() => setCopied(false), 2000)
+      } catch {
+         // Clipboard API indisponível (permissão negada ou contexto inseguro)
+      }
    }
 
    return (
@@ -71,13 +79,13 @@ export default function Contact() {
                className="w-full flex flex-col sm:flex-row sm:justify-center gap-3"
             >
 
-               {/* Email — clique em qualquer lugar copia */}
+               {/* Email: clique em qualquer lugar copia */}
                <motion.div
                   variants={cardVariant}
                   onClick={handleCopy}
                   role="button"
                   tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && handleCopy()}
+                  onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleCopy() } }}
                   aria-label={copied ? "Email copiado!" : "Clique para copiar o email"}
                   className="group card-base flex items-center gap-4 px-5 py-4 hover:border-purple-base/40 cursor-pointer select-none w-full sm:w-auto sm:min-w-[240px]"
                >

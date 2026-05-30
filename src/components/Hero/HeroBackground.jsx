@@ -3,6 +3,9 @@
 import { useRef, useMemo, useEffect, Component } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 
+// Module-level pointer avoids polluting window and is safe across unmount cycles
+let _auroraMouseRef = null
+
 const vertexShader = `
    varying vec2 vUv;
    void main() {
@@ -52,10 +55,10 @@ const fragmentShader = `
 
       // parallax procedural por camada:
       // cada layer recebe deslocamento de mouse com intensidade diferente,
-      // simulando profundidade — layer distante move pouco, layer próxima move mais
-      vec2 mouse0 = uMouse * 0.04;   // fundo — quase estático
+      // simulando profundidade: layer distante move pouco, layer próxima move mais
+      vec2 mouse0 = uMouse * 0.04;   // fundo: quase estático
       vec2 mouse1 = uMouse * 0.09;   // camada média
-      vec2 mouse2 = uMouse * 0.16;   // camada próxima — mais responsiva
+      vec2 mouse2 = uMouse * 0.16;   // camada próxima: mais responsiva
 
       float n1 = fbm((uv + mouse1) * 1.8 + vec2(t * 0.7,  t * 0.5));
       float n2 = fbm((uv + mouse2) * 2.6 - vec2(t * 0.5,  t * 0.3) + n1 * 0.5);
@@ -93,7 +96,7 @@ function AuroraPlane() {
    }), [])
 
    useEffect(() => {
-      window.__auroraMouseRef = mouseRef
+      _auroraMouseRef = mouseRef
 
       const onVisibility = () => {
          pausedRef.current = document.hidden
@@ -101,7 +104,7 @@ function AuroraPlane() {
       document.addEventListener("visibilitychange", onVisibility)
       return () => {
          document.removeEventListener("visibilitychange", onVisibility)
-         window.__auroraMouseRef = null
+         _auroraMouseRef = null
       }
    }, [])
 
@@ -146,6 +149,9 @@ class CanvasErrorBoundary extends Component {
    static getDerivedStateFromError() {
       return { failed: true }
    }
+   componentDidCatch(error, info) {
+      console.error("[HeroBackground] Canvas error:", error, info)
+   }
    render() {
       if (this.state.failed) return <StaticFallback />
       return this.props.children
@@ -154,8 +160,8 @@ class CanvasErrorBoundary extends Component {
 
 export default function HeroBackground() {
    const handleMouseMove = (e) => {
-      if (window.__auroraMouseRef) {
-         window.__auroraMouseRef.current = {
+      if (_auroraMouseRef) {
+         _auroraMouseRef.current = {
             x:  (e.clientX / window.innerWidth  - 0.5) * 2,
             y: -(e.clientY / window.innerHeight - 0.5) * 2,
          }

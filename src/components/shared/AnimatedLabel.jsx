@@ -1,9 +1,10 @@
 "use client"
 
+import { useMemo } from "react"
 import { motion } from "framer-motion"
 
 export default function AnimatedLabel({ children, className = "section-label" }) {
-   const chars = children.split("")
+   const chars = useMemo(() => children.split(""), [children])
 
    return (
       <motion.span

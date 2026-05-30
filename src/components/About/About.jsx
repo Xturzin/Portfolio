@@ -33,6 +33,7 @@ function ProfilePhoto() {
          alt="Arthur Couto"
          width={56}
          height={56}
+         loading="lazy"
          onError={() => setError(true)}
          className="w-14 h-14 rounded-full object-cover object-center flex-shrink-0 ring-2 ring-purple-base/30"
       />
